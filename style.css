@@ -1,0 +1,9 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: linear-gradient(to bottom right, #f8fafc, #f1f5f9);
+  color: #0f172a;
+}
+#root {
+  padding: 20px;
+}
