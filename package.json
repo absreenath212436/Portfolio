@@ -9,11 +9,7 @@
   },
   "dependencies": {
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "three": "^0.152.2",
-  "@react-three/fiber": "^8.0.27",
-  "@react-three/drei": "^9.56.3",
-    "framer-motion": "^10.16.4"
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "vite": "^4.0.0",
