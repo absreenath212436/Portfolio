@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-// Import your Avatar3D component for 3D animated avatar
-import Avatar3D from "./Avatar3D"; // Adjust path if needed
 
 const SUMMARY = `Operations and Project Management professional with 8+ years of experience in digital operations, client service delivery, and process transformation. Strong in Generative AI, workflow automation, digital transformation, leadership, and collaboration.`;
 
@@ -86,56 +84,24 @@ export default function App() {
   }
 
   return (
-    <div
-      style={{
-        fontFamily: "system-ui, sans-serif",
-        maxWidth: 900,
-        margin: "auto",
-        padding: 20,
-      }}
-    >
-      {/* 3D Avatar container */}
-      <div style={{ height: 400, marginBottom: 20 }}>
-        <Avatar3D />
-      </div>
+    <div className="container">
+      <header>
+        <h1>Sreenath A B</h1>
+        <nav>
+          {["summary", "experience", "education", "skills"].map((sec) => (
+            <button
+              key={sec}
+              onClick={() => setSection(sec)}
+              className={section === sec ? "active" : ""}
+              aria-current={section === sec ? "page" : false}
+            >
+              {sec.charAt(0).toUpperCase() + sec.slice(1)}
+            </button>
+          ))}
+        </nav>
+      </header>
 
-      {/* Navigation Menu */}
-      <nav
-        style={{
-          marginBottom: 20,
-          display: "flex",
-          gap: 10,
-          justifyContent: "center",
-        }}
-      >
-        {["summary", "experience", "education", "skills"].map((sec) => (
-          <button
-            key={sec}
-            onClick={() => setSection(sec)}
-            style={{
-              padding: "8px 16px",
-              cursor: "pointer",
-              fontWeight: section === sec ? "bold" : "normal",
-              backgroundColor: section === sec ? "#4f46e5" : "#e0e7ff",
-              color: section === sec ? "white" : "black",
-              border: "none",
-              borderRadius: 5,
-            }}
-          >
-            {sec.charAt(0).toUpperCase() + sec.slice(1)}
-          </button>
-        ))}
-      </nav>
-
-      {/* Section content */}
-      <section
-        style={{
-          minHeight: 400,
-          border: "1px solid #ddd",
-          padding: 20,
-          borderRadius: 8,
-        }}
-      >
+      <main>
         {section === "summary" && (
           <>
             <h2>Summary & Contact</h2>
@@ -148,7 +114,7 @@ export default function App() {
               <a
                 href="https://www.linkedin.com/in/sreenath-ab"
                 target="_blank"
-                rel="noreferrer"
+                rel="noreferrer noopener"
               >
                 linkedin.com/in/sreenath-ab
               </a>
@@ -162,9 +128,9 @@ export default function App() {
         {section === "experience" && (
           <>
             <h2>Experience</h2>
-            <div style={{ maxHeight: 300, overflowY: "auto", marginTop: 10 }}>
+            <div className="scroll-panel" tabIndex={0}>
               {EXPERIENCES.map((job, i) => (
-                <div key={i} style={{ marginBottom: 20 }}>
+                <div key={i} style={{ marginBottom: "1.5rem" }}>
                   <h3>{job.title}</h3>
                   <p>
                     <em>
@@ -186,7 +152,7 @@ export default function App() {
           <>
             <h2>Education</h2>
             {EDUCATION.map((ed, i) => (
-              <div key={i} style={{ marginBottom: 15 }}>
+              <div key={i} style={{ marginBottom: "1rem" }}>
                 <p>
                   <strong>{ed.degree}</strong>
                 </p>
@@ -202,21 +168,9 @@ export default function App() {
           <>
             <h2>Skills & Certifications</h2>
             <div
-              style={{
-                display: "flex",
-                gap: 20,
-                marginBottom: 10,
-              }}
+              style={{ display: "flex", gap: "1rem", marginBottom: "1rem" }}
             >
-              <div
-                style={{
-                  flex: 1,
-                  maxHeight: 200,
-                  overflowY: "auto",
-                  border: "1px solid #eee",
-                  padding: 10,
-                }}
-              >
+              <div className="scroll-panel" tabIndex={0} style={{ flex: 1 }}>
                 <h3>Hard Skills</h3>
                 <ul>
                   {HARD_SKILLS.map((skill, i) => (
@@ -224,15 +178,7 @@ export default function App() {
                   ))}
                 </ul>
               </div>
-              <div
-                style={{
-                  flex: 1,
-                  maxHeight: 200,
-                  overflowY: "auto",
-                  border: "1px solid #eee",
-                  padding: 10,
-                }}
-              >
+              <div className="scroll-panel" tabIndex={0} style={{ flex: 1 }}>
                 <h3>Soft Skills</h3>
                 <ul>
                   {SOFT_SKILLS.map((skill, i) => (
@@ -242,7 +188,10 @@ export default function App() {
               </div>
             </div>
 
-            <div>
+            <section
+              className="upload-section"
+              aria-label="Upload your certificates"
+            >
               <h3>Upload Certificates</h3>
               <input
                 type="file"
@@ -251,24 +200,24 @@ export default function App() {
                 onChange={handleCertificateUpload}
               />
               {certificates.length > 0 && (
-                <ul style={{ marginTop: 10 }}>
-                  {certificates.map((cert, idx) => (
-                    <li key={idx}>
+                <ul className="uploaded-list">
+                  {certificates.map((file, i) => (
+                    <li key={i}>
                       <a
-                        href={cert.url}
+                        href={file.url}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        {cert.name}
+                        {file.name}
                       </a>
                     </li>
                   ))}
                 </ul>
               )}
-            </div>
+            </section>
           </>
         )}
-      </section>
+      </main>
     </div>
   );
 }
