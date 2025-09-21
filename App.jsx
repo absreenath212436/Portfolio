@@ -112,11 +112,11 @@ export default function App() {
             <p>
               <strong>LinkedIn: </strong>
               <a
-                href="https://www.linkedin.com/in/sreenath-ab"
+                href="www.linkedin.com/in/sreenathab"
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                linkedin.com/in/sreenath-ab
+                linkedin.com/Sreenath
               </a>
             </p>
             <p>
