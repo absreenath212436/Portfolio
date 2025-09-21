@@ -112,7 +112,7 @@ export default function App() {
             <p>
               <strong>LinkedIn: </strong>
               <a
-                href="www.linkedin.com/in/sreenathab"
+                href="https://www.linkedin.com/in/sreenathab/"
                 target="_blank"
                 rel="noreferrer noopener"
               >
