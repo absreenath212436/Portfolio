@@ -1,6 +1,22 @@
 import React, { useState } from "react";
 
-const SUMMARY = `Operations and Project Management professional with 8+ years of experience in digital operations, client service delivery, and process transformation. Strong in Generative AI, workflow automation, digital transformation, leadership, and collaboration.`;
+const SUMMARY = `Operations and Project Management professional with 8 years of
+experience delivering scalable solutions in business operations,
+process optimization, and team leadership. Currently managing
+multiple projects and leading a 45+ member team at Opendoor,
+driving operational efficiency, workflow automation, and consistent
+delivery across diverse functions.
+
+Google-certified in Project Management, with a leadership style
+rooted in ownership, accountability, and measurable outcomes.
+Skilled in cross-functional collaboration, data-backed decision-
+making, and developing high-performance teams that consistently
+exceed expectations.
+
+Currently expanding expertise in Generative AI, prompt design, and
+intelligent process automation to future-proof operational strategies
+and enhance business transformation. Passionate about integrating
+technology with process excellence to deliver sustainable results.`;
 
 const EXPERIENCES = [
   {
