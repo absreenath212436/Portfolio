@@ -116,7 +116,7 @@ export default function App() {
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                linkedin.com/Sreenath
+                linkedin.com/sreenath
               </a>
             </p>
             <p>
