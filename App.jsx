@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import "./App.css";
 
 const SECTIONS = ["summary", "experience", "education", "skills"];
@@ -80,33 +79,10 @@ const SOFT_SKILLS = [
   "Adaptability",
 ];
 
-const sectionVariants = {
-  enter: (direction) => ({
-    opacity: 0,
-    rotateY: direction > 0 ? -70 : 70,
-    scale: 0.7,
-    zIndex: 0,
-  }),
-  center: {
-    opacity: 1,
-    rotateY: 0,
-    scale: 1,
-    zIndex: 1,
-    transition: { duration: 0.7 },
-  },
-  exit: (direction) => ({
-    opacity: 0,
-    rotateY: direction < 0 ? 70 : -70,
-    scale: 0.7,
-    zIndex: 0,
-    transition: { duration: 0.5 },
-  }),
-};
-
 export default function App() {
   const [sectionIdx, setSectionIdx] = useState(0);
   const [certificates, setCertificates] = useState([]);
-  const direction = 1;
+  const section = SECTIONS[sectionIdx];
 
   function nextSection() {
     setSectionIdx((i) => (i + 1) % SECTIONS.length);
@@ -122,8 +98,6 @@ export default function App() {
     }));
     setCertificates([...certificates, ...newCerts]);
   }
-  
-  const section = SECTIONS[sectionIdx];
 
   return (
     <div className="container">
@@ -149,116 +123,131 @@ export default function App() {
       </header>
 
       <div className="carousel-buttons">
-        <button onClick={prevSection} aria-label="Previous section">◀</button>
-        <button onClick={nextSection} aria-label="Next section">▶</button>
+        <button onClick={prevSection} aria-label="Previous section">
+          ◀
+        </button>
+        <button onClick={nextSection} aria-label="Next section">
+          ▶
+        </button>
       </div>
-
       <main>
-        <AnimatePresence custom={direction} mode="wait">
-          <motion.section
-            key={section}
-            custom={direction}
-            variants={sectionVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            className="section-content"
-            style={{
-              background: "#fff",
-              borderRadius: "20px",
-              boxShadow: "0 10px 32px 0 #3842930c",
-              padding: "2.5rem",
-              margin:"1.2rem 0",
-              minHeight: 400,
-              position:"relative",
-              perspective: 1200,
-              willChange: "transform, opacity"
-            }}
-          >
-            {section === "summary" && (
-              <>
-                <h2><i className="fa-solid fa-users" style={{ marginRight: 8, color:'#4f46e5' }}></i> Summary & Contact</h2>
-                <p style={{ fontSize: "1.13rem", fontWeight: 500, marginBottom: 32 }}>
-                  {SUMMARY}
-                </p>
-                <p>
-                  <i className="fa-solid fa-envelope" style={{marginRight:6, color:'#4f46e5'}}></i>{" "}
-                  <a href="mailto:absreenath212436@gmail.com">absreenath212436@gmail.com</a>
-                </p>
-                <p>
-                  <i className="fa-brands fa-linkedin" style={{marginRight:6, color:'#4f46e5'}}></i>{" "}
-                  <a href="https://www.linkedin.com/in/sreenathab/" target="_blank" rel="noopener noreferrer">
-                    linkedin.com/sreenath
-                  </a>
-                </p>
-                <p>
-                  <i className="fa-solid fa-location-dot" style={{marginRight:6, color:'#4f46e5'}}></i> Chennai, India
-                </p>
-              </>
-            )}
-            {section === "experience" && (
-              <>
-                <h2><i className="fa-solid fa-briefcase" style={{ marginRight:8, color:'#4f46e5'}}></i> Experience</h2>
-                <div className="scroll-panel" tabIndex={0}>
-                  {EXPERIENCES.map((job, i) => (
-                    <div key={i} style={{ marginBottom: "1.8rem" }}>
-                      <h3 style={{marginBottom:4}}>{job.title}</h3>
-                      <p>
-                        <em>{job.company} — {job.period} — {job.location}</em>
-                      </p>
-                      <ul>
-                        {job.details.map((d, j) => <li key={j}>{d}</li>)}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </>
-            )}
-            {section === "education" && (
-              <>
-                <h2><i className="fa-solid fa-graduation-cap" style={{ marginRight:8, color:'#4f46e5'}}></i> Education</h2>
-                {EDUCATION.map((ed, i) => (
-                  <div key={i} style={{ marginBottom: "1.4rem" }}>
-                    <p><strong>{ed.degree}</strong></p>
-                    <p>{ed.school} — {ed.period} — {ed.location}</p>
-                  </div>
-                ))}
-              </>
-            )}
-            {section === "skills" && (
-              <>
-                <h2><i className="fa-solid fa-tools" style={{ marginRight:8, color:'#4f46e5'}}></i> Skills & Certifications</h2>
-                <div style={{display: "flex", gap: "2rem", marginBottom: "1.4rem"}}>
-                  <div className="scroll-panel" tabIndex={0} style={{ flex: 1 }}>
-                    <h3>Hard Skills</h3>
+        <section key={section} className="section-content animate">
+          {section === "summary" && (
+            <>
+              <h2>Summary & Contact</h2>
+              <p className="summary-text">{SUMMARY}</p>
+              <p>
+                <i
+                  className="fa-solid fa-envelope"
+                  style={{ marginRight: 6, color: "#4f46e5" }}
+                ></i>
+                <a href="mailto:absreenath212436@gmail.com">
+                  absreenath212436@gmail.com
+                </a>
+              </p>
+              <p>
+                <i
+                  className="fa-brands fa-linkedin"
+                  style={{ marginRight: 6, color: "#4f46e5" }}
+                ></i>
+                <a
+                  href="https://www.linkedin.com/in/sreenathab/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  linkedin.com/sreenath
+                </a>
+              </p>
+              <p>
+                <i
+                  className="fa-solid fa-location-dot"
+                  style={{ marginRight: 6, color: "#4f46e5" }}
+                ></i>
+                Chennai, India
+              </p>
+            </>
+          )}
+          {section === "experience" && (
+            <>
+              <h2>Experience</h2>
+              <div className="scroll-panel" tabIndex={0}>
+                {EXPERIENCES.map((job, i) => (
+                  <div key={i} style={{ marginBottom: "1.8rem" }}>
+                    <h3 style={{ marginBottom: 4 }}>{job.title}</h3>
+                    <p>
+                      <em>
+                        {job.company} — {job.period} — {job.location}
+                      </em>
+                    </p>
                     <ul>
-                      {HARD_SKILLS.map((skill, i) => <li key={i}>{skill}</li>)}
-                    </ul>
-                  </div>
-                  <div className="scroll-panel" tabIndex={0} style={{ flex: 1 }}>
-                    <h3>Soft Skills</h3>
-                    <ul>
-                      {SOFT_SKILLS.map((skill, i) => <li key={i}>{skill}</li>)}
-                    </ul>
-                  </div>
-                </div>
-                <section className="upload-section" aria-label="Upload your certificates">
-                  <h3>Upload Certificates</h3>
-                  <input type="file" multiple accept=".pdf,.jpg,.jpeg,.png" onChange={handleCertificateUpload} />
-                  {certificates.length > 0 && (
-                    <ul className="uploaded-list">
-                      {certificates.map((file, i) => (
-                        <li key={i}>
-                          <a href={file.url} target="_blank" rel="noopener noreferrer">{file.name}</a>
-                        </li>
+                      {job.details.map((d, j) => (
+                        <li key={j}>{d}</li>
                       ))}
                     </ul>
-                  )}
-                </section>
-              </>
-            )}
-          </motion.section>
-        </AnimatePresence>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
+          {section === "education" && (
+            <>
+              <h2>Education</h2>
+              {EDUCATION.map((ed, i) => (
+                <div key={i} style={{ marginBottom: "1.4rem" }}>
+                  <p>
+                    <strong>{ed.degree}</strong>
+                  </p>
+                  <p>
+                    {ed.school} — {ed.period} — {ed.location}
+                  </p>
+                </div>
+              ))}
+            </>
+          )}
+          {section === "skills" && (
+            <>
+              <h2>Skills & Certifications</h2>
+              <div style={{ display: "flex", gap: "2rem", marginBottom: "1.4rem" }}>
+                <div className="scroll-panel" tabIndex={0} style={{ flex: 1 }}>
+                  <h3>Hard Skills</h3>
+                  <ul>
+                    {HARD_SKILLS.map((skill, i) => (
+                      <li key={i}>{skill}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="scroll-panel" tabIndex={0} style={{ flex: 1 }}>
+                  <h3>Soft Skills</h3>
+                  <ul>
+                    {SOFT_SKILLS.map((skill, i) => (
+                      <li key={i}>{skill}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+              <section className="upload-section" aria-label="Upload your certificates">
+                <h3>Upload Certificates</h3>
+                <input
+                  type="file"
+                  multiple
+                  accept=".pdf,.jpg,.jpeg,.png"
+                  onChange={handleCertificateUpload}
+                />
+                {certificates.length > 0 && (
+                  <ul className="uploaded-list">
+                    {certificates.map((file, i) => (
+                      <li key={i}>
+                        <a href={file.url} target="_blank" rel="noopener noreferrer">
+                          {file.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </section>
+            </>
+          )}
+        </section>
       </main>
     </div>
   );
