@@ -1,15 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import Avatar3D from "./Avatar3D";
+import Avatar3D from "./Avatar3D"; // Imported the 3D Component
 
 export default function PortfolioWithAvatar() {
-  // Avatar State
-  const [skinTone, setSkinTone] = useState("#f2d6c9");
-  const [hairColor, setHairColor] = useState("#2b2b2b");
-  const [hasBeard, setHasBeard] = useState(true);
-  const [hasGlasses, setHasGlasses] = useState(false);
-  const [uploadedPhoto, setUploadedPhoto] = useState(null);
-  
   // Navigation State
   const [avatarX, setAvatarX] = useState(0);
   const [avatarSection, setAvatarSection] = useState("home");
@@ -30,35 +23,12 @@ export default function PortfolioWithAvatar() {
     setAvatarX(target);
   }, [avatarSection]);
 
-  // Handle Head Tilt on Mouse Move
-  useEffect(() => {
-    const handleMove = (e) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width;
-      const tilt = (x - 0.5) * 20; // Tilt between -10deg and 10deg
-      if (avatarRef.current) {
-        avatarRef.current.style.setProperty("--head-tilt", `${tilt}deg`);
-      }
-    };
-    window.addEventListener("mousemove", handleMove);
-    return () => window.removeEventListener("mousemove", handleMove);
-  }, []);
-
   function handleSectionClick(section) {
     setAvatarSection(section);
     const element = document.getElementById(section);
     if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
     }
-  }
-
-  function handlePhotoUpload(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (ev) => setUploadedPhoto(ev.target.result);
-    reader.readAsDataURL(file);
   }
 
   return (
@@ -95,7 +65,10 @@ export default function PortfolioWithAvatar() {
       <main ref={containerRef} className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-8">
         
         {/* HERO / AVATAR STAGE */}
+        {/* Fixed Section Structure */}
         <section id="home" className="relative bg-white rounded-3xl shadow-xl shadow-slate-200/50 p-6 sm:p-10 overflow-hidden border border-slate-100">
+          
+          {/* Avatar Track Area */}
           <div className="relative h-48 flex items-end mb-8 bg-slate-50 rounded-2xl border border-slate-100/50">
             {/* Track Line */}
             <div className="absolute inset-x-10 bottom-0 h-1 bg-slate-200 rounded-full">
@@ -108,18 +81,15 @@ export default function PortfolioWithAvatar() {
               ))}
             </div>
 
-            {/* Moving Avatar */}
-           <motion.div
+            {/* Moving 3D Avatar */}
+            <motion.div
               ref={avatarRef}
               className="absolute -bottom-5 w-40 h-40 z-20 filter drop-shadow-2xl"
               animate={{ left: `${avatarX}%` }}
               transition={{ type: "spring", stiffness: 90, damping: 16, mass: 1.2 }}
               style={{ x: "-50%" }}
             >
-              {/* --- CHANGE STARTS HERE --- */}
-              {/* We replaced AvatarSVG with Avatar3D */}
               <Avatar3D /> 
-              {/* --- CHANGE ENDS HERE --- */}
             </motion.div>
             
             <div className="absolute top-4 left-4 text-xs font-mono text-slate-400 bg-white px-2 py-1 rounded border border-slate-100">
@@ -127,47 +97,22 @@ export default function PortfolioWithAvatar() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-12">
-            <div className="lg:col-span-2 space-y-6">
-              <div>
+          {/* Text Content Area */}
+          <div className="mt-12 space-y-6">
+             <div>
                 <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
                   Hi — I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Sreenath</span>
                 </h1>
-                <p className="mt-4 text-lg text-slate-600 leading-relaxed">
+                <p className="mt-4 text-lg text-slate-600 leading-relaxed max-w-3xl">
                   Operations and Project Management professional with 8+ years of experience delivering scalable solutions. Currently leading a 45+ member team at Opendoor to drive workflow automation and efficiency.
                 </p>
-              </div>
+             </div>
 
-              <div className="flex flex-wrap gap-3">
+             <div className="flex flex-wrap gap-3">
                 <StatusBadge icon="📍" label="Location" value="Chennai, India" />
                 <StatusBadge icon="💼" label="Role" value="Team Manager @ Opendoor" />
                 <StatusBadge icon="🎓" label="Education" value="MCA, Vels University" />
-              </div>
-            </div>
-              
-              <div className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="text-xs font-semibold text-slate-500 block mb-1">Skin Tone</label>
-                    <input type="color" value={skinTone} onChange={(e) => setSkinTone(e.target.value)} className="w-full h-8 rounded cursor-pointer border-0 p-0" />
-                  </div>
-                  <div>
-                    <label className="text-xs font-semibold text-slate-500 block mb-1">Hair Color</label>
-                    <input type="color" value={hairColor} onChange={(e) => setHairColor(e.target.value)} className="w-full h-8 rounded cursor-pointer border-0 p-0" />
-                  </div>
-                </div>
-
-                <div className="flex gap-4">
-                  <Toggle label="Glasses" checked={hasGlasses} onChange={setHasGlasses} />
-                  <Toggle label="Beard" checked={hasBeard} onChange={setHasBeard} />
-                </div>
-
-                <div className="pt-3 border-t border-slate-200">
-                  <label className="text-xs text-slate-500 block mb-2">Or upload your own photo:</label>
-                  <input type="file" accept="image/*" onChange={handlePhotoUpload} className="block w-full text-xs text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 transition-all"/>
-                </div>
-              </div>
-            </div>
+             </div>
           </div>
         </section>
 
@@ -361,19 +306,6 @@ function StatusBadge({ icon, label, value }) {
   );
 }
 
-function Toggle({ label, checked, onChange }) {
-  return (
-    <label className="flex items-center cursor-pointer gap-2 select-none group">
-      <div className="relative">
-        <input type="checkbox" className="sr-only" checked={checked} onChange={(e) => onChange(e.target.checked)} />
-        <div className={`w-10 h-6 rounded-full shadow-inner transition-colors ${checked ? 'bg-indigo-500' : 'bg-slate-200'}`}></div>
-        <div className={`absolute top-1 left-1 bg-white w-4 h-4 rounded-full shadow transition-transform ${checked ? 'translate-x-4' : 'translate-x-0'}`}></div>
-      </div>
-      <span className="text-sm text-slate-600 group-hover:text-slate-900">{label}</span>
-    </label>
-  );
-}
-
 function JobItem({ role, company, period, location, description }) {
   return (
     <div className="relative pl-6 sm:pl-0">
@@ -411,84 +343,6 @@ function ProjectCard({ title, desc, tag }) {
         <span className="text-[10px] font-bold px-2 py-0.5 bg-white border border-slate-200 rounded text-slate-500 uppercase">{tag}</span>
       </div>
       <p className="text-sm text-slate-600 leading-relaxed">{desc}</p>
-    </div>
-  );
-}
-
-// --- The Interactive Avatar Component ---
-function AvatarSVG({ skinTone, hairColor, hasBeard, hasGlasses, uploadedPhoto }) {
-  if (uploadedPhoto) {
-    return (
-      <div className="w-full h-full rounded-full overflow-hidden border-4 border-white shadow-2xl relative z-20 bg-white">
-        <img src={uploadedPhoto} alt="avatar" className="w-full h-full object-cover" />
-      </div>
-    );
-  }
-
-  return (
-    <div className="w-full h-full relative z-20">
-      <svg viewBox="0 0 220 220" className="w-full h-full drop-shadow-xl" preserveAspectRatio="xMidYMid meet">
-        <defs>
-          <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
-            <feDropShadow dx="0" dy="4" stdDeviation="8" floodOpacity="0.1" />
-          </filter>
-        </defs>
-
-        {/* Head Group - allow CSS variable for tilt */}
-        <g style={{ transform: "rotate(var(--head-tilt, 0deg))", transformOrigin: "110px 140px", transition: "transform 0.1s ease-out" }}>
-          
-          {/* Face Shape */}
-          <circle cx="110" cy="110" r="75" fill={skinTone} filter="url(#soft)" />
-          
-          {/* Hair Base */}
-          <path d="M35 100 C50 20, 170 20, 185 100 Q110 50, 35 100" fill={hairColor} />
-
-          {/* Eyes Group */}
-          <g transform="translate(0,0)">
-            {/* Left Eye */}
-            <ellipse cx="80" cy="115" rx="10" ry="8" fill="#fff" />
-            <ellipse cx="80" cy="115" rx="3.5" ry="3.5" fill="#1e293b" />
-            
-            {/* Right Eye */}
-            <ellipse cx="140" cy="115" rx="10" ry="8" fill="#fff" />
-            <ellipse cx="140" cy="115" rx="3.5" ry="3.5" fill="#1e293b" />
-            
-            {/* Blinking Animation */}
-            <motion.rect
-              x="68" y="105" width="24" height="20" fill={skinTone}
-              animate={{ height: [0, 20, 0] }}
-              transition={{ repeat: Infinity, duration: 4.5, delay: 0.5, times: [0, 0.05, 0.1] }}
-            />
-            <motion.rect
-              x="128" y="105" width="24" height="20" fill={skinTone}
-              animate={{ height: [0, 20, 0] }}
-              transition={{ repeat: Infinity, duration: 4.5, delay: 0.6, times: [0, 0.05, 0.1] }}
-            />
-          </g>
-
-          {/* Nose */}
-          <path d="M110 120 q5 12 0 16" stroke="rgba(0,0,0,0.1)" strokeWidth="3" fill="none" strokeLinecap="round" />
-
-          {/* Smile */}
-          <path d="M95 145 q15 10 30 0" stroke="#be123c" strokeWidth="3.5" fill="none" strokeLinecap="round" />
-
-          {/* Beard */}
-          {hasBeard && <path d="M65 135 q45 45 90 0 q-10 25 -90 0" fill="#2b2b2b" opacity="0.85" />}
-
-          {/* Glasses */}
-          {hasGlasses && (
-            <g stroke="#334155" strokeWidth="3" fill="none" opacity="0.9">
-              <circle cx="80" cy="115" r="16" />
-              <line x1="96" y1="115" x2="124" y2="115" />
-              <circle cx="140" cy="115" r="16" />
-            </g>
-          )}
-
-          {/* Cheeks */}
-          <ellipse cx="75" cy="135" rx="8" ry="4" fill="#ef4444" opacity="0.1" />
-          <ellipse cx="145" cy="135" rx="8" ry="4" fill="#ef4444" opacity="0.1" />
-        </g>
-      </svg>
     </div>
   );
 }
