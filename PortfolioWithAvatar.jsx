@@ -1,15 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
-import Avatar3D from "./Avatar3D"; // Imported the 3D Component
+import { motion, useAnimation } from "framer-motion";
 
 export default function PortfolioWithAvatar() {
-  // Navigation State
-  const [avatarX, setAvatarX] = useState(0);
   const [avatarSection, setAvatarSection] = useState("home");
-  const avatarRef = useRef(null);
-  const containerRef = useRef(null);
+  const trackRef = useRef(null);
+  const controls = useAnimation(); 
 
-  // Define where the avatar moves for each section (percentages)
   const sectionPositions = {
     home: 8,
     about: 30,
@@ -18,10 +14,14 @@ export default function PortfolioWithAvatar() {
     contact: 92,
   };
 
+  // Move avatar when section changes
   useEffect(() => {
     const target = sectionPositions[avatarSection] ?? 8;
-    setAvatarX(target);
-  }, [avatarSection]);
+    controls.start({ 
+      left: `${target}%`,
+      transition: { type: "spring", stiffness: 50, damping: 20 }
+    });
+  }, [avatarSection, controls]);
 
   function handleSectionClick(section) {
     setAvatarSection(section);
@@ -31,8 +31,31 @@ export default function PortfolioWithAvatar() {
     }
   }
 
+  const handleDragEnd = (event, info) => {
+    if (!trackRef.current) return;
+    
+    const trackWidth = trackRef.current.offsetWidth;
+    const rect = trackRef.current.getBoundingClientRect();
+    const x = info.point.x - rect.left;
+    const dropPercent = (x / trackWidth) * 100;
+
+    let closestSection = "home";
+    let minDiff = 1000;
+
+    Object.keys(sectionPositions).forEach((key) => {
+      const diff = Math.abs(dropPercent - sectionPositions[key]);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestSection = key;
+      }
+    });
+
+    handleSectionClick(closestSection);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 text-slate-900 font-sans selection:bg-indigo-100">
+      
       {/* Top Navigation */}
       <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -46,7 +69,7 @@ export default function PortfolioWithAvatar() {
             </div>
           </div>
           <nav className="hidden md:flex gap-1 items-center bg-slate-50 p-1 rounded-lg border border-slate-200/50">
-            {['home','about','experience','projects','contact'].map(s => (
+            {Object.keys(sectionPositions).map(s => (
               <button
                 key={s}
                 onClick={() => handleSectionClick(s)}
@@ -62,43 +85,68 @@ export default function PortfolioWithAvatar() {
         </div>
       </header>
 
-      <main ref={containerRef} className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-8">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-8">
         
         {/* HERO / AVATAR STAGE */}
-        {/* Fixed Section Structure */}
-        <section id="home" className="relative bg-white rounded-3xl shadow-xl shadow-slate-200/50 p-6 sm:p-10 overflow-hidden border border-slate-100">
+        <section id="home" className="relative bg-white rounded-3xl shadow-xl shadow-slate-200/50 p-6 sm:p-10 border border-slate-100">
           
           {/* Avatar Track Area */}
-          <div className="relative h-48 flex items-end mb-8 bg-slate-50 rounded-2xl border border-slate-100/50">
+          <div ref={trackRef} className="relative h-80 flex items-end mb-8 bg-slate-50 rounded-2xl border border-slate-100/50 overflow-hidden">
+            
             {/* Track Line */}
-            <div className="absolute inset-x-10 bottom-0 h-1 bg-slate-200 rounded-full">
+            <div className="absolute inset-x-10 bottom-10 h-1 bg-slate-200 rounded-full">
               {Object.keys(sectionPositions).map((sec) => (
                 <div
                   key={sec}
+                  onClick={(e) => { e.stopPropagation(); handleSectionClick(sec); }}
                   style={{ left: `${sectionPositions[sec]}%` }}
-                  className="absolute -top-1.5 w-4 h-4 rounded-full bg-white border-4 border-slate-300 transform -translate-x-1/2 z-10"
+                  className="absolute -top-1.5 w-4 h-4 rounded-full bg-white border-4 border-slate-300 transform -translate-x-1/2 z-10 cursor-pointer hover:scale-125 transition-transform hover:border-indigo-500"
                 />
               ))}
             </div>
 
-            {/* Moving 3D Avatar */}
+            {/* Draggable Video Container */}
             <motion.div
-              ref={avatarRef}
-              className="absolute -bottom-5 w-40 h-40 z-20 filter drop-shadow-2xl"
-              animate={{ left: `${avatarX}%` }}
-              transition={{ type: "spring", stiffness: 90, damping: 16, mass: 1.2 }}
+              className="absolute bottom-10 w-48 h-48 z-20 cursor-grab active:cursor-grabbing"
+              animate={controls}
+              drag="x" 
+              dragConstraints={trackRef}
+              dragElastic={0.1}
+              dragMomentum={false}
+              onDragEnd={handleDragEnd}
+              // Added onTap to handle clicks (Navigates to the section)
+              onTap={() => handleSectionClick(avatarSection)}
               style={{ x: "-50%" }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 1.1, cursor: "grabbing" }}
             >
-              <Avatar3D /> 
+               {/* VIDEO STACK: 
+                  We render ALL 5 videos at once, stacked on top of each other.
+                  We only change the opacity. This ensures NO loading delay or black screens.
+               */}
+               <div className="relative w-full h-full">
+                 {Object.keys(sectionPositions).map((sec) => (
+                   <video 
+                     key={sec}
+                     src={`${import.meta.env.BASE_URL}${sec}.mp4`}
+                     autoPlay 
+                     loop 
+                     muted 
+                     playsInline
+                     draggable="false"
+                     className={`absolute inset-0 w-full h-full object-contain pointer-events-none drop-shadow-2xl transition-opacity duration-500 ${avatarSection === sec ? 'opacity-100' : 'opacity-0'}`}
+                   />
+                 ))}
+               </div>
             </motion.div>
             
-            <div className="absolute top-4 left-4 text-xs font-mono text-slate-400 bg-white px-2 py-1 rounded border border-slate-100">
-               Interactive Zone: Click sections to move me
+            <div className="absolute top-4 left-4 text-xs font-mono text-slate-400 bg-white px-2 py-1 rounded border border-slate-100 pointer-events-none">
+               Interactive Zone: Click me or drag me!
             </div>
           </div>
 
           {/* Text Content Area */}
-          <div className="mt-12 space-y-6">
+          <div className="mt-4 space-y-6">
              <div>
                 <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
                   Hi — I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Sreenath</span>
