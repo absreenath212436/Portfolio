@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import Avatar3D from "./Avatar3D";
 
 export default function PortfolioWithAvatar() {
   // Avatar State
@@ -108,20 +109,17 @@ export default function PortfolioWithAvatar() {
             </div>
 
             {/* Moving Avatar */}
-            <motion.div
+           <motion.div
               ref={avatarRef}
               className="absolute -bottom-5 w-40 h-40 z-20 filter drop-shadow-2xl"
               animate={{ left: `${avatarX}%` }}
               transition={{ type: "spring", stiffness: 90, damping: 16, mass: 1.2 }}
               style={{ x: "-50%" }}
             >
-              <AvatarSVG
-                skinTone={skinTone}
-                hairColor={hairColor}
-                hasBeard={hasBeard}
-                hasGlasses={hasGlasses}
-                uploadedPhoto={uploadedPhoto}
-              />
+              {/* --- CHANGE STARTS HERE --- */}
+              {/* We replaced AvatarSVG with Avatar3D */}
+              <Avatar3D /> 
+              {/* --- CHANGE ENDS HERE --- */}
             </motion.div>
             
             <div className="absolute top-4 left-4 text-xs font-mono text-slate-400 bg-white px-2 py-1 rounded border border-slate-100">
@@ -146,13 +144,6 @@ export default function PortfolioWithAvatar() {
                 <StatusBadge icon="🎓" label="Education" value="MCA, Vels University" />
               </div>
             </div>
-
-            {/* Customizer Panel */}
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-100">
-              <div className="flex items-center justify-between mb-4">
-                <div className="text-sm font-bold text-slate-700">Customize Avatar</div>
-                <div className="text-xs text-slate-400">Make it look like you!</div>
-              </div>
               
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
