@@ -4,7 +4,7 @@ import { motion, useAnimation } from "framer-motion";
 export default function PortfolioWithAvatar() {
   const [avatarSection, setAvatarSection] = useState("home");
   const trackRef = useRef(null);
-  const controls = useAnimation(); 
+  const controls = useAnimation();
 
   const sectionPositions = {
     home: 8,
@@ -14,12 +14,11 @@ export default function PortfolioWithAvatar() {
     contact: 92,
   };
 
-  // Move avatar when section changes
   useEffect(() => {
     const target = sectionPositions[avatarSection] ?? 8;
-    controls.start({ 
+    controls.start({
       left: `${target}%`,
-      transition: { type: "spring", stiffness: 60, damping: 25 }
+      transition: { type: "spring", stiffness: 70, damping: 22 },
     });
   }, [avatarSection, controls]);
 
@@ -27,10 +26,10 @@ export default function PortfolioWithAvatar() {
     setAvatarSection(section);
     const element = document.getElementById(section);
     if (element) {
-        // Offset for the sticky header and interaction zone
-        const yOffset = -450; 
-        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
+      const yOffset = -420;
+      const y =
+        element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
     }
   }
 
@@ -41,208 +40,297 @@ export default function PortfolioWithAvatar() {
     const x = info.point.x - rect.left;
     const dropPercent = (x / trackWidth) * 100;
 
-    let closestSection = "home";
-    let minDiff = 1000;
-
-    Object.keys(sectionPositions).forEach((key) => {
-      const diff = Math.abs(dropPercent - sectionPositions[key]);
+    let closest = "home";
+    let minDiff = 999;
+    Object.keys(sectionPositions).forEach((k) => {
+      const diff = Math.abs(dropPercent - sectionPositions[k]);
       if (diff < minDiff) {
         minDiff = diff;
-        closestSection = key;
+        closest = k;
       }
     });
-    handleSectionClick(closestSection);
+    handleSectionClick(closest);
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
-      
-      {/* Top Navigation */}
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50 text-slate-900 font-sans">
+      {/* HEADER */}
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold">SA</div>
-            <div className="hidden sm:block">
-              <div className="text-lg font-bold text-slate-800 leading-tight">Sreenath A B</div>
-              <div className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Project Management</div>
+            <div className="w-11 h-11 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold">
+              SA
+            </div>
+            <div>
+              <div className="font-bold text-slate-800">Sreenath A B</div>
+              <div className="text-[11px] uppercase tracking-wider text-slate-500">
+                AI-Driven Operations & Project Management
+              </div>
             </div>
           </div>
-          <nav className="flex gap-1 items-center bg-slate-100 p-1 rounded-lg">
-            {Object.keys(sectionPositions).map(s => (
+
+          <nav className="flex gap-1 bg-slate-100 p-1 rounded-lg">
+            {Object.keys(sectionPositions).map((s) => (
               <button
                 key={s}
                 onClick={() => handleSectionClick(s)}
-                className={`text-xs md:text-sm px-3 py-1.5 rounded-md transition-all ${avatarSection === s ? 'bg-white text-indigo-600 shadow-sm font-semibold' : 'text-slate-500 hover:text-slate-800'}`}
+                className={`px-3 py-1.5 text-xs md:text-sm rounded-md transition ${
+                  avatarSection === s
+                    ? "bg-white text-indigo-600 shadow font-semibold"
+                    : "text-slate-500 hover:text-slate-800"
+                }`}
               >
-                {s.charAt(0).toUpperCase() + s.slice(1)}
+                {s.toUpperCase()}
               </button>
             ))}
           </nav>
         </div>
       </header>
 
-      {/* STICKY INTERACTIVE SECTION */}
-      <div className="sticky top-[65px] z-40 bg-slate-50/80 backdrop-blur-sm pb-4 border-b border-slate-200">
-        <div className="max-w-6xl mx-auto px-4 pt-6">
-          <section className="relative bg-white rounded-2xl shadow-lg p-4 border border-slate-200">
-            <div ref={trackRef} className="relative h-48 flex items-end bg-slate-50 rounded-xl overflow-hidden border border-slate-100">
-              
-              {/* Track Line */}
-              <div className="absolute inset-x-10 bottom-8 h-1 bg-slate-200 rounded-full">
-                {Object.keys(sectionPositions).map((sec) => (
-                  <div
-                    key={sec}
-                    onClick={() => handleSectionClick(sec)}
-                    style={{ left: `${sectionPositions[sec]}%` }}
-                    className={`absolute -top-1.5 w-4 h-4 rounded-full border-4 transform -translate-x-1/2 z-10 cursor-pointer transition-all ${avatarSection === sec ? 'bg-indigo-600 border-indigo-200 scale-125' : 'bg-white border-slate-300'}`}
-                  />
-                ))}
-              </div>
-
-              {/* Avatar Container */}
-              <motion.div
-                className="absolute bottom-8 w-32 h-32 z-20 cursor-grab active:cursor-grabbing"
-                animate={controls}
-                drag="x" 
-                dragConstraints={trackRef}
-                dragElastic={0.05}
-                dragMomentum={false}
-                onDragEnd={handleDragEnd}
-                style={{ x: "-50%" }}
-              >
-                 <div className="relative w-full h-full">
-                   {Object.keys(sectionPositions).map((sec) => (
-                     <video 
-                       key={sec}
-                       src={`${import.meta.env.BASE_URL}${sec}.mp4`}
-                       autoPlay loop muted playsInline
-                       className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-300 ${avatarSection === sec ? 'opacity-100' : 'opacity-0'}`}
-                     />
-                   ))}
-                 </div>
-              </motion.div>
-              <div className="absolute top-2 left-2 text-[10px] font-mono text-slate-400">Interactive Avatar Stage</div>
+      {/* AVATAR TRACK */}
+      <div className="sticky top-[64px] z-40 bg-white/70 backdrop-blur border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-6 py-6">
+          <div
+            ref={trackRef}
+            className="relative h-48 rounded-2xl bg-slate-100 border border-slate-200 overflow-hidden"
+          >
+            <div className="absolute inset-x-12 bottom-10 h-1 bg-slate-300 rounded-full">
+              {Object.keys(sectionPositions).map((sec) => (
+                <div
+                  key={sec}
+                  onClick={() => handleSectionClick(sec)}
+                  style={{ left: `${sectionPositions[sec]}%` }}
+                  className={`absolute -top-1.5 w-4 h-4 rounded-full border-4 -translate-x-1/2 cursor-pointer transition ${
+                    avatarSection === sec
+                      ? "bg-indigo-600 border-indigo-200 scale-125"
+                      : "bg-white border-slate-300"
+                  }`}
+                />
+              ))}
             </div>
-          </section>
+
+            <motion.div
+              className="absolute bottom-10 w-28 h-28 cursor-grab"
+              animate={controls}
+              drag="x"
+              dragConstraints={trackRef}
+              dragElastic={0.05}
+              dragMomentum={false}
+              onDragEnd={handleDragEnd}
+              style={{ x: "-50%" }}
+            >
+              {Object.keys(sectionPositions).map((sec) => (
+                <video
+                  key={sec}
+                  src={`${import.meta.env.BASE_URL}${sec}.mp4`}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className={`absolute inset-0 w-full h-full object-contain transition-opacity ${
+                    avatarSection === sec ? "opacity-100" : "opacity-0"
+                  }`}
+                />
+              ))}
+            </motion.div>
+          </div>
         </div>
       </div>
 
-      <main className="max-w-4xl mx-auto px-4 py-10 space-y-12">
-        
-        {/* HOME / INTRO */}
-        <section id="home" className="pt-20">
-          <h1 className="text-4xl font-extrabold text-slate-900">
-            Operations & <span className="text-indigo-600">Project Management</span>
+      {/* CONTENT */}
+      <main className="max-w-5xl mx-auto px-6 py-14 space-y-20">
+        {/* HOME */}
+        <section id="home">
+          <h1 className="text-4xl md:text-5xl font-extrabold">
+            AI-Driven <span className="text-indigo-600">Operations Leader</span>
           </h1>
-          <p className="mt-4 text-lg text-slate-600 leading-relaxed">
-            Operations professional with 8+ years of experience. Currently leading 45+ members at Opendoor, focusing on workflow automation and scaling business processes.
+          <p className="mt-6 text-lg text-slate-600 max-w-3xl">
+            AI-driven Operations and Project Management professional with
+            expertise in automation, intelligent workflows, and digital
+            transformation. Proven experience embedding Generative AI, RAG
+            systems, and agentic automation to improve productivity, quality, and
+            decision-making while retaining human-in-the-loop governance.
           </p>
-          <div className="flex flex-wrap gap-4 mt-6">
-            <span className="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium shadow-sm">📍 Chennai, India</span>
-            <span className="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium shadow-sm">💼 Team Manager @ Opendoor</span>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Chip text="📍 Chennai, India" />
+            <Chip text="💼 Team Manager @ Opendoor" />
+            <Chip text="🤖 AI Automation & Agentic Systems" />
           </div>
         </section>
 
         {/* ABOUT */}
         <section id="about">
-          <ContentCard title="Summary & Skills" sectionKey="about" onVisit={handleSectionClick}>
-            <p className="text-slate-600 leading-relaxed">
-              Google-certified in Project Management, skilled in cross-functional collaboration and data-backed decision-making. 
-              Passionate about integrating Generative AI into operational workflows.
+          <SectionCard title="Summary & Skills">
+            <p className="text-slate-600 max-w-4xl">
+              Google-certified Project Management professional with strong
+              expertise in AI-driven automation, end-to-end process
+              transformation, and data-backed decision-making. Skilled in
+              Generative AI, RAG and agentic systems, human-in-the-loop workflows,
+              and AI-powered analytics.
             </p>
-            <div className="mt-6 grid grid-cols-2 gap-4">
-               <div className="p-4 bg-indigo-50 rounded-xl border border-indigo-100">
-                 <h4 className="text-xs font-bold text-indigo-700 uppercase mb-2">Hard Skills</h4>
-                 <div className="text-sm text-indigo-900 font-medium">Workflow Automation • AI Tools • Process Control</div>
-               </div>
-               <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-100">
-                 <h4 className="text-xs font-bold text-emerald-700 uppercase mb-2">Soft Skills</h4>
-                 <div className="text-sm text-emerald-900 font-medium">Leadership • Problem Solving • Adaptability</div>
-               </div>
+
+            <div className="grid md:grid-cols-2 gap-6 mt-8">
+              <SkillBlock
+                title="AI & Automation"
+                items={[
+                  "Generative AI (LLMs, Prompt Engineering)",
+                  "RAG Systems & Agentic AI",
+                  "Workflow Automation Platforms",
+                  "AI Analytics, BI & Reporting Dashboards",
+                ]}
+                color="indigo"
+              />
+              <SkillBlock
+                title="Operations & Program Management"
+                items={[
+                  "Operations Strategy & Execution",
+                  "End-to-End Process Transformation",
+                  "Value Stream Mapping",
+                  "Transition & Change Management",
+                  "Cross-Functional & Global Stakeholder Management",
+                ]}
+                color="emerald"
+              />
             </div>
-          </ContentCard>
+          </SectionCard>
         </section>
 
         {/* EXPERIENCE */}
         <section id="experience">
-          <ContentCard title="Professional Experience" sectionKey="experience" onVisit={handleSectionClick}>
-            <div className="space-y-6">
-              <JobItem role="Team Manager" company="Opendoor" period="2023 - Present" 
-                desc="Managed 45+ pros, increased productivity by 30% via automation." />
-              <JobItem role="Subject Matter Expert" company="Opendoor" period="2022 - 2023" 
-                desc="Optimized workflows and developed training modules for migration." />
-              <JobItem role="Senior Associate" company="Allsec" period="2017 - 2021" 
-                desc="Managed workflow queues and performance metrics." />
-            </div>
-          </ContentCard>
+          <SectionCard title="Professional Experience">
+            <ExperienceItem
+              role="Team Manager"
+              company="Opendoor"
+              period="Nov 2023 – Present"
+              bullets={[
+                "Led a 45+ member team managing customer feedback, support, and document validation operations",
+                "Converted end-to-end manual workflows into AI-automated, agent-driven processes, achieving 30% productivity gain and 25% quality improvement",
+                "Embedded Generative AI and AI agents for triage, analysis, and reporting with human-in-the-loop controls",
+                "Partnered with US stakeholders to scale AI-enabled initiatives",
+                "Improved reporting accuracy by 70% through AI-powered dashboards",
+              ]}
+            />
+
+            <ExperienceItem
+              role="Subject Matter Expert"
+              company="Opendoor"
+              period="Mar 2022 – Nov 2023"
+              bullets={[
+                "Optimized workflows through automation and SOP enhancements",
+                "Ensured quality compliance via layered quality checks",
+                "Developed training modules for new process migrations",
+              ]}
+            />
+
+            <ExperienceItem
+              role="Senior Associate"
+              company="Allsec Technologies"
+              period="Mar 2017 – Feb 2021"
+              bullets={[
+                "Managed workflow queues and performance metrics for international clients",
+                "Supported automation initiatives to improve resolution accuracy",
+                "Delivered training aligned with productivity goals",
+              ]}
+            />
+          </SectionCard>
         </section>
 
         {/* PROJECTS */}
         <section id="projects">
-          <ContentCard title="Key Achievements" sectionKey="projects" onVisit={handleSectionClick}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-4 border border-slate-200 rounded-xl hover:border-indigo-300 transition-colors">
-                <h4 className="font-bold text-slate-800">AI Dashboards</h4>
-                <p className="text-sm text-slate-500">Boosted reporting accuracy by 70%.</p>
-              </div>
-              <div className="p-4 border border-slate-200 rounded-xl hover:border-indigo-300 transition-colors">
-                <h4 className="font-bold text-slate-800">Process Automation</h4>
-                <p className="text-sm text-slate-500">30% productivity increase across large teams.</p>
-              </div>
+          <SectionCard title="Key Achievements">
+            <div className="grid md:grid-cols-2 gap-6">
+              <AchievementCard
+                title="Manual Operations → AI Agent Workflows"
+                desc="Transitioned routine manual processes into AI agents with human-in-the-loop governance for critical decisions."
+              />
+              <AchievementCard
+                title="Process Optimization & Capacity Modeling"
+                desc="Improved team efficiency and engagement by 80% using data-backed capacity planning."
+              />
             </div>
-          </ContentCard>
+          </SectionCard>
         </section>
 
         {/* CONTACT */}
-        <section id="contact" className="pb-40">
-          <ContentCard title="Contact" sectionKey="contact" onVisit={handleSectionClick}>
-            <div className="flex flex-col sm:flex-row gap-6 justify-between items-center">
+        <section id="contact">
+          <SectionCard title="Contact">
+            <div className="flex flex-col md:flex-row gap-8 justify-between">
               <div className="space-y-2">
-                <p className="text-slate-600">Open to opportunities in Operations and AI Transformation.</p>
-                <a href="mailto:absreenath212436@gmail.com" className="block text-indigo-600 font-bold hover:underline">absreenath212436@gmail.com</a>
+                <p>📞 +91 9940296659</p>
+                <a
+                  href="mailto:absreenath212436@gmail.com"
+                  className="text-indigo-600 font-semibold hover:underline"
+                >
+                  absreenath212436@gmail.com
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/sreenath-ab"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-600 font-semibold hover:underline"
+                >
+                  linkedin.com/in/sreenath-ab
+                </a>
               </div>
-              <div className="text-center p-4 bg-slate-100 rounded-xl w-full sm:w-auto">
+              <div className="p-6 bg-slate-100 rounded-xl text-center">
                 <div className="text-xs text-slate-500">Location</div>
                 <div className="font-bold">Chennai, India</div>
               </div>
             </div>
-          </ContentCard>
+          </SectionCard>
         </section>
       </main>
     </div>
   );
 }
 
-// --- Subcomponents ---
+/* ---------- UI COMPONENTS ---------- */
 
-function ContentCard({ title, children, sectionKey, onVisit }) {
-  return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-      <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-        <h2 className="text-lg font-bold text-slate-800">{title}</h2>
-        <button 
-          onClick={() => onVisit(sectionKey)} 
-          className="text-[10px] font-bold px-3 py-1 bg-white border border-indigo-200 text-indigo-600 rounded-full hover:bg-indigo-600 hover:text-white transition-all uppercase tracking-tight"
-        >
-          View Section
-        </button>
-      </div>
-      <div className="p-6">
-        {children}
-      </div>
-    </div>
-  );
-}
+const Chip = ({ text }) => (
+  <span className="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm shadow-sm">
+    {text}
+  </span>
+);
 
-function JobItem({ role, company, period, desc }) {
-  return (
-    <div className="border-l-2 border-indigo-100 pl-4 py-1">
-      <div className="flex justify-between items-start">
-        <h3 className="font-bold text-slate-900">{role}</h3>
-        <span className="text-[10px] font-mono text-slate-400">{period}</span>
-      </div>
-      <div className="text-sm text-indigo-600 font-medium mb-1">{company}</div>
-      <p className="text-sm text-slate-600">{desc}</p>
+const SectionCard = ({ title, children }) => (
+  <div className="bg-white rounded-2xl shadow border border-slate-200 p-8">
+    <h2 className="text-2xl font-bold mb-6">{title}</h2>
+    {children}
+  </div>
+);
+
+const SkillBlock = ({ title, items, color }) => (
+  <div
+    className={`rounded-xl p-5 border bg-${color}-50 border-${color}-100`}
+  >
+    <h4 className={`font-bold text-${color}-700 mb-3`}>{title}</h4>
+    <ul className="space-y-1 text-sm">
+      {items.map((i) => (
+        <li key={i}>• {i}</li>
+      ))}
+    </ul>
+  </div>
+);
+
+const ExperienceItem = ({ role, company, period, bullets }) => (
+  <div className="border-l-4 border-indigo-200 pl-5 py-3 mb-6">
+    <div className="flex justify-between items-center">
+      <h3 className="font-bold text-lg">{role}</h3>
+      <span className="text-xs text-slate-400 font-mono">{period}</span>
     </div>
-  );
-}
+    <div className="text-indigo-600 font-medium">{company}</div>
+    <ul className="mt-2 space-y-1 text-sm text-slate-600 list-disc list-inside">
+      {bullets.map((b) => (
+        <li key={b}>{b}</li>
+      ))}
+    </ul>
+  </div>
+);
+
+const AchievementCard = ({ title, desc }) => (
+  <div className="p-6 border border-slate-200 rounded-xl hover:border-indigo-300 transition">
+    <h4 className="font-bold mb-2">{title}</h4>
+    <p className="text-sm text-slate-600">{desc}</p>
+  </div>
+);
