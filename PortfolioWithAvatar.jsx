@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion, useAnimation } from "framer-motion";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 /* ---------------- CONFIG ---------------- */
 
@@ -15,40 +15,14 @@ const sectionPositions = {
 
 export default function PortfolioWithAvatar() {
   const [avatarSection, setAvatarSection] = useState("home");
-  const trackRef = useRef(null);
-  const controls = useAnimation();
-
-  useEffect(() => {
-    controls.start({
-      left: `${sectionPositions[avatarSection]}%`,
-      transition: { type: "spring", stiffness: 70, damping: 22 },
-    });
-  }, [avatarSection, controls]);
 
   const scrollToSection = (id) => {
     setAvatarSection(id);
     const el = document.getElementById(id);
     if (!el) return;
-    const yOffset = -420; // adjust if needed
+    const yOffset = -80; // adjust for header height
     const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
     window.scrollTo({ top: y, behavior: "smooth" });
-  };
-
-  const onDragEnd = (_, info) => {
-    if (!trackRef.current) return;
-    const rect = trackRef.current.getBoundingClientRect();
-    const percent = ((info.point.x - rect.left) / rect.width) * 100;
-
-    let closest = "home";
-    let min = Infinity;
-    Object.keys(sectionPositions).forEach((k) => {
-      const diff = Math.abs(percent - sectionPositions[k]);
-      if (diff < min) {
-        min = diff;
-        closest = k;
-      }
-    });
-    scrollToSection(closest);
   };
 
   return (
@@ -87,63 +61,11 @@ export default function PortfolioWithAvatar() {
         </div>
       </header>
 
-      {/* ---------- AVATAR TRACK ---------- */}
-      <div className="sticky top-20 z-40">
-        <div className="max-w-7xl mx-auto px-6 py-6">
-          <div
-            ref={trackRef}
-            className="relative h-48 rounded-2xl bg-slate-100 border border-slate-200 overflow-hidden"
-          >
-            {/* Track Line */}
-            <div className="absolute inset-x-12 bottom-10 h-1 bg-slate-300 rounded-full">
-              {Object.keys(sectionPositions).map((sec) => (
-                <div
-                  key={sec}
-                  onClick={() => scrollToSection(sec)}
-                  style={{ left: `${sectionPositions[sec]}%` }}
-                  className={`absolute -top-1.5 w-4 h-4 rounded-full border-4 -translate-x-1/2 cursor-pointer transition ${
-                    avatarSection === sec
-                      ? "bg-indigo-600 border-indigo-200 scale-125"
-                      : "bg-white border-slate-300"
-                  }`}
-                />
-              ))}
-            </div>
-
-            {/* Avatar Video */}
-            <motion.div
-              className="absolute bottom-10 w-28 h-28 cursor-grab"
-              animate={controls}
-              drag="x"
-              dragConstraints={trackRef}
-              dragMomentum={false}
-              dragElastic={0.05}
-              onDragEnd={onDragEnd}
-              style={{ x: "-50%" }}
-            >
-              {Object.keys(sectionPositions).map((sec) => (
-                <video
-                  key={sec}
-                  src={`${import.meta.env.BASE_URL}${sec}.mp4`}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-300 ${
-                    avatarSection === sec ? "opacity-100" : "opacity-40"
-                  }`}
-                />
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </div>
-
       {/* ---------- CONTENT ---------- */}
       <main className="max-w-5xl mx-auto px-6 py-16 space-y-28">
 
         {/* HOME */}
-        <Section id="home" bg="ai">
+        <Section id="home" bg="ai" video="home.mp4">
           <h1 className="font-heading text-5xl md:text-6xl font-extrabold tracking-tight">
             AI-Driven <span className="text-indigo-600">Operations Leader</span>
           </h1>
@@ -164,7 +86,7 @@ export default function PortfolioWithAvatar() {
         <Divider />
 
         {/* ABOUT */}
-        <Section id="about" bg="grid" title="Summary & Skills">
+        <Section id="about" bg="grid" video="about.mp4" title="Summary & Skills">
           <p className="text-slate-600 max-w-4xl">
             Google-certified Project Management professional with strong expertise in AI-driven
             automation, end-to-end process transformation, and data-backed decision-making.
@@ -201,7 +123,7 @@ export default function PortfolioWithAvatar() {
         <Divider />
 
         {/* EXPERIENCE */}
-        <Section id="experience" bg="flow" title="Professional Experience">
+        <Section id="experience" bg="flow" video="experience.mp4" title="Professional Experience">
           <ExperienceItem
             role="Team Manager"
             company="Opendoor"
@@ -241,7 +163,7 @@ export default function PortfolioWithAvatar() {
         <Divider />
 
         {/* PROJECTS */}
-        <Section id="projects" bg="spotlight" title="Key Achievements">
+        <Section id="projects" bg="spotlight" video="projects.mp4" title="Key Achievements">
           <div className="grid md:grid-cols-2 gap-6">
             <AchievementCard
               title="Manual Operations → AI Agents"
@@ -257,7 +179,7 @@ export default function PortfolioWithAvatar() {
         <Divider />
 
         {/* CONTACT */}
-        <Section id="contact" title="Contact">
+        <Section id="contact" bg="ai" video="contact.mp4" title="Contact">
           <div className="flex flex-col md:flex-row gap-10 justify-between">
             <div className="space-y-2">
               <p>📞 +91 9940296659</p>
@@ -290,19 +212,30 @@ export default function PortfolioWithAvatar() {
 
 /* ---------------- COMPONENTS ---------------- */
 
-const Section = ({ id, title, children, bg }) => (
-  <section id={id} className="relative">
+const Section = ({ id, title, children, bg, video }) => (
+  <section id={id} className="relative min-h-screen">
     <SectionBackground variant={bg} />
+
+    {/* Background Video */}
+    {video && (
+      <video
+        src={`${import.meta.env.BASE_URL}${video}`}
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover opacity-30 pointer-events-none"
+      />
+    )}
+
     <motion.div
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-120px" }}
       transition={{ duration: 0.6 }}
-      className="space-y-8"
+      className="relative z-10 space-y-8"
     >
-      {title && (
-        <h2 className="font-heading text-3xl font-bold">{title}</h2>
-      )}
+      {title && <h2 className="font-heading text-3xl font-bold">{title}</h2>}
       {children}
     </motion.div>
   </section>
@@ -317,9 +250,7 @@ const SectionBackground = ({ variant }) => {
     spotlight:
       "bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.14),transparent_50%)]",
   };
-  return (
-    <div className={`absolute inset-0 -z-10 ${styles[variant] || ""}`} />
-  );
+  return <div className={`absolute inset-0 -z-10 ${styles[variant] || ""}`} />;
 };
 
 const Divider = () => (
