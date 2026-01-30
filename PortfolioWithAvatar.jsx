@@ -19,7 +19,7 @@ export default function PortfolioWithAvatar() {
     const target = sectionPositions[avatarSection] ?? 8;
     controls.start({ 
       left: `${target}%`,
-      transition: { type: "spring", stiffness: 50, damping: 20 }
+      transition: { type: "spring", stiffness: 60, damping: 25 }
     });
   }, [avatarSection, controls]);
 
@@ -27,13 +27,15 @@ export default function PortfolioWithAvatar() {
     setAvatarSection(section);
     const element = document.getElementById(section);
     if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        // Offset for the sticky header and interaction zone
+        const yOffset = -450; 
+        const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
     }
   }
 
   const handleDragEnd = (event, info) => {
     if (!trackRef.current) return;
-    
     const trackWidth = trackRef.current.offsetWidth;
     const rect = trackRef.current.getBoundingClientRect();
     const x = info.point.x - rect.left;
@@ -49,348 +51,198 @@ export default function PortfolioWithAvatar() {
         closestSection = key;
       }
     });
-
     handleSectionClick(closestSection);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 text-slate-900 font-sans selection:bg-indigo-100">
+    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-indigo-100">
       
       {/* Top Navigation */}
-      <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-slate-200">
+      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-600 to-violet-500 flex items-center justify-center text-white font-bold shadow-sm">
-              SA
-            </div>
-            <div>
+            <div className="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold">SA</div>
+            <div className="hidden sm:block">
               <div className="text-lg font-bold text-slate-800 leading-tight">Sreenath A B</div>
-              <div className="text-xs text-slate-500 font-medium">Ops & Project Management Professional</div>
+              <div className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">Project Management</div>
             </div>
           </div>
-          <nav className="hidden md:flex gap-1 items-center bg-slate-50 p-1 rounded-lg border border-slate-200/50">
+          <nav className="flex gap-1 items-center bg-slate-100 p-1 rounded-lg">
             {Object.keys(sectionPositions).map(s => (
               <button
                 key={s}
                 onClick={() => handleSectionClick(s)}
-                className={`text-sm px-4 py-1.5 rounded-md transition-all ${avatarSection === s ? 'bg-white text-indigo-600 shadow-sm font-semibold' : 'text-slate-500 hover:text-slate-800 hover:bg-slate-200/50'}`}
+                className={`text-xs md:text-sm px-3 py-1.5 rounded-md transition-all ${avatarSection === s ? 'bg-white text-indigo-600 shadow-sm font-semibold' : 'text-slate-500 hover:text-slate-800'}`}
               >
                 {s.charAt(0).toUpperCase() + s.slice(1)}
               </button>
             ))}
           </nav>
-          <a href="#contact" onClick={() => handleSectionClick("contact")} className="ml-2 inline-flex items-center justify-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm shadow-indigo-200">
-            Contact Me
-          </a>
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-10 space-y-8">
-        
-        {/* HERO / AVATAR STAGE */}
-        <section id="home" className="relative bg-white rounded-3xl shadow-xl shadow-slate-200/50 p-6 sm:p-10 border border-slate-100">
-          
-          {/* Avatar Track Area */}
-          <div ref={trackRef} className="relative h-80 flex items-end mb-8 bg-slate-50 rounded-2xl border border-slate-100/50 overflow-hidden">
-            
-            {/* Track Line */}
-            <div className="absolute inset-x-10 bottom-10 h-1 bg-slate-200 rounded-full">
-              {Object.keys(sectionPositions).map((sec) => (
-                <div
-                  key={sec}
-                  onClick={(e) => { e.stopPropagation(); handleSectionClick(sec); }}
-                  style={{ left: `${sectionPositions[sec]}%` }}
-                  className="absolute -top-1.5 w-4 h-4 rounded-full bg-white border-4 border-slate-300 transform -translate-x-1/2 z-10 cursor-pointer hover:scale-125 transition-transform hover:border-indigo-500"
-                />
-              ))}
-            </div>
+      {/* STICKY INTERACTIVE SECTION */}
+      <div className="sticky top-[65px] z-40 bg-slate-50/80 backdrop-blur-sm pb-4 border-b border-slate-200">
+        <div className="max-w-6xl mx-auto px-4 pt-6">
+          <section className="relative bg-white rounded-2xl shadow-lg p-4 border border-slate-200">
+            <div ref={trackRef} className="relative h-48 flex items-end bg-slate-50 rounded-xl overflow-hidden border border-slate-100">
+              
+              {/* Track Line */}
+              <div className="absolute inset-x-10 bottom-8 h-1 bg-slate-200 rounded-full">
+                {Object.keys(sectionPositions).map((sec) => (
+                  <div
+                    key={sec}
+                    onClick={() => handleSectionClick(sec)}
+                    style={{ left: `${sectionPositions[sec]}%` }}
+                    className={`absolute -top-1.5 w-4 h-4 rounded-full border-4 transform -translate-x-1/2 z-10 cursor-pointer transition-all ${avatarSection === sec ? 'bg-indigo-600 border-indigo-200 scale-125' : 'bg-white border-slate-300'}`}
+                  />
+                ))}
+              </div>
 
-            {/* Draggable Video Container */}
-            <motion.div
-              className="absolute bottom-10 w-48 h-48 z-20 cursor-grab active:cursor-grabbing"
-              animate={controls}
-              drag="x" 
-              dragConstraints={trackRef}
-              dragElastic={0.1}
-              dragMomentum={false}
-              onDragEnd={handleDragEnd}
-              // Added onTap to handle clicks (Navigates to the section)
-              onTap={() => handleSectionClick(avatarSection)}
-              style={{ x: "-50%" }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 1.1, cursor: "grabbing" }}
-            >
-               {/* VIDEO STACK: 
-                  We render ALL 5 videos at once, stacked on top of each other.
-                  We only change the opacity. This ensures NO loading delay or black screens.
-               */}
-               <div className="relative w-full h-full">
-                 {Object.keys(sectionPositions).map((sec) => (
-                   <video 
-                     key={sec}
-                     src={`${import.meta.env.BASE_URL}${sec}.mp4`}
-                     autoPlay 
-                     loop 
-                     muted 
-                     playsInline
-                     draggable="false"
-                     className={`absolute inset-0 w-full h-full object-contain pointer-events-none drop-shadow-2xl transition-opacity duration-500 ${avatarSection === sec ? 'opacity-100' : 'opacity-0'}`}
-                   />
-                 ))}
-               </div>
-            </motion.div>
-            
-            <div className="absolute top-4 left-4 text-xs font-mono text-slate-400 bg-white px-2 py-1 rounded border border-slate-100 pointer-events-none">
-               Interactive Zone: Click me or drag me!
-            </div>
-          </div>
-
-          {/* Text Content Area */}
-          <div className="mt-4 space-y-6">
-             <div>
-                <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
-                  Hi — I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600">Sreenath</span>
-                </h1>
-                <p className="mt-4 text-lg text-slate-600 leading-relaxed max-w-3xl">
-                  Operations and Project Management professional with 8+ years of experience delivering scalable solutions. Currently leading a 45+ member team at Opendoor to drive workflow automation and efficiency.
-                </p>
-             </div>
-
-             <div className="flex flex-wrap gap-3">
-                <StatusBadge icon="📍" label="Location" value="Chennai, India" />
-                <StatusBadge icon="💼" label="Role" value="Team Manager @ Opendoor" />
-                <StatusBadge icon="🎓" label="Education" value="MCA, Vels University" />
-             </div>
-          </div>
-        </section>
-
-        {/* ABOUT SECTION */}
-        <section id="about">
-          <ContentCard title="Summary & Skills" onVisit={() => handleSectionClick("about")}>
-            <div className="prose prose-slate max-w-none text-slate-600">
-              <p className="mb-4">
-                Google-certified in Project Management, with a leadership style rooted in ownership, accountability, and measurable outcomes. Skilled in cross-functional collaboration, data-backed decision-making, and developing high-performance teams that consistently exceed expectations.
-              </p>
-              <p>
-                Currently expanding expertise in Generative AI, prompt design, and intelligent process automation to future-proof operational strategies and enhance business transformation.
-              </p>
-            </div>
-            
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-               <div>
-                 <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">Hard Skills</h3>
-                 <div className="flex flex-wrap gap-2">
-                   {["Operational Excellence", "Project Management", "Process Control", "Workflow Automation", "AI Tools"].map(skill => (
-                     <span key={skill} className="px-3 py-1 bg-indigo-50 text-indigo-700 text-sm rounded-full font-medium border border-indigo-100">{skill}</span>
+              {/* Avatar Container */}
+              <motion.div
+                className="absolute bottom-8 w-32 h-32 z-20 cursor-grab active:cursor-grabbing"
+                animate={controls}
+                drag="x" 
+                dragConstraints={trackRef}
+                dragElastic={0.05}
+                dragMomentum={false}
+                onDragEnd={handleDragEnd}
+                style={{ x: "-50%" }}
+              >
+                 <div className="relative w-full h-full">
+                   {Object.keys(sectionPositions).map((sec) => (
+                     <video 
+                       key={sec}
+                       src={`${import.meta.env.BASE_URL}${sec}.mp4`}
+                       autoPlay loop muted playsInline
+                       className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-300 ${avatarSection === sec ? 'opacity-100' : 'opacity-0'}`}
+                     />
                    ))}
                  </div>
-               </div>
-               <div>
-                 <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">Soft Skills</h3>
-                 <div className="flex flex-wrap gap-2">
-                   {["Leadership", "Communication", "Team Collaboration", "Problem Solving", "Adaptability"].map(skill => (
-                     <span key={skill} className="px-3 py-1 bg-emerald-50 text-emerald-700 text-sm rounded-full font-medium border border-emerald-100">{skill}</span>
-                   ))}
-                 </div>
-               </div>
+              </motion.div>
+              <div className="absolute top-2 left-2 text-[10px] font-mono text-slate-400">Interactive Avatar Stage</div>
             </div>
-          </ContentCard>
-        </section>
-
-        {/* EXPERIENCE SECTION */}
-        <section id="experience">
-          <ContentCard title="Professional Experience" onVisit={() => handleSectionClick("experience")}>
-            <div className="space-y-8">
-              <JobItem 
-                role="Team Manager" 
-                company="Opendoor" 
-                period="11/2023 - Present"
-                location="Chennai"
-                description={[
-                  "Directed a team of 45+ professionals for support and document validation.",
-                  "Increased productivity by 30% and improved quality by 25% through strategic automation.",
-                  "Partnered with US stakeholders for operational expansion.",
-                  "Boosted reporting accuracy by 70% using AI-driven dashboards."
-                ]}
-              />
-              <JobItem 
-                role="Subject Matter Expert" 
-                company="Opendoor" 
-                period="03/2022 - 11/2023"
-                location="Chennai"
-                description={[
-                  "Optimized workflows via automation and enhanced Standard Operating Procedures (SOPs).",
-                  "Maintained high-quality standards with multi-layer checks.",
-                  "Developed comprehensive training modules for process migration."
-                ]}
-              />
-              <JobItem 
-                role="Senior Customer Associate" 
-                company="Allsec Technologies" 
-                period="03/2017 - 02/2021"
-                location="Chennai"
-                description={[
-                  "Managed complex workflow queues and performance metrics.",
-                  "Supported automation initiatives for process streamlining.",
-                  "Delivered training aligning team productivity with business goals."
-                ]}
-              />
-            </div>
-            
-            {/* Education Subsection */}
-            <div className="mt-10 pt-8 border-t border-slate-100">
-              <h3 className="text-lg font-bold text-slate-800 mb-4">Education</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="p-4 bg-slate-50 rounded-lg border border-slate-100">
-                  <div className="font-semibold text-slate-900">Master of Computer Applications (MCA)</div>
-                  <div className="text-sm text-slate-500 mt-1">Vels University • 2014 - 2016</div>
-                </div>
-                <div className="p-4 bg-slate-50 rounded-lg border border-slate-100">
-                  <div className="font-semibold text-slate-900">Bachelor of Computer Applications (BCA)</div>
-                  <div className="text-sm text-slate-500 mt-1">Alpha Arts & Science College • 2010 - 2013</div>
-                </div>
-              </div>
-            </div>
-          </ContentCard>
-        </section>
-
-        {/* PROJECTS SECTION */}
-        <section id="projects">
-          <ContentCard title="Key Achievements & Projects" onVisit={() => handleSectionClick("projects")}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <ProjectCard 
-                title="AI Reporting Dashboards" 
-                tag="Automation" 
-                desc="Implemented AI-driven dashboards that boosted reporting accuracy by 70%, providing real-time visibility into team performance." 
-              />
-              <ProjectCard 
-                title="Productivity Overhaul" 
-                tag="Operations" 
-                desc="Led a strategic initiative that increased team productivity by 30% and improved quality scores by 25% across 45+ members." 
-              />
-              <ProjectCard 
-                title="Migration Training Modules" 
-                tag="L&D" 
-                desc="Developed and deployed comprehensive training modules that facilitated smooth process migration and standardized SOPs." 
-              />
-              <ProjectCard 
-                title="Workflow Automation" 
-                tag="Process" 
-                desc="Partnered with engineering to automate repetitive document validation tasks, significantly reducing manual turnaround time." 
-              />
-            </div>
-          </ContentCard>
-        </section>
-
-        {/* CONTACT SECTION */}
-        <section id="contact" className="pb-10">
-          <ContentCard title="Get In Touch" onVisit={() => handleSectionClick("contact")}>
-            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-              <div>
-                <p className="text-slate-600 mb-6 max-w-lg">
-                  I am currently open to opportunities in Operations, Project Management, and Process Excellence. Feel free to reach out via email or connect on LinkedIn.
-                </p>
-                <div className="space-y-3">
-                  <a href="mailto:absreenath212436@gmail.com" className="flex items-center gap-3 text-indigo-600 font-medium hover:underline">
-                    <span className="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center">✉️</span>
-                    absreenath212436@gmail.com
-                  </a>
-                  <a href="https://www.linkedin.com/in/sreenathab/" target="_blank" rel="noreferrer" className="flex items-center gap-3 text-indigo-600 font-medium hover:underline">
-                    <span className="w-8 h-8 rounded-full bg-indigo-50 flex items-center justify-center">🔗</span>
-                    linkedin.com/in/sreenathab
-                  </a>
-                </div>
-              </div>
-              <div className="p-6 bg-slate-50 rounded-xl border border-slate-200 text-center">
-                 <div className="text-sm text-slate-500 mb-2">Based in</div>
-                 <div className="font-bold text-slate-800 text-lg">Chennai, India</div>
-                 <div className="text-xs text-slate-400 mt-1">Open to Remote & Hybrid</div>
-              </div>
-            </div>
-          </ContentCard>
-        </section>
-
-      </main>
-
-      <footer className="bg-white border-t border-slate-200 py-8 mt-12">
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <div className="text-slate-900 font-bold mb-2">Sreenath A B</div>
-          <div className="text-sm text-slate-500">
-             © {new Date().getFullYear()} • Built with React, Tailwind & Framer Motion
-          </div>
+          </section>
         </div>
-      </footer>
+      </div>
+
+      <main className="max-w-4xl mx-auto px-4 py-10 space-y-12">
+        
+        {/* HOME / INTRO */}
+        <section id="home" className="pt-20">
+          <h1 className="text-4xl font-extrabold text-slate-900">
+            Operations & <span className="text-indigo-600">Project Management</span>
+          </h1>
+          <p className="mt-4 text-lg text-slate-600 leading-relaxed">
+            Operations professional with 8+ years of experience. Currently leading 45+ members at Opendoor, focusing on workflow automation and scaling business processes.
+          </p>
+          <div className="flex flex-wrap gap-4 mt-6">
+            <span className="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium shadow-sm">📍 Chennai, India</span>
+            <span className="px-4 py-2 bg-white border border-slate-200 rounded-full text-sm font-medium shadow-sm">💼 Team Manager @ Opendoor</span>
+          </div>
+        </section>
+
+        {/* ABOUT */}
+        <section id="about">
+          <ContentCard title="Summary & Skills" sectionKey="about" onVisit={handleSectionClick}>
+            <p className="text-slate-600 leading-relaxed">
+              Google-certified in Project Management, skilled in cross-functional collaboration and data-backed decision-making. 
+              Passionate about integrating Generative AI into operational workflows.
+            </p>
+            <div className="mt-6 grid grid-cols-2 gap-4">
+               <div className="p-4 bg-indigo-50 rounded-xl border border-indigo-100">
+                 <h4 className="text-xs font-bold text-indigo-700 uppercase mb-2">Hard Skills</h4>
+                 <div className="text-sm text-indigo-900 font-medium">Workflow Automation • AI Tools • Process Control</div>
+               </div>
+               <div className="p-4 bg-emerald-50 rounded-xl border border-emerald-100">
+                 <h4 className="text-xs font-bold text-emerald-700 uppercase mb-2">Soft Skills</h4>
+                 <div className="text-sm text-emerald-900 font-medium">Leadership • Problem Solving • Adaptability</div>
+               </div>
+            </div>
+          </ContentCard>
+        </section>
+
+        {/* EXPERIENCE */}
+        <section id="experience">
+          <ContentCard title="Professional Experience" sectionKey="experience" onVisit={handleSectionClick}>
+            <div className="space-y-6">
+              <JobItem role="Team Manager" company="Opendoor" period="2023 - Present" 
+                desc="Managed 45+ pros, increased productivity by 30% via automation." />
+              <JobItem role="Subject Matter Expert" company="Opendoor" period="2022 - 2023" 
+                desc="Optimized workflows and developed training modules for migration." />
+              <JobItem role="Senior Associate" company="Allsec" period="2017 - 2021" 
+                desc="Managed workflow queues and performance metrics." />
+            </div>
+          </ContentCard>
+        </section>
+
+        {/* PROJECTS */}
+        <section id="projects">
+          <ContentCard title="Key Achievements" sectionKey="projects" onVisit={handleSectionClick}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="p-4 border border-slate-200 rounded-xl hover:border-indigo-300 transition-colors">
+                <h4 className="font-bold text-slate-800">AI Dashboards</h4>
+                <p className="text-sm text-slate-500">Boosted reporting accuracy by 70%.</p>
+              </div>
+              <div className="p-4 border border-slate-200 rounded-xl hover:border-indigo-300 transition-colors">
+                <h4 className="font-bold text-slate-800">Process Automation</h4>
+                <p className="text-sm text-slate-500">30% productivity increase across large teams.</p>
+              </div>
+            </div>
+          </ContentCard>
+        </section>
+
+        {/* CONTACT */}
+        <section id="contact" className="pb-40">
+          <ContentCard title="Contact" sectionKey="contact" onVisit={handleSectionClick}>
+            <div className="flex flex-col sm:flex-row gap-6 justify-between items-center">
+              <div className="space-y-2">
+                <p className="text-slate-600">Open to opportunities in Operations and AI Transformation.</p>
+                <a href="mailto:absreenath212436@gmail.com" className="block text-indigo-600 font-bold hover:underline">absreenath212436@gmail.com</a>
+              </div>
+              <div className="text-center p-4 bg-slate-100 rounded-xl w-full sm:w-auto">
+                <div className="text-xs text-slate-500">Location</div>
+                <div className="font-bold">Chennai, India</div>
+              </div>
+            </div>
+          </ContentCard>
+        </section>
+      </main>
     </div>
   );
 }
 
 // --- Subcomponents ---
 
-function ContentCard({ title, children, onVisit }) {
+function ContentCard({ title, children, sectionKey, onVisit }) {
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-      <div className="px-6 py-4 border-b border-slate-50 flex items-center justify-between bg-slate-50/50">
-        <h2 className="text-xl font-bold text-slate-800">{title}</h2>
-        <button onClick={onVisit} className="text-xs font-medium px-3 py-1.5 bg-white border border-slate-200 rounded-full hover:bg-indigo-50 hover:text-indigo-600 transition-colors shadow-sm">
-          👇 Bring Avatar Here
+    <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+      <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <h2 className="text-lg font-bold text-slate-800">{title}</h2>
+        <button 
+          onClick={() => onVisit(sectionKey)} 
+          className="text-[10px] font-bold px-3 py-1 bg-white border border-indigo-200 text-indigo-600 rounded-full hover:bg-indigo-600 hover:text-white transition-all uppercase tracking-tight"
+        >
+          View Section
         </button>
       </div>
-      <div className="p-6 sm:p-8">
+      <div className="p-6">
         {children}
       </div>
     </div>
   );
 }
 
-function StatusBadge({ icon, label, value }) {
+function JobItem({ role, company, period, desc }) {
   return (
-    <div className="flex items-center gap-3 px-4 py-3 bg-white rounded-xl border border-slate-200 shadow-sm">
-      <div className="text-xl">{icon}</div>
-      <div>
-        <div className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">{label}</div>
-        <div className="text-sm font-semibold text-slate-800">{value}</div>
+    <div className="border-l-2 border-indigo-100 pl-4 py-1">
+      <div className="flex justify-between items-start">
+        <h3 className="font-bold text-slate-900">{role}</h3>
+        <span className="text-[10px] font-mono text-slate-400">{period}</span>
       </div>
-    </div>
-  );
-}
-
-function JobItem({ role, company, period, location, description }) {
-  return (
-    <div className="relative pl-6 sm:pl-0">
-      <div className="hidden sm:block absolute left-0 top-0 bottom-0 w-px bg-slate-200 transform translate-x-3"></div>
-      <div className="sm:flex gap-6 relative">
-        <div className="hidden sm:flex flex-col items-center">
-            <div className="w-6 h-6 rounded-full bg-indigo-100 border-2 border-indigo-500 z-10"></div>
-        </div>
-        <div className="flex-1">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2">
-            <div>
-              <h3 className="text-lg font-bold text-slate-900">{role}</h3>
-              <div className="text-sm font-medium text-indigo-600">{company}</div>
-            </div>
-            <div className="text-xs font-mono text-slate-500 bg-slate-100 px-2 py-1 rounded self-start sm:self-center mt-1 sm:mt-0">
-              {period} • {location}
-            </div>
-          </div>
-          <ul className="list-disc list-outside ml-4 text-slate-600 text-sm space-y-1.5 marker:text-indigo-300">
-            {description.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ProjectCard({ title, desc, tag }) {
-  return (
-    <div className="p-5 rounded-xl bg-slate-50 border border-slate-100 hover:border-indigo-200 transition-colors group">
-      <div className="flex justify-between items-start mb-2">
-        <h3 className="font-bold text-slate-800 group-hover:text-indigo-700 transition-colors">{title}</h3>
-        <span className="text-[10px] font-bold px-2 py-0.5 bg-white border border-slate-200 rounded text-slate-500 uppercase">{tag}</span>
-      </div>
-      <p className="text-sm text-slate-600 leading-relaxed">{desc}</p>
+      <div className="text-sm text-indigo-600 font-medium mb-1">{company}</div>
+      <p className="text-sm text-slate-600">{desc}</p>
     </div>
   );
 }
