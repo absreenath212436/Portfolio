@@ -29,7 +29,7 @@ export default function PortfolioWithAvatar() {
     setAvatarSection(id);
     const el = document.getElementById(id);
     if (!el) return;
-    const yOffset = -420;
+    const yOffset = -420; // adjust if needed
     const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
     window.scrollTo({ top: y, behavior: "smooth" });
   };
@@ -88,12 +88,13 @@ export default function PortfolioWithAvatar() {
       </header>
 
       {/* ---------- AVATAR TRACK ---------- */}
-      <div className="sticky top-[64px] z-40 bg-white/70 backdrop-blur border-b border-slate-200">
+      <div className="sticky top-20 z-40">
         <div className="max-w-7xl mx-auto px-6 py-6">
           <div
             ref={trackRef}
             className="relative h-48 rounded-2xl bg-slate-100 border border-slate-200 overflow-hidden"
           >
+            {/* Track Line */}
             <div className="absolute inset-x-12 bottom-10 h-1 bg-slate-300 rounded-full">
               {Object.keys(sectionPositions).map((sec) => (
                 <div
@@ -109,6 +110,7 @@ export default function PortfolioWithAvatar() {
               ))}
             </div>
 
+            {/* Avatar Video */}
             <motion.div
               className="absolute bottom-10 w-28 h-28 cursor-grab"
               animate={controls}
@@ -128,7 +130,7 @@ export default function PortfolioWithAvatar() {
                   muted
                   playsInline
                   className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-300 ${
-                    avatarSection === sec ? "opacity-100" : "opacity-0"
+                    avatarSection === sec ? "opacity-100" : "opacity-40"
                   }`}
                 />
               ))}
