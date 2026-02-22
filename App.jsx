@@ -1,254 +1,275 @@
-import React, { useState } from "react";
+import React from "react";
 import "./style.css";
 
-const SECTIONS = ["summary", "experience", "education", "skills"];
-
-const SECTION_ICONS = {
-  summary: <i className="fa-solid fa-users" style={{ marginRight: 8, color: "#4f46e5" }}></i>,
-  experience: <i className="fa-solid fa-briefcase" style={{ marginRight: 8, color: "#4f46e5" }}></i>,
-  education: <i className="fa-solid fa-graduation-cap" style={{ marginRight: 8, color: "#4f46e5" }}></i>,
-  skills: <i className="fa-solid fa-tools" style={{ marginRight: 8, color: "#4f46e5" }}></i>,
-};
-
-const SUMMARY = `Operations and Project Management professional with 8 years of experience delivering scalable solutions in business operations, process optimization, and team leadership. Currently managing multiple projects and leading a 45+ member team at Opendoor, driving operational efficiency, workflow automation, and consistent delivery across diverse functions.
-Google-certified in Project Management, with a leadership style rooted in ownership, accountability, and measurable outcomes. Skilled in cross-functional collaboration, data-backed decision-making, and developing high-performance teams that consistently exceed expectations.
-Currently expanding expertise in Generative AI, prompt design, and intelligent process automation to future-proof operational strategies and enhance business transformation. Passionate about integrating technology with process excellence to deliver sustainable results.`;
-
-const EXPERIENCES = [
-  {
-    title: "Team Manager",
-    company: "Opendoor",
-    period: "11/2023 - Present",
-    location: "Chennai",
-    details: [
-      "Directed a team of 45+ professionals for support and document validation.",
-      "Increased productivity by 30%, improved quality by 25% through automation.",
-      "Partnered with US stakeholders for operational expansion.",
-      "Boosted reporting accuracy by 70% with AI dashboards.",
-    ],
-  },
-  {
-    title: "Subject Matter Expert",
-    company: "Opendoor",
-    period: "03/2022 - 11/2023",
-    location: "Chennai",
-    details: [
-      "Optimized workflows via automation, enhanced SOPs.",
-      "Maintained quality with multi-layer checks.",
-      "Developed training modules for migration.",
-    ],
-  },
-  {
-    title: "Senior Customer Associate",
-    company: "Allsec Technologies",
-    period: "03/2017 - 02/2021",
-    location: "Chennai",
-    details: [
-      "Managed workflow queues and metrics.",
-      "Supported automation for process streamlining.",
-      "Delivered training aligning productivity.",
-    ],
-  },
-];
-const EDUCATION = [
-  {
-    degree: "Master of Computer Applications (MCA)",
-    school: "Vels University",
-    period: "07/2014 - 05/2016",
-    location: "Chennai",
-  },
-  {
-    degree: "Bachelor of Computer Applications (BCA)",
-    school: "Alpha Arts & Science College",
-    period: "06/2010 - 11/2013",
-    location: "Chennai",
-  },
-];
-const HARD_SKILLS = [
-  "Operational Excellence",
-  "Project Management",
-  "Process Control",
-  "Workflow Automation",
-  "AI Tools",
-];
-const SOFT_SKILLS = [
-  "Leadership",
-  "Communication",
-  "Team Collaboration",
-  "Problem Solving",
-  "Adaptability",
-];
-
 export default function App() {
-  const [sectionIdx, setSectionIdx] = useState(0);
-  const [certificates, setCertificates] = useState([]);
-  const section = SECTIONS[sectionIdx];
-
-  function nextSection() {
-    setSectionIdx((i) => (i + 1) % SECTIONS.length);
-  }
-  function prevSection() {
-    setSectionIdx((i) => (i - 1 + SECTIONS.length) % SECTIONS.length);
-  }
-  function handleCertificateUpload(e) {
-    const files = Array.from(e.target.files);
-    const newCerts = files.map((f) => ({
-      name: f.name,
-      url: URL.createObjectURL(f),
-    }));
-    setCertificates([...certificates, ...newCerts]);
-  }
-
   return (
-    <div className="container">
-      <header>
-        <h1>
-          <span style={{ marginRight: "0.6em", color: "#4f46e5" }}>
-            {SECTION_ICONS[section]}
-          </span>
-          Sreenath A B
-        </h1>
-        <nav>
-          {SECTIONS.map((sec, i) => (
-            <button
-              key={sec}
-              onClick={() => setSectionIdx(i)}
-              className={section === sec ? "active" : ""}
-              aria-current={section === sec ? "page" : false}
-            >
-              {SECTION_ICONS[sec]} {sec.charAt(0).toUpperCase() + sec.slice(1)}
-            </button>
-          ))}
-        </nav>
-      </header>
+    <div className="app">
 
-      <div className="carousel-buttons">
-        <button onClick={prevSection} aria-label="Previous section">
-          ◀
-        </button>
-        <button onClick={nextSection} aria-label="Next section">
-          ▶
-        </button>
-      </div>
-      <main>
-        <section key={section} className="section-content animate">
-          {section === "summary" && (
-            <>
-              <h2>Summary & Contact</h2>
-              <p className="summary-text">{SUMMARY}</p>
+      {/* ================= HERO ================= */}
+      <section className="section hero">
+        <video autoPlay muted loop playsInline className="bg-video">
+          <source src="/videos/hero.mp4" type="video/mp4" />
+        </video>
+        <div className="overlay"></div>
+
+        <div className="content center">
+          <h1 className="main-title">Sreenath A B</h1>
+
+          <h2 className="headline">
+            I Design Intelligent Operations That Scale.
+          </h2>
+
+          <p className="subtext">
+            From frontline execution to AI-enabled program architecture,
+            I build operational systems that reduce friction, increase clarity,
+            and multiply output.
+          </p>
+
+          <div className="proof-strip">
+            <div>
+              <h3>45+</h3>
+              <p>Professionals Led</p>
+            </div>
+            <div>
+              <h3>8+ Years</h3>
+              <p>Execution Leadership</p>
+            </div>
+            <div>
+              <h3>Multi-Program</h3>
+              <p>Owner</p>
+            </div>
+            <div>
+              <h3>AI</h3>
+              <p>Workflow Architect</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= STORY ================= */}
+      <section className="section">
+        <video autoPlay muted loop playsInline className="bg-video">
+          <source src="/videos/story.mp4" type="video/mp4" />
+        </video>
+        <div className="overlay"></div>
+
+        <div className="content narrow">
+          <h2>From Execution to Architecture</h2>
+
+          <p>
+            I did not begin in strategy rooms.
+          </p>
+
+          <p>
+            I began where pressure lives — inside SLA dashboards,
+            workflow queues, and operational escalations.
+          </p>
+
+          <p>
+            Managing execution at scale taught me something critical:
+            systems fail long before people do.
+          </p>
+
+          <p>
+            I learned to see inefficiency patterns early.
+            I learned to identify friction before it became failure.
+            I learned that scale without structure eventually collapses.
+          </p>
+
+          <p>
+            That realization shaped my path.
+          </p>
+
+          <p className="highlight">
+            Operator → Optimizer → Architect
+          </p>
+
+          <p>
+            Today, I design operational environments that think structurally,
+            measure intelligently, improve continuously, and scale sustainably.
+          </p>
+
+          <p>
+            AI is not a trend in my work — it is leverage.
+          </p>
+        </div>
+      </section>
+
+      {/* ================= WHAT I BUILD ================= */}
+      <section className="section">
+        <video autoPlay muted loop playsInline className="bg-video">
+          <source src="/videos/build.mp4" type="video/mp4" />
+        </video>
+        <div className="overlay"></div>
+
+        <div className="content">
+          <h2>Systems I Design</h2>
+
+          <div className="grid-3">
+
+            <div className="card">
+              <h3>Operational Intelligence Systems</h3>
               <p>
-                <i
-                  className="fa-solid fa-envelope"
-                  style={{ marginRight: 6, color: "#4f46e5" }}
-                ></i>
-                <a href="mailto:absreenath212436@gmail.com">
-                  absreenath212436@gmail.com
-                </a>
+                Governance frameworks that make performance visible,
+                measurable, and predictable.
               </p>
+              <ul>
+                <li>KPI Architecture</li>
+                <li>Performance Modeling</li>
+                <li>Workflow Mapping</li>
+                <li>SLA Governance</li>
+                <li>Quality Control Frameworks</li>
+              </ul>
+            </div>
+
+            <div className="card">
+              <h3>Scalable Execution Programs</h3>
               <p>
-                <i
-                  className="fa-brands fa-linkedin"
-                  style={{ marginRight: 6, color: "#4f46e5" }}
-                ></i>
-                <a
-                  href="https://www.linkedin.com/in/sreenathab/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  linkedin.com/sreenath
-                </a>
+                Multi-team coordination systems that reduce chaos
+                and increase accountability.
               </p>
+              <ul>
+                <li>Program Planning</li>
+                <li>Risk Structuring</li>
+                <li>Stakeholder Alignment</li>
+                <li>Delivery Architecture</li>
+                <li>Change Enablement</li>
+              </ul>
+            </div>
+
+            <div className="card">
+              <h3>AI-Augmented Workflow Environments</h3>
               <p>
-                <i
-                  className="fa-solid fa-location-dot"
-                  style={{ marginRight: 6, color: "#4f46e5" }}
-                ></i>
-                Chennai, India
+                Human-in-the-loop intelligent systems
+                that reduce manual friction and amplify decision clarity.
               </p>
-            </>
-          )}
-          {section === "experience" && (
-            <>
-              <h2>Experience</h2>
-              <div className="scroll-panel" tabIndex={0}>
-                {EXPERIENCES.map((job, i) => (
-                  <div key={i} style={{ marginBottom: "1.8rem" }}>
-                    <h3 style={{ marginBottom: 4 }}>{job.title}</h3>
-                    <p>
-                      <em>
-                        {job.company} — {job.period} — {job.location}
-                      </em>
-                    </p>
-                    <ul>
-                      {job.details.map((d, j) => (
-                        <li key={j}>{d}</li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </>
-          )}
-          {section === "education" && (
-            <>
-              <h2>Education</h2>
-              {EDUCATION.map((ed, i) => (
-                <div key={i} style={{ marginBottom: "1.4rem" }}>
-                  <p>
-                    <strong>{ed.degree}</strong>
-                  </p>
-                  <p>
-                    {ed.school} — {ed.period} — {ed.location}
-                  </p>
-                </div>
-              ))}
-            </>
-          )}
-          {section === "skills" && (
-            <>
-              <h2>Skills & Certifications</h2>
-              <div style={{ display: "flex", gap: "2rem", marginBottom: "1.4rem" }}>
-                <div className="scroll-panel" tabIndex={0} style={{ flex: 1 }}>
-                  <h3>Hard Skills</h3>
-                  <ul>
-                    {HARD_SKILLS.map((skill, i) => (
-                      <li key={i}>{skill}</li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="scroll-panel" tabIndex={0} style={{ flex: 1 }}>
-                  <h3>Soft Skills</h3>
-                  <ul>
-                    {SOFT_SKILLS.map((skill, i) => (
-                      <li key={i}>{skill}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              <section className="upload-section" aria-label="Upload your certificates">
-                <h3>Upload Certificates</h3>
-                <input
-                  type="file"
-                  multiple
-                  accept=".pdf,.jpg,.jpeg,.png"
-                  onChange={handleCertificateUpload}
-                />
-                {certificates.length > 0 && (
-                  <ul className="uploaded-list">
-                    {certificates.map((file, i) => (
-                      <li key={i}>
-                        <a href={file.url} target="_blank" rel="noopener noreferrer">
-                          {file.name}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </section>
-            </>
-          )}
-        </section>
-      </main>
+              <ul>
+                <li>AI Case Classification</li>
+                <li>Automated Routing Logic</li>
+                <li>Decision Support Dashboards</li>
+                <li>Prompt Design & RAG Systems</li>
+                <li>Intelligent Automation Governance</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ================= IMPACT ================= */}
+      <section className="section">
+        <video autoPlay muted loop playsInline className="bg-video">
+          <source src="/videos/impact.mp4" type="video/mp4" />
+        </video>
+        <div className="overlay"></div>
+
+        <div className="content narrow">
+          <h2>Impact Across Programs</h2>
+
+          <ul className="impact-list">
+            <li>Reduced operational friction across multiple workflows</li>
+            <li>Improved reporting clarity through intelligent dashboards</li>
+            <li>Built scalable team structures supporting expansion</li>
+            <li>Strengthened quality governance and compliance reliability</li>
+            <li>Enabled cross-regional stakeholder alignment</li>
+            <li>Delivered measurable productivity and quality improvements</li>
+          </ul>
+        </div>
+      </section>
+
+      {/* ================= LEADERSHIP PHILOSOPHY ================= */}
+      <section className="section">
+        <video autoPlay muted loop playsInline className="bg-video">
+          <source src="/videos/leadership.mp4" type="video/mp4" />
+        </video>
+        <div className="overlay"></div>
+
+        <div className="content narrow">
+          <h2>How I Lead</h2>
+
+          <p>
+            I lead with structure — not noise.
+          </p>
+
+          <p>
+            Structure creates ownership.
+            Structure creates transparency.
+            Structure creates accountability.
+          </p>
+
+          <p>
+            I design environments where people know:
+          </p>
+
+          <ul>
+            <li>What matters</li>
+            <li>How they are measured</li>
+            <li>How they win</li>
+          </ul>
+
+          <p>
+            Sustainable performance is not forced.
+            It is engineered.
+          </p>
+        </div>
+      </section>
+
+      {/* ================= FUTURE ================= */}
+      <section className="section">
+        <video autoPlay muted loop playsInline className="bg-video">
+          <source src="/videos/future.mp4" type="video/mp4" />
+        </video>
+        <div className="overlay"></div>
+
+        <div className="content narrow">
+          <h2>Where I’m Headed</h2>
+
+          <p>
+            We are entering a decade where AI will not replace operators —
+            it will replace inefficient systems.
+          </p>
+
+          <p>
+            My focus is building AI-augmented operating models that blend:
+          </p>
+
+          <ul>
+            <li>Human Judgment</li>
+            <li>Machine Efficiency</li>
+            <li>Structured Governance</li>
+            <li>Scalable Architecture</li>
+          </ul>
+
+          <p>
+            I am building toward roles at the intersection of:
+            AI Strategy, Program Architecture, and Intelligent System Deployment.
+          </p>
+        </div>
+      </section>
+
+      {/* ================= CONTACT ================= */}
+      <section className="section contact">
+        <video autoPlay muted loop playsInline className="bg-video">
+          <source src="/videos/contact.mp4" type="video/mp4" />
+        </video>
+        <div className="overlay"></div>
+
+        <div className="content center">
+          <h2>Let’s Design the Next Generation of Operations</h2>
+
+          <p>
+            If you're building systems that must scale intelligently —
+            I’d welcome the conversation.
+          </p>
+
+          <div className="contact-info">
+            <p>Email: absreenath212436@gmail.com</p>
+            <p>LinkedIn: linkedin.com/in/sreenathab</p>
+            <p>Location: Chennai, India</p>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
