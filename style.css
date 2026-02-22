@@ -1,3 +1,283 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ===============================
+   GLOBAL RESET & SMOOTH SCROLL
+================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #0f172a; /* Deep executive navy */
+  color: #e2e8f0;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+}
+
+/* ===============================
+   FULL SCREEN SECTION SYSTEM
+================================= */
+
+.app {
+  scroll-snap-type: y mandatory;
+}
+
+.section {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 8%;
+  overflow: hidden;
+}
+
+/* ===============================
+   BACKGROUND VIDEO CONTROL
+================================= */
+
+.bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 110%;
+  height: 110%;
+  object-fit: cover;
+  transform: translate(-50%, -50%) scale(1.05);
+  z-index: -2;
+  opacity: 0.35; /* controlled cinematic feel */
+  filter: brightness(60%) contrast(110%);
+}
+
+/* Dark overlay for readability */
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15, 23, 42, 0.85),
+    rgba(15, 23, 42, 0.95)
+  );
+  z-index: -1;
+}
+
+/* ===============================
+   CONTENT LAYOUT
+================================= */
+
+.content {
+  max-width: 1200px;
+  animation: fadeUp 1.2s ease forwards;
+}
+
+.content.narrow {
+  max-width: 850px;
+}
+
+.content.center {
+  text-align: center;
+}
+
+/* ===============================
+   HERO TYPOGRAPHY
+================================= */
+
+.main-title {
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #ffffff;
+}
+
+.headline {
+  font-size: 2rem;
+  margin-top: 1rem;
+  color: #a5b4fc; /* violet accent */
+}
+
+.subtext {
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+  color: #cbd5e1;
+  line-height: 1.8;
+}
+
+/* ===============================
+   PROOF STRIP
+================================= */
+
+.proof-strip {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+}
+
+.proof-strip h3 {
+  font-size: 2rem;
+  color: #6366f1;
+}
+
+.proof-strip p {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+/* ===============================
+   SECTION HEADINGS
+================================= */
+
+.section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+  display: inline-block;
+}
+
+/* Elegant animated underline */
+.section h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 60%;
+  height: 3px;
+  background: #6366f1;
+  animation: expandLine 1.5s ease forwards;
+}
+
+/* ===============================
+   GRID & CARDS
+================================= */
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.card {
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  padding: 2rem;
+  border-radius: 16px;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  transition: all 0.4s ease;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  border-color: #6366f1;
+}
+
+.card h3 {
+  color: #a5b4fc;
+  margin-bottom: 1rem;
+}
+
+.card ul {
+  margin-top: 1rem;
+  padding-left: 1.2rem;
+}
+
+.card li {
+  margin-bottom: 0.5rem;
+  color: #cbd5e1;
+}
+
+/* ===============================
+   IMPACT LIST
+================================= */
+
+.impact-list {
+  list-style: none;
+  padding: 0;
+  line-height: 2;
+}
+
+.impact-list li {
+  padding-left: 1.5rem;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.impact-list li::before {
+  content: "•";
+  color: #6366f1;
+  position: absolute;
+  left: 0;
+}
+
+/* ===============================
+   HIGHLIGHT TEXT
+================================= */
+
+.highlight {
+  font-weight: 600;
+  font-size: 1.3rem;
+  color: #a5b4fc;
+  margin: 1.5rem 0;
+}
+
+/* ===============================
+   CONTACT
+================================= */
+
+.contact-info p {
+  margin: 0.5rem 0;
+  color: #cbd5e1;
+}
+
+/* ===============================
+   ANIMATIONS
+================================= */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes expandLine {
+  from {
+    width: 0;
+  }
+  to {
+    width: 60%;
+  }
+}
+
+/* ===============================
+   RESPONSIVE OPTIMIZATION
+================================= */
+
+@media (max-width: 768px) {
+  .main-title {
+    font-size: 2.5rem;
+  }
+
+  .headline {
+    font-size: 1.5rem;
+  }
+
+  .section h2 {
+    font-size: 1.8rem;
+  }
+
+  .proof-strip {
+    gap: 1.5rem;
+  }
+}
