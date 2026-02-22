@@ -6,7 +6,7 @@ export default function App() {
     <div className="app">
 
       {/* ================= HERO ================= */}
-      <section className="section">
+      <section className="section hero">
         <video autoPlay muted loop playsInline className="bg-video">
           <source src="/videos/hero.mp4" type="video/mp4" />
         </video>
