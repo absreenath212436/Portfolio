@@ -103,10 +103,10 @@ export default function App() {
               className="profile-image" 
             />
 
-            <h2 className="greeting">Hi There, I am</h2>
+            <h2 className="greeting">Hi There, Thi is</h2>
             <h1 className="main-title">Sreenath A B</h1>
             <h2 className="headline">
-              I am an <Typewriter words={["AI Transformation Leader", "Process Automation Architect", "Operations Optimizer"]} />
+              I am <Typewriter words={["an AI Transformation Leader", "a Process Automation Architect", "an Operations Optimizer"]} />
             </h2>
             <p className="subtext">
               AI Transformation & Operations Leader with a 10-year track record spanning project management, team leadership, and stakeholder management. I architect AI-driven automation systems that eliminate manual workflows and deliver measurable financial impact.
@@ -136,7 +136,7 @@ export default function App() {
             </p>
             
             <p className="highlight-dark" style={{ minHeight: '54px', display: 'flex', alignItems: 'center' }}>
-               <Typewriter words={["Operator → Optimizer → AI Architect..."]} />
+               Operator → <Typewriter words={["Optimizer → AI Architect","Operational Excellence → Process Automator"]} />
             </p>
 
             <p className="subtext">
