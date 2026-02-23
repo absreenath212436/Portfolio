@@ -128,6 +128,38 @@ body, html {
   object-position: center top; /* 🔥 Anchors video to the top to protect the face */
 }
 
+/* ================= PROFESSIONAL NEON PROFILE IMAGE ================= */
+.profile-image {
+  width: 180px;  /* Resized for better presence */
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  
+  /* 🔥 FIX: Anchors to the top so your hair and head aren't cut off */
+  object-position: top; 
+  
+  margin-bottom: 30px;
+  
+  /* Triple Layer Neon Framework */
+  border: 4px solid #66FCF1; 
+  box-shadow: 
+    0 0 10px rgba(102, 252, 241, 0.5),   /* Inner glow */
+    0 0 20px rgba(102, 252, 241, 0.3),   /* Outer halo */
+    0 0 40px rgba(102, 252, 241, 0.1);   /* Distant atmosphere */
+    
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+}
+
+.profile-image:hover {
+  transform: scale(1.08) rotate(2deg); /* Slight pop and tilt for personality */
+  box-shadow: 
+    0 0 20px rgba(102, 252, 241, 0.8), 
+    0 0 40px rgba(102, 252, 241, 0.5), 
+    0 0 60px rgba(102, 252, 241, 0.2);
+  border-color: #ffffff; /* Brightens the ring on hover */
+}
+
 /* ================= TYPOGRAPHY ================= */
 h2 {
   font-size: 40px;
