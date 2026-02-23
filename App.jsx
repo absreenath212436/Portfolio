@@ -103,7 +103,7 @@ export default function App() {
               className="profile-image" 
             />
 
-            <h2 className="greeting">Hi There, Thi is</h2>
+            <h2 className="greeting">Hi There, this is</h2>
             <h1 className="main-title">Sreenath A B</h1>
             <h2 className="headline">
               I am <Typewriter words={["an AI Transformation Leader", "a Process Automation Architect", "an Operations Optimizer"]} />
