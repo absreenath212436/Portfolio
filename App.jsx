@@ -89,7 +89,7 @@ const Loader = ({ onDone }) => {
   }, [onDone]);
   return (
     <motion.div className="loader" exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>
-      <div className="loader-logo">SAB<span className="accent">.</span></div>
+      <div className="loader-logo">SAB<span className="accent"></span></div>
       <div className="loader-bar"><div className="loader-fill" style={{ width: pct + "%" }} /></div>
       <div className="loader-pct">{pct}%</div>
     </motion.div>
@@ -305,7 +305,7 @@ export default function App() {
           {/* NAV */}
           <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}>
             <div className="nav-content">
-              <div className="nav-logo">Sreenath<span className="accent">.</span></div>
+              <div className="nav-logo">Sreenath<span className="accent"></span></div>
               <ul className="nav-links">
                 {["home","about","experience","projects","operations","impact","contact"].map(id => (
                   <li key={id}><a href={`#${id}`}>{id.charAt(0).toUpperCase()+id.slice(1)}</a></li>
