@@ -511,7 +511,7 @@ export default function App() {
                   <ContactForm />
                   <div className="contact-info-cards" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
                     <a href="mailto:absreenath212436@gmail.com" className="contact-info-card"><span className="contact-icon">✉</span><div><h4>Email</h4><p>absreenath212436@gmail.com</p></div></a>
-                    <a href="https://linkedin.com/in/sreenath-ab" target="_blank" rel="noopener noreferrer" className="contact-info-card"><span className="contact-icon">in</span><div><h4>LinkedIn</h4><p>linkedin.com/in/sreenath-ab</p></div></a>
+                    <a href="https://linkedin.com/in/sreenathab" target="_blank" rel="noopener noreferrer" className="contact-info-card"><span className="contact-icon">in</span><div><h4>LinkedIn</h4><p>linkedin.com/in/sreenathab</p></div></a>
                   </div>
                 </FadeIn>
                 <FadeIn direction="right" className="media-content media-portrait neon-border" style={{ margin: "0 auto" }}>
