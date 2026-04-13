@@ -89,7 +89,7 @@ const Loader = ({ onDone }) => {
   }, [onDone]);
   return (
     <motion.div className="loader" exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>
-      <div className="loader-logo">SAB<span className="accent"></span></div>
+      <div className="loader-logo">SREENATH.AB<span className="accent"></span></div>
       <div className="loader-bar"><div className="loader-fill" style={{ width: pct + "%" }} /></div>
       <div className="loader-pct">{pct}%</div>
     </motion.div>
@@ -526,7 +526,7 @@ export default function App() {
           {/* FOOTER */}
           <footer className="site-footer">
             <div className="footer-content">
-              <div className="footer-brand"><span className="footer-logo">Sreenath<span className="accent">.</span></span><p className="footer-tagline">AI Transformation & Operations Excellence Leader</p></div>
+              <div className="footer-brand"><span className="footer-logo">Sreenath<span className="accent">.AB</span></span><p className="footer-tagline">AI Transformation & Operations Excellence Leader</p></div>
               <div className="footer-links">{["home","about","experience","projects","operations","impact","contact"].map(id=><a href={`#${id}`} key={id}>{id.charAt(0).toUpperCase()+id.slice(1)}</a>)}</div>
               <div className="footer-social">
                 <a href="mailto:absreenath212436@gmail.com" aria-label="Email">✉</a>
