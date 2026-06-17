@@ -325,7 +325,7 @@ export default function App() {
                 <h2 className="headline">I am <Typewriter words={typewords} /></h2>
                 <p className="subtext">10 years in operations. Purpose-built AI systems that run them. I bridge Lean methodology, structured KPI governance, and production AI engineering to deliver outcomes that scale.</p>
                 <div className="hero-cta">
-                  <a href={`${import.meta.env.BASE_URL}resume.pdf`} target="_blank" rel="noopener noreferrer" className="btn-primary"><span className="btn-icon">↓</span> Download Resume</a>
+                  <a href={`${import.meta.env.BASE_URL}Sreenath AB Resume.pdf`} target="_blank" rel="noopener noreferrer" className="btn-primary"><span className="btn-icon">↓</span> Download Resume</a>
                   <a href="#contact" className="btn-secondary">Let's Talk</a>
                 </div>
                 <div className="proof-strip">
