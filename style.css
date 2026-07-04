@@ -121,7 +121,7 @@ a{text-decoration:none;color:inherit}
 /* ── TYPOGRAPHY ── */
 h2{font-family:var(--serif);font-size:38px;font-weight:500;margin-bottom:18px;letter-spacing:-.01em;color:var(--ink)}
 /* short gold rule under section headings only (not hero greeting/headline) */
-.section h2:not(.greeting):not(.headline)::after{content:"";display:block;width:46px;height:2px;margin-top:16px;background:linear-gradient(90deg,var(--gold),var(--gold-lite))
+.section h2:not(.greeting):not(.headline)::after{content:"";display:block;width:46px;height:2px;margin-top:16px;background:linear-gradient(90deg,var(--gold),var(--gold-lite))}
 #education h2::after,
 #certifications h2::after,
 #leadership h2::after,
