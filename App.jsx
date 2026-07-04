@@ -173,11 +173,11 @@ export default function App() {
         if (id === "about") setAvatarAction("Walk");
         if (id === "experience") setAvatarAction("Point");
         if (id === "education") setAvatarAction("Point");
+        if (id === "certifications") setAvatarAction("Point");
         if (id === "leadership") setAvatarAction("Wave");
         if (id === "projects") setAvatarAction("Jump");
         if (id === "toolkit") setAvatarAction("Point");
         if (id === "impact") setAvatarAction("Walk");
-        if (id === "testimonials") setAvatarAction("Wave");
         if (id === "contact") setAvatarAction("Wave");
       });
     }, { threshold: 0.4 });
@@ -186,7 +186,7 @@ export default function App() {
   }, [loaded]);
 
   // Sections shown in the top navigation and footer.
-  const navItems = ["home", "about", "experience", "education", "projects", "operations", "toolkit", "impact", "testimonials", "contact"];
+  const navItems = ["home", "about", "experience", "education", "certifications", "projects", "operations", "toolkit", "impact", "contact"];
 
   // DATA
   const typewords = ["an Artificial Intelligence Transformation Leader", "a Process Optimisation Expert", "a Lean Operations Practitioner", "a Multi-Stakeholder Program Leader", "a Production Artificial Intelligence Systems Builder"];
@@ -203,8 +203,8 @@ export default function App() {
       role: "Team Manager — Artificial Intelligence & Operations",
       company: "Opendoor Technologies  ·  Nov 2023 – Present",
       bullets: [
-        "Lead a 45+ member operations team across multiple programs with full accountability for service-level compliance, quality, and cost efficiency.",
-        "Founded and manage a dedicated Artificial Intelligence Automation Unit — shipping 6 production agents that replaced manual triage, scheduling, quality assurance, and vendor coordination workflows.",
+        "Lead a 45+ member cross-functional operations organisation — directing through 4+ team leads and 2+ subject-matter experts, coordinating daily with United States counterparts, and partnering with executive-level stakeholders — with full accountability for service-level compliance, quality, and cost efficiency.",
+        "Founded and direct a separate 5-member Artificial Intelligence Automation Unit — shipping 6 production agents that replaced manual triage, scheduling, quality assurance, and vendor coordination workflows.",
         "Delivered $88K+ annual cost savings through automation-driven workforce optimisation while improving throughput and quality.",
         "Cut average handle time by 90% on high-volume workflows by replacing manual lookups with automatically enriched outputs.",
         "Own performance and risk governance across all programs — tracking resolution service levels, handle time, first-contact resolution, and utilisation weekly.",
@@ -242,6 +242,73 @@ export default function App() {
       degree: "Bachelor of Computer Applications",
       school: "Alpha Arts & Science College, University of Madras, Chennai  ·  2010 – 2013",
       note: "Undergraduate foundation in programming, databases, and computer science fundamentals.",
+    },
+  ];
+
+  // Professional certifications. Verify links point to the learner's Coursera credentials.
+  const certifications = [
+    {
+      title: "Agentic AI and AI Agents for Leaders",
+      issuer: "Vanderbilt University",
+      date: "Jun 2026", courses: "3 courses",
+      learned: "Strategic grounding in agentic artificial intelligence for organisational decision-making — designing custom assistant agents, critically evaluating AI solutions, and applying prompt engineering to drive real-world impact as a leader.",
+      verify: "https://coursera.org/verify/specialization/BCFK2W5W3SMU",
+    },
+    {
+      title: "IBM RAG and Agentic AI",
+      issuer: "IBM",
+      date: "Oct 2025", courses: "8 courses",
+      learned: "Building production generative AI — retrieval-augmented generation, vector databases, and multimodal applications, plus multi-agent architectures using LangChain, LangGraph, CrewAI, and AutoGen with function calling and multi-step reasoning.",
+      verify: "https://coursera.org/verify/professional-cert/E3CK03U6JNVU",
+    },
+    {
+      title: "Google AI",
+      issuer: "Google",
+      date: "Mar 2026", courses: "7 courses",
+      learned: "Applying artificial intelligence across the full knowledge-work lifecycle — brainstorming, research, communication, content creation, data analysis, and app building — including effective prompting and responsible use.",
+      verify: "https://coursera.org/verify/professional-cert/9038H1OH0I0B",
+    },
+    {
+      title: "Generative AI for Project Managers",
+      issuer: "IBM · SkillUp",
+      date: "Aug 2025", courses: "3 courses",
+      learned: "Using generative AI to plan and execute projects — differentiating model types, applying tools such as ChatGPT, Copilot, Gemini, and image generation to project workflows, and weighing ethical considerations.",
+      verify: "https://coursera.org/verify/specialization/H7465QH07NJF",
+    },
+    {
+      title: "Google Prompting Essentials",
+      issuer: "Google",
+      date: "Nov 2025", courses: "4 courses",
+      learned: "Advanced prompting techniques for complex tasks — designing effective prompts for everyday work, accelerating data analysis and presentation building, and using AI as an expert partner.",
+      verify: "https://coursera.org/verify/specialization/QSHF2AUISZRA",
+    },
+    {
+      title: "Google Cloud AI Infrastructure",
+      issuer: "Google Cloud",
+      date: "Mar 2026", courses: "3 courses",
+      learned: "Artificial intelligence infrastructure fundamentals — hyperscale compute architecture, graphics- and tensor-processing acceleration, selecting machine types and provisioning platforms, and optimising for AI workloads.",
+      verify: "https://coursera.org/verify/specialization/4WJDGO7HGVAC",
+    },
+    {
+      title: "Google Data Analytics",
+      issuer: "Google",
+      date: "Jun 2026", courses: "9 courses",
+      learned: "End-to-end data analytics — asking the right questions, preparing and cleaning data, analysis and visualisation, working with spreadsheets, Structured Query Language, Tableau, and Python.",
+      verify: "https://coursera.org/verify/professional-cert/5BZ5UEN1MMWL",
+    },
+    {
+      title: "Google Project Management",
+      issuer: "Google",
+      date: "Jul 2025", courses: "6 courses",
+      learned: "Full project management lifecycle — initiation, planning, execution, and closure across both traditional and Agile methodologies.",
+      verify: "https://coursera.org/verify/professional-cert/2D3O66MMTQO7",
+    },
+    {
+      title: "Six Sigma Yellow Belt",
+      issuer: "Kennesaw State University",
+      date: "Jun 2026", courses: "4 courses",
+      learned: "Lean and Six Sigma foundations — the Define-Measure-Analyze-Improve-Control framework and the core tools for process improvement and quality assurance.",
+      verify: "https://coursera.org/verify/specialization/SKQUB1WXUYTT",
     },
   ];
 
@@ -320,20 +387,12 @@ export default function App() {
     },
   ];
 
-  // NOTE: Replace the placeholder text below with real recommendations
-  // (name, title/company, and quote) before publishing this section.
-  const testimonials = [
-    { quote: "[Paste a real recommendation here — e.g. a note from a manager or senior stakeholder on delivery, impact, or leadership.]", name: "[Name]", title: "[Role · Company]" },
-    { quote: "[Paste a second recommendation here — a peer or cross-functional partner works well for balance.]", name: "[Name]", title: "[Role · Company]" },
-    { quote: "[Paste a third recommendation here — optional, but three cards fill the row nicely.]", name: "[Name]", title: "[Role · Company]" },
-  ];
-
   const impactData = [
     { num: "$88K+", label: "Annual savings", desc: "Automation-driven workforce optimisation across programs", color: "#4f46e5" },
     { num: "90%", label: "Handle time reduction", desc: "Handle time cut from 25 min to under 3 min", color: "#059669" },
     { num: "100+", label: "Tickets/day", desc: "Automatically triaged — zero manual intervention", color: "#d97706" },
     { num: "100", label: "Markets covered", desc: "Automated triage coverage expanded Q2 2026", color: "#7c3aed" },
-    { num: "45+", label: "Team members", desc: "Led across multiple operational programs", color: "#0891b2" },
+    { num: "45+", label: "Team members", desc: "Led through team leads and subject-matter experts across programs", color: "#0891b2" },
     { num: "6", label: "Agents live", desc: "Production systems — not prototypes", color: "#dc2626" },
     { num: "741", label: "Tickets/month", desc: "Automated end-to-end by maintenance pipeline", color: "#7c3aed" },
     { num: "25%", label: "Quality uplift", desc: "Operational quality improvement as subject matter expert", color: "#059669" },
@@ -378,7 +437,7 @@ export default function App() {
                 <div className="proof-strip">
                   <div><h3>$88K+</h3><p>Annual Savings</p></div>
                   <div><h3>90%</h3><p>Handle Time Cut</p></div>
-                  <div><h3>45+</h3><p>Team Members</p></div>
+                  <div><h3>45+</h3><p>Team Led</p></div>
                   <div><h3>6</h3><p>Agents Live</p></div>
                 </div>
               </FadeIn>
@@ -390,22 +449,12 @@ export default function App() {
             </div>
           </section>
 
-          {/* STATS */}
-          <div className="stats-strip">
-            {[{target:100,suffix:"+",label:"Tickets triaged / day"},{target:45,suffix:"+",label:"Team members led"},{target:6,suffix:"",label:"Agents in production"},{target:741,suffix:"",label:"Maintenance tickets / month"}].map((s,i)=>(
-              <div className="stat-item" key={i}>
-                <span className="stat-num"><Counter target={s.target} suffix={s.suffix} /></span>
-                <span className="stat-label">{s.label}</span>
-              </div>
-            ))}
-          </div>
-
           {/* ══ ABOUT ══ */}
           <section id="about" className="section alt-bg">
             <div className="container split-reversed">
               <FadeIn direction="left" className="text-content">
                 <h2><span className="accent">About</span> Me</h2>
-                <p className="subtext">I am an Artificial Intelligence Transformation and Operations leader with 8+ years spanning large-scale service operations and hands-on production engineering. I currently lead a 45+ member cross-functional operations organisation across multiple programs, while founding and directing a dedicated automation unit that has shipped six production agents into daily use.</p>
+                <p className="subtext">I am an Artificial Intelligence Transformation and Operations leader with 8+ years spanning large-scale service operations and hands-on production engineering. I currently lead a 45+ member cross-functional operations organisation — directing through team leads and subject-matter experts, coordinating with United States counterparts, and partnering with executive-level stakeholders — while founding and directing a separate 5-member automation unit that has shipped six production agents into daily use.</p>
                 <p className="subtext">My work sits at the intersection of Lean operating discipline and applied artificial intelligence. I map, measure, and streamline a process first — then build governed automation on top of it, with each agent carrying the same monitoring, guardrails, and accountability as any operational workflow. The outcome is measurable and durable: $88K+ in annual savings, up to 90% reduction in handle time, and automated triage coverage across 100 markets.</p>
                 <p className="highlight-dark" style={{minHeight:"54px",display:"flex",alignItems:"center"}}>
                   Operator → <Typewriter words={["Optimizer → Systems Architect","Process Excellence → Real Outcomes","Data-Driven → Outcome-Focused"]} />
@@ -417,12 +466,6 @@ export default function App() {
                     <div className="skills-container">{list.map(s=><span className="skill-tag" key={s}>{s}</span>)}</div>
                   </div>
                 ))}
-                <h4 className="section-subtitle">Certifications</h4>
-                <div className="skills-container">
-                  {["Google — Project Management","IBM — Generative Artificial Intelligence","IBM — Retrieval-Augmented & Agentic Artificial Intelligence","Google — Prompt Engineering"].map(s=>(
-                    <span className="skill-tag cert-tag" key={s}>🏆 {s}</span>
-                  ))}
-                </div>
               </FadeIn>
               <FadeIn direction="down" delay={0.2} className="media-content media-square neon-border">
                 <video autoPlay muted loop playsInline className="feature-video">
@@ -476,8 +519,33 @@ export default function App() {
             </div>
           </section>
 
+          {/* ══ CERTIFICATIONS ══ */}
+          <section id="certifications" className="section hero-bg">
+            <div className="container" style={{flexDirection:"column",gap:"40px"}}>
+              <FadeIn direction="up" style={{textAlign:"center"}}>
+                <h2>Professional <span className="accent">Certifications</span></h2>
+                <p className="subtext" style={{maxWidth:"600px",margin:"0 auto"}}>Verified credentials in artificial intelligence, data, project management, and process excellence — with what each program covered.</p>
+              </FadeIn>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:"20px",maxWidth:"1100px",margin:"0 auto",width:"100%"}}>
+                {certifications.map((c,i)=>(
+                  <FadeIn direction="up" delay={i*0.05} key={i}>
+                    <div className="dark-card" style={{display:"flex",flexDirection:"column",gap:"10px",height:"100%"}}>
+                      <div className="skills-container" style={{marginBottom:"2px"}}>
+                        <span className="skill-tag cert-tag">🏆 {c.issuer}</span>
+                      </div>
+                      <h3 style={{margin:0}}>{c.title}</h3>
+                      <div className="subtext" style={{margin:0,fontSize:"0.85rem",opacity:0.75}}>{c.date}  ·  {c.courses}</div>
+                      <p className="subtext" style={{margin:0,flex:1}}>{c.learned}</p>
+                      <a href={c.verify} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{alignSelf:"flex-start",fontSize:"0.85rem",padding:"6px 14px"}}>Verify credential →</a>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+
           {/* ══ LEADERSHIP PHILOSOPHY ══ */}
-          <section id="leadership" className="section hero-bg">
+          <section id="leadership" className="section alt-bg">
             <div className="container" style={{flexDirection:"column",gap:"40px"}}>
               <FadeIn direction="up" style={{textAlign:"center"}}>
                 <h2>Leadership <span className="accent">Philosophy</span></h2>
@@ -498,7 +566,7 @@ export default function App() {
           </section>
 
           {/* ══ OPERATIONS ══ */}
-          <section id="operations" className="section alt-bg">
+          <section id="operations" className="section hero-bg">
             <div className="container" style={{flexDirection:"column",gap:"40px"}}>
               <FadeIn direction="up" style={{textAlign:"center"}}>
                 <h2>How I Run <span className="accent">Operations</span></h2>
@@ -525,7 +593,7 @@ export default function App() {
           </section>
 
           {/* ══ PROJECTS ══ */}
-          <section id="projects" className="section hero-bg">
+          <section id="projects" className="section alt-bg">
             <div className="container projects-full-width">
               <FadeIn direction="up">
                 <h2>Signature <span className="accent">Artificial Intelligence Agents</span></h2>
@@ -568,7 +636,7 @@ export default function App() {
           </section>
 
           {/* ══ TOOLKIT ══ */}
-          <section id="toolkit" className="section alt-bg">
+          <section id="toolkit" className="section hero-bg">
             <div className="container" style={{flexDirection:"column",gap:"32px"}}>
               <FadeIn direction="up" style={{textAlign:"center"}}>
                 <h2>Technology <span className="accent">Toolkit</span></h2>
@@ -588,7 +656,7 @@ export default function App() {
           </section>
 
           {/* ══ IMPACT ══ */}
-          <section id="impact" className="section hero-bg">
+          <section id="impact" className="section alt-bg">
             <div className="container" style={{flexDirection:"column",gap:"40px"}}>
               <FadeIn direction="up" style={{textAlign:"center"}}>
                 <h2>Measured <span className="accent">Impact</span></h2>
@@ -601,30 +669,6 @@ export default function App() {
                       <div className="impact-num" style={{color:item.color}}>{item.num}</div>
                       <div className="impact-label">{item.label}</div>
                       <div className="impact-desc">{item.desc}</div>
-                    </div>
-                  </FadeIn>
-                ))}
-              </div>
-            </div>
-          </section>
-
-          {/* ══ TESTIMONIALS ══ */}
-          <section id="testimonials" className="section alt-bg">
-            <div className="container" style={{flexDirection:"column",gap:"40px"}}>
-              <FadeIn direction="up" style={{textAlign:"center"}}>
-                <h2>What Others <span className="accent">Say</span></h2>
-                <p className="subtext" style={{maxWidth:"520px",margin:"0 auto"}}>Recommendations from colleagues, stakeholders, and partners.</p>
-              </FadeIn>
-              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"20px",maxWidth:"1000px",margin:"0 auto",width:"100%"}}>
-                {testimonials.map((t,i)=>(
-                  <FadeIn direction="up" delay={i*0.08} key={i}>
-                    <div className="dark-card" style={{display:"flex",flexDirection:"column",gap:"16px",height:"100%"}}>
-                      <div style={{fontSize:"2.4rem",lineHeight:"1",opacity:0.35}}>“</div>
-                      <p className="subtext" style={{fontStyle:"italic",margin:0,flex:1}}>{t.quote}</p>
-                      <div>
-                        <div style={{fontWeight:700}}>{t.name}</div>
-                        <div className="subtext" style={{margin:0,fontSize:"0.9rem"}}>{t.title}</div>
-                      </div>
                     </div>
                   </FadeIn>
                 ))}
