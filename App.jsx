@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform, useInView } from "framer-motion";
 import Scene from "./src/Scene.jsx";
 import "./style.css";
-
 // ── SCROLL-SAFE FADE-IN ───────────────────────────────────────────────────
 // whileInView breaks when a Three.js canvas is present in the DOM.
 // useInView + manual animate fixes this correctly.
@@ -25,7 +24,6 @@ const FadeIn = ({ children, direction = "up", delay = 0, className = "", style =
     </motion.div>
   );
 };
-
 // ── CURSOR ───────────────────────────────────────────────────────────────
 const Cursor = () => {
   const dot = useRef(null), ring = useRef(null);
@@ -46,7 +44,6 @@ const Cursor = () => {
   }, []);
   return (<><div ref={dot} className="cursor-dot" /><div ref={ring} className="cursor-ring" /></>);
 };
-
 // ── PARTICLES ────────────────────────────────────────────────────────────
 const ParticleCanvas = () => {
   const canvasRef = useRef(null);
@@ -78,7 +75,6 @@ const ParticleCanvas = () => {
   }, []);
   return <canvas ref={canvasRef} className="particle-canvas" />;
 };
-
 // ── LOADER ───────────────────────────────────────────────────────────────
 const Loader = ({ onDone }) => {
   const [pct, setPct] = useState(0);
@@ -95,7 +91,6 @@ const Loader = ({ onDone }) => {
     </motion.div>
   );
 };
-
 // ── TYPEWRITER ───────────────────────────────────────────────────────────
 const Typewriter = ({ words }) => {
   const [idx, setIdx] = useState(0), [sub, setSub] = useState(0), [rev, setRev] = useState(false), [blink, setBlink] = useState(true);
@@ -108,7 +103,6 @@ const Typewriter = ({ words }) => {
   }, [sub, idx, rev, words]);
   return <span className="typewriter-text">{words[idx].substring(0, sub)}<span className="cursor" style={{ opacity: blink ? 1 : 0 }}>|</span></span>;
 };
-
 // ── COUNTER ──────────────────────────────────────────────────────────────
 const Counter = ({ target, suffix = "" }) => {
   const [val, setVal] = useState(0), ref = useRef(null);
@@ -121,7 +115,6 @@ const Counter = ({ target, suffix = "" }) => {
   }, [inView, target]);
   return <span ref={ref}>{val}{suffix}</span>;
 };
-
 // ── CONTACT FORM ─────────────────────────────────────────────────────────
 const ContactForm = () => {
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
@@ -146,7 +139,6 @@ const ContactForm = () => {
     </form>
   );
 };
-
 // ════════════════════════════════════════════════════════════════
 // MAIN APP
 // ════════════════════════════════════════════════════════════════
@@ -158,13 +150,11 @@ export default function App() {
   const [heroMuted, setHeroMuted] = useState(true);
   const { scrollYProgress } = useScroll();
   const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-
   useEffect(() => {
     const s = () => setScrolled(window.scrollY > 60);
     window.addEventListener("scroll", s);
     return () => window.removeEventListener("scroll", s);
   }, []);
-
   useEffect(() => {
     if (!loaded) return;
     const obs = new IntersectionObserver((entries) => {
@@ -186,20 +176,16 @@ export default function App() {
     document.querySelectorAll(".section").forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, [loaded]);
-
   // Sections shown in the top navigation and footer.
   const navItems = ["home", "about", "experience", "education", "certifications", "projects", "operations", "toolkit", "impact", "contact"];
-
   // DATA
   const typewords = ["an Artificial Intelligence Transformation Leader", "a Process Optimisation Expert", "a Lean Operations Practitioner", "a Multi-Stakeholder Program Leader", "a Production Artificial Intelligence Systems Builder"];
-
   const skills = {
     "Artificial Intelligence & Automation": ["Agentic Artificial Intelligence", "Retrieval-Augmented Generation", "Prompt Engineering", "Human-in-the-Loop Design", "Claude / Large Language Models", "Python", "LangChain"],
     "Operations": ["Lean / Six Sigma", "SIPOC Framework", "Value Stream Mapping", "Standard Operating Procedure Design", "Root Cause Analysis", "Kaizen", "Process Reengineering"],
     "Performance Governance": ["Performance Metric Design & Tracking", "Risk Indicator Monitoring", "Service-Level Governance", "Capacity Planning", "Quality Assurance Frameworks", "Audit & Compliance"],
     "Leadership": ["Multi-Stakeholder Management", "Cross-functional Delivery", "Change Management", "Team Development", "Program Governance"],
   };
-
   const experience = [
     {
       role: "Team Manager — Artificial Intelligence & Operations",
@@ -233,7 +219,6 @@ export default function App() {
       ],
     },
   ];
-
   const education = [
     {
       degree: "Master of Computer Applications",
@@ -246,7 +231,6 @@ export default function App() {
       note: "Undergraduate foundation in programming, databases, and computer science fundamentals.",
     },
   ];
-
   // Professional certifications. Verify links point to the learner's Coursera credentials.
   const certifications = [
     {
@@ -313,7 +297,6 @@ export default function App() {
       verify: "https://coursera.org/verify/specialization/SKQUB1WXUYTT",
     },
   ];
-
   const leadership = [
     { icon: "🧭", title: "Understand before you automate", desc: "Every workflow is mapped, measured, and stripped of waste before a single line of automation is written. Automating a broken process only makes the mistakes faster." },
     { icon: "📏", title: "Govern with numbers, not opinions", desc: "Teams and agents alike run on defined thresholds and weekly reviews. Performance is visible, tracked, and acted on — never assumed." },
@@ -322,7 +305,6 @@ export default function App() {
     { icon: "🌐", title: "Lead across borders", desc: "I keep operations leadership, engineering, vendors, and compliance aligned across United States and India time zones through structured communication." },
     { icon: "🎯", title: "Honesty over hype", desc: "I report what actually happened against what was promised. Credibility compounds — inflated numbers do not." },
   ];
-
   const techStack = {
     "Artificial Intelligence & Language Models": ["Claude", "Large Language Models", "Retrieval-Augmented Generation", "Agentic Artificial Intelligence", "Prompt Engineering", "Claude Vision", "Human-in-the-Loop Design"],
     "Automation Platforms": ["Gumloop", "Cowork", "Workflow Orchestration", "Model Context Protocol"],
@@ -331,7 +313,6 @@ export default function App() {
     "Integrations & Systems": ["Zendesk", "Slack", "Gmail", "Jira", "System Integrations", "Google Workspace"],
     "Operations Methodology": ["Lean / Six Sigma", "Value Stream Mapping", "SIPOC Mapping", "Kaizen", "Standard Operating Procedure Design", "Root Cause Analysis"],
   };
-
   const opsPillars = [
     { icon: "📐", tag: "PROCESS MAPPING", title: "Map before you build", desc: "Every process starts as a SIPOC map before any code is written. This surfaces gaps and handoff failures that automation would otherwise lock in permanently." },
     { icon: "📊", tag: "PERFORMANCE & RISK", title: "Govern with data", desc: "Performance indicators track what happened. Risk indicators flag what is at risk. Every program runs on weekly reviews against defined thresholds — not monthly retrospectives." },
@@ -340,7 +321,6 @@ export default function App() {
     { icon: "🤝", tag: "STAKEHOLDERS", title: "Align across time zones", desc: "I manage operations leadership, platform engineering, external vendors, and compliance teams across the United States and India with structured governance and communication." },
     { icon: "🧠", tag: "AUTOMATION AS PROCESS", title: "Agents are processes too", desc: "Every agent ships with service levels, failure modes, rollback procedures, deduplication guards, and monitoring. Automation is treated with the same rigour as any Lean workflow." },
   ];
-
   const projects = [
     {
       badge: "Production · Agent 01", name: "Intelligent Customer Feedback Triage System", impact: "$55K annual savings  ·  90% handle time reduction",
@@ -388,7 +368,6 @@ export default function App() {
       metrics: [{ v: "7-Step", l: "One-Shot" }, { v: "5 Zones", l: "Measured" }, { v: "Vision", l: "Powered" }, { v: "Validated", l: "Pricing" }],
     },
   ];
-
   const impactData = [
     { num: "$88K+", label: "Annual savings", desc: "Automation-driven workforce optimisation across programs", color: "#4f46e5" },
     { num: "90%", label: "Handle time reduction", desc: "Handle time cut from 25 min to under 3 min", color: "#059669" },
@@ -399,7 +378,6 @@ export default function App() {
     { num: "741", label: "Tickets/month", desc: "Automated end-to-end by maintenance pipeline", color: "#7c3aed" },
     { num: "25%", label: "Quality uplift", desc: "Operational quality improvement as subject matter expert", color: "#059669" },
   ];
-
   return (
     <>
       <AnimatePresence>{!loaded && <Loader onDone={() => setLoaded(true)} />}</AnimatePresence>
@@ -409,7 +387,6 @@ export default function App() {
           <div className="scanlines" /><div className="film-grain" />
           <motion.div className="scroll-progress" style={{ width: progressWidth }} />
           <Scene currentAction={avatarAction} />
-
           {/* NAV */}
           <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}>
             <div className="nav-content">
@@ -421,7 +398,6 @@ export default function App() {
               </ul>
             </div>
           </nav>
-
           {/* ══ HOME ══ */}
           <section id="home" className="section hero-bg">
             <div className="container split-layout">
@@ -442,6 +418,7 @@ export default function App() {
                   <div><h3>45+</h3><p>Team Led</p></div>
                   <div><h3>6</h3><p>Agents Live</p></div>
                 </div>
+              </FadeIn>
               <FadeIn direction="up" delay={0.2} className="media-content media-portrait neon-border">
                 <video ref={heroVideoRef} autoPlay muted loop playsInline className="feature-video">
                   <source src={`${import.meta.env.BASE_URL}home.mp4`} type="video/mp4" />
@@ -461,7 +438,6 @@ export default function App() {
               </FadeIn>
             </div>
           </section>
-
           {/* ══ ABOUT ══ */}
           <section id="about" className="section alt-bg">
             <div className="container split-reversed">
@@ -487,7 +463,6 @@ export default function App() {
               </FadeIn>
             </div>
           </section>
-
           {/* ══ EXPERIENCE ══ */}
           <section id="experience" className="section hero-bg">
             <div className="container split-layout">
@@ -511,7 +486,6 @@ export default function App() {
               </FadeIn>
             </div>
           </section>
-
           {/* ══ EDUCATION ══ */}
           <section id="education" className="section alt-bg">
             <div className="container" style={{flexDirection:"column",gap:"40px"}}>
@@ -531,7 +505,6 @@ export default function App() {
               </div>
             </div>
           </section>
-
           {/* ══ CERTIFICATIONS ══ */}
           <section id="certifications" className="section hero-bg">
             <div className="container" style={{flexDirection:"column",gap:"40px"}}>
@@ -556,7 +529,6 @@ export default function App() {
               </div>
             </div>
           </section>
-
           {/* ══ LEADERSHIP PHILOSOPHY ══ */}
           <section id="leadership" className="section alt-bg">
             <div className="container" style={{flexDirection:"column",gap:"40px"}}>
@@ -577,7 +549,6 @@ export default function App() {
               </div>
             </div>
           </section>
-
           {/* ══ OPERATIONS ══ */}
           <section id="operations" className="section hero-bg">
             <div className="container" style={{flexDirection:"column",gap:"40px"}}>
@@ -604,7 +575,6 @@ export default function App() {
               </div>
             </div>
           </section>
-
           {/* ══ PROJECTS ══ */}
           <section id="projects" className="section alt-bg">
             <div className="container projects-full-width">
@@ -647,7 +617,6 @@ export default function App() {
               </div>
             </div>
           </section>
-
           {/* ══ TOOLKIT ══ */}
           <section id="toolkit" className="section hero-bg">
             <div className="container" style={{flexDirection:"column",gap:"32px"}}>
@@ -667,7 +636,6 @@ export default function App() {
               </div>
             </div>
           </section>
-
           {/* ══ IMPACT ══ */}
           <section id="impact" className="section alt-bg">
             <div className="container" style={{flexDirection:"column",gap:"40px"}}>
@@ -688,7 +656,6 @@ export default function App() {
               </div>
             </div>
           </section>
-
           {/* ══ CONTACT ══ */}
           <section id="contact" className="section hero-bg contact">
             <div className="container contact-container">
@@ -712,7 +679,6 @@ export default function App() {
               </div>
             </div>
           </section>
-
           {/* FOOTER */}
           <footer className="site-footer">
             <div className="footer-content">
