@@ -310,3 +310,29 @@ h2{font-family:var(--serif);font-size:38px;font-weight:500;margin-bottom:18px;le
   .btn-primary::after,.form-submit-btn::after{display:none}
   *{scroll-behavior:auto}
 }
+/* ── HERO VIDEO — landscape, feathered blend (hero section only) ── */
+#home .media-content{
+  width:50% !important;
+  max-width:620px !important;
+  aspect-ratio:16 / 9 !important;
+  height:auto !important;
+  align-self:center !important;
+  background:transparent !important;
+  border:none !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
+  mask-composite:intersect;
+}
+#home .media-content:hover{ box-shadow:none !important; }
+#home .feature-video{ object-fit:cover; object-position:center; }
+
+@media (max-width:900px){
+  #home .media-content{ width:100% !important; max-width:520px !important; }
+}
