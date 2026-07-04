@@ -310,29 +310,40 @@ h2{font-family:var(--serif);font-size:38px;font-weight:500;margin-bottom:18px;le
   .btn-primary::after,.form-submit-btn::after{display:none}
   *{scroll-behavior:auto}
 }
-/* ── HERO VIDEO — landscape, feathered blend (hero section only) ── */
+/* ── HERO VIDEO — taller crop, face-focused, feathered (hero only) ── */
 #home .media-content{
-  width:50% !important;
-  max-width:620px !important;
-  aspect-ratio:16 / 9 !important;
+  width:44% !important;
+  max-width:470px !important;
+  aspect-ratio:4 / 5 !important;      /* "a bit vertical" — taller than wide */
   height:auto !important;
   align-self:center !important;
   background:transparent !important;
   border:none !important;
   border-radius:0 !important;
   box-shadow:none !important;
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
-  -webkit-mask-composite:source-in;
-  mask-image:
-    linear-gradient(to right, transparent 0, #000 14%, #000 86%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 12%, #000 88%, transparent 100%);
-  mask-composite:intersect;
+  position:relative;
 }
 #home .media-content:hover{ box-shadow:none !important; }
-#home .feature-video{ object-fit:cover; object-position:center; }
-
-@media (max-width:900px){
-  #home .media-content{ width:100% !important; max-width:520px !important; }
+#home .feature-video{
+  object-fit:cover;
+  object-position:70% center;         /* keeps YOU (right side); crops the room on the left */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-composite:intersect;
 }
+/* mute / unmute button */
+.video-mute{
+  position:absolute; bottom:12px; right:12px; z-index:5;
+  width:38px; height:38px; border-radius:50%;
+  border:1px solid rgba(183,138,46,.55);
+  background:rgba(26,23,18,.55); color:#fff; font-size:15px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; backdrop-filter:blur(4px); transition:all .2s;
+}
+.video-mute:hover{ background:rgba(26,23,18,.82); border-color:#C9A227; transform:scale(1.06); }
+@media(max-width:900px){ #home .media-content{ width:100% !important; max-width:420px !important; } }
