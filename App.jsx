@@ -172,7 +172,12 @@ export default function App() {
         if (id === "home") setAvatarAction("Wave");
         if (id === "about") setAvatarAction("Walk");
         if (id === "experience") setAvatarAction("Point");
+        if (id === "education") setAvatarAction("Point");
+        if (id === "leadership") setAvatarAction("Wave");
         if (id === "projects") setAvatarAction("Jump");
+        if (id === "toolkit") setAvatarAction("Point");
+        if (id === "impact") setAvatarAction("Walk");
+        if (id === "testimonials") setAvatarAction("Wave");
         if (id === "contact") setAvatarAction("Wave");
       });
     }, { threshold: 0.4 });
@@ -180,26 +185,29 @@ export default function App() {
     return () => obs.disconnect();
   }, [loaded]);
 
+  // Sections shown in the top navigation and footer.
+  const navItems = ["home", "about", "experience", "education", "projects", "operations", "toolkit", "impact", "testimonials", "contact"];
+
   // DATA
-  const typewords = ["an AI Transformation Leader", "a Process Optimisation Expert", "a Lean Operations Practitioner", "a Multi-Stakeholder Program Leader", "a Production AI Systems Builder"];
+  const typewords = ["an Artificial Intelligence Transformation Leader", "a Process Optimisation Expert", "a Lean Operations Practitioner", "a Multi-Stakeholder Program Leader", "a Production Artificial Intelligence Systems Builder"];
 
   const skills = {
-    "AI & Automation": ["Agentic AI", "RAG Architecture", "Prompt Engineering", "Human-in-the-Loop", "Claude AI / LLMs", "Python", "LangChain"],
-    "Operations": ["Lean / Six Sigma", "SIPOC Framework", "Value Stream Mapping", "SOP Design", "Root Cause Analysis", "Kaizen", "Process Reengineering"],
-    "Performance Governance": ["KPI Design & Tracking", "KRI Monitoring", "SLA Governance", "Capacity Planning", "QA Frameworks", "Audit & Compliance"],
+    "Artificial Intelligence & Automation": ["Agentic Artificial Intelligence", "Retrieval-Augmented Generation", "Prompt Engineering", "Human-in-the-Loop Design", "Claude / Large Language Models", "Python", "LangChain"],
+    "Operations": ["Lean / Six Sigma", "SIPOC Framework", "Value Stream Mapping", "Standard Operating Procedure Design", "Root Cause Analysis", "Kaizen", "Process Reengineering"],
+    "Performance Governance": ["Performance Metric Design & Tracking", "Risk Indicator Monitoring", "Service-Level Governance", "Capacity Planning", "Quality Assurance Frameworks", "Audit & Compliance"],
     "Leadership": ["Multi-Stakeholder Management", "Cross-functional Delivery", "Change Management", "Team Development", "Program Governance"],
   };
 
   const experience = [
     {
-      role: "Team Manager — AI & Operations",
+      role: "Team Manager — Artificial Intelligence & Operations",
       company: "Opendoor Technologies  ·  Nov 2023 – Present",
       bullets: [
-        "Lead a 45+ member operations team across multiple programs with full accountability for SLA compliance, quality, and cost efficiency.",
-        "Built and manage a dedicated AI Automation Unit — shipping 6 production agents that replaced manual triage, scheduling, QA, and vendor coordination workflows.",
-        "Delivered $88K+ annual cost savings through AI-driven workforce optimisation while improving throughput and quality.",
-        "Cut average handle time by 90% on high-volume workflows by replacing manual lookups with AI-enriched outputs.",
-        "Own KPI and KRI governance across all programs — tracking resolution SLA, AHT, first-contact resolution, and agent utilisation weekly.",
+        "Lead a 45+ member operations team across multiple programs with full accountability for service-level compliance, quality, and cost efficiency.",
+        "Founded and manage a dedicated Artificial Intelligence Automation Unit — shipping 6 production agents that replaced manual triage, scheduling, quality assurance, and vendor coordination workflows.",
+        "Delivered $88K+ annual cost savings through automation-driven workforce optimisation while improving throughput and quality.",
+        "Cut average handle time by 90% on high-volume workflows by replacing manual lookups with automatically enriched outputs.",
+        "Own performance and risk governance across all programs — tracking resolution service levels, handle time, first-contact resolution, and utilisation weekly.",
         "Apply SIPOC mapping and Value Stream Analysis before every process redesign — eliminating waste before automating.",
         "Partner with global operations leadership and platform teams to align priorities and drive cross-functional transitions.",
       ],
@@ -209,87 +217,126 @@ export default function App() {
       company: "Opendoor Technologies  ·  Mar 2022 – Nov 2023",
       bullets: [
         "Redesigned multi-step workflows delivering a 25% improvement in quality scores by standardising decision criteria and removing redundant handoffs.",
-        "Built SOP frameworks and compliance governance structures adopted across multiple programs.",
+        "Built standard-operating-procedure frameworks and compliance governance structures adopted across multiple programs.",
         "Led cross-regional process transitions — coordinating global teams to maintain performance continuity from day one.",
-        "Ran structured Root Cause Analysis sessions for quality failures, implementing corrective actions tracked against measurable KPIs.",
+        "Ran structured Root Cause Analysis sessions for quality failures, implementing corrective actions tracked against measurable performance targets.",
       ],
     },
     {
       role: "Senior Customer Associate",
       company: "Allsec Technologies  ·  Mar 2017 – Feb 2021",
       bullets: [
-        "Managed high-volume international operations in financial services queues with consistent 100% SLA compliance.",
+        "Managed high-volume international operations in financial services queues with consistent 100% service-level compliance.",
         "Acted as quality reviewer and escalation point, contributing to process improvement and training design.",
       ],
     },
   ];
 
+  const education = [
+    {
+      degree: "Master of Computer Applications",
+      school: "Vels University (VISTAS), Chennai  ·  2014 – 2016",
+      note: "Postgraduate degree covering software engineering, systems design, and applied computing.",
+    },
+    {
+      degree: "Bachelor of Computer Applications",
+      school: "Alpha Arts & Science College, University of Madras, Chennai  ·  2010 – 2013",
+      note: "Undergraduate foundation in programming, databases, and computer science fundamentals.",
+    },
+  ];
+
+  const leadership = [
+    { icon: "🧭", title: "Understand before you automate", desc: "Every workflow is mapped, measured, and stripped of waste before a single line of automation is written. Automating a broken process only makes the mistakes faster." },
+    { icon: "📏", title: "Govern with numbers, not opinions", desc: "Teams and agents alike run on defined thresholds and weekly reviews. Performance is visible, tracked, and acted on — never assumed." },
+    { icon: "🤝", title: "People first, then the system", desc: "I grow team leads and subject-matter experts to own outcomes. Automation removes the drudgery so people can do higher-value work — not the other way round." },
+    { icon: "🛡️", title: "Ship with guardrails", desc: "Every agent carries failure modes, rollback paths, deduplication guards, and human review where it matters. Rigour is what separates production systems from demos." },
+    { icon: "🌐", title: "Lead across borders", desc: "I keep operations leadership, engineering, vendors, and compliance aligned across United States and India time zones through structured communication." },
+    { icon: "🎯", title: "Honesty over hype", desc: "I report what actually happened against what was promised. Credibility compounds — inflated numbers do not." },
+  ];
+
+  const techStack = {
+    "Artificial Intelligence & Language Models": ["Claude", "Large Language Models", "Retrieval-Augmented Generation", "Agentic Artificial Intelligence", "Prompt Engineering", "Claude Vision", "Human-in-the-Loop Design"],
+    "Automation Platforms": ["Gumloop", "Cowork", "Workflow Orchestration", "Model Context Protocol"],
+    "Data & Analytics": ["Snowflake", "Structured Query Language", "Data Warehousing", "Google Sheets"],
+    "Engineering & Languages": ["Python", "JavaScript", "React", "Three.js", "Framer Motion", "Tailwind CSS", "Vite"],
+    "Integrations & Systems": ["Zendesk", "Slack", "Gmail", "Jira", "System Integrations", "Google Workspace"],
+    "Operations Methodology": ["Lean / Six Sigma", "Value Stream Mapping", "SIPOC Mapping", "Kaizen", "Standard Operating Procedure Design", "Root Cause Analysis"],
+  };
+
   const opsPillars = [
-    { icon: "📐", tag: "SIPOC", title: "Map before you build", desc: "Every process starts as a SIPOC before any code is written. This surfaces gaps and handoff failures that automation would otherwise lock in permanently." },
-    { icon: "📊", tag: "KPI / KRI", title: "Govern with data", desc: "KPIs track what happened. KRIs flag what's at risk. Every program runs on weekly performance reviews against defined thresholds — not monthly retrospectives." },
-    { icon: "🔁", tag: "LEAN / VSM", title: "Eliminate waste first", desc: "Value Stream Mapping precedes every redesign. One workflow was cut from 25 minutes to under 3 by removing 7 manual steps — before any AI was introduced." },
-    { icon: "🎯", tag: "SLA / QA", title: "Quality is structured", desc: "Programs run tiered SLA structures with clear escalation paths. QA is scored via formal rubrics with full ticket coverage — not random spot-checks." },
-    { icon: "🤝", tag: "STAKEHOLDERS", title: "Align across time zones", desc: "I manage operations leadership, platform engineering, external vendors, and compliance teams across US and India with structured governance and communication." },
-    { icon: "🧠", tag: "AI AS OPS", title: "Agents are processes too", desc: "Every agent ships with SLAs, failure modes, rollback procedures, deduplication guards, and monitoring. Automation is treated with the same rigour as any Lean workflow." },
+    { icon: "📐", tag: "PROCESS MAPPING", title: "Map before you build", desc: "Every process starts as a SIPOC map before any code is written. This surfaces gaps and handoff failures that automation would otherwise lock in permanently." },
+    { icon: "📊", tag: "PERFORMANCE & RISK", title: "Govern with data", desc: "Performance indicators track what happened. Risk indicators flag what is at risk. Every program runs on weekly reviews against defined thresholds — not monthly retrospectives." },
+    { icon: "🔁", tag: "LEAN / VALUE STREAM", title: "Eliminate waste first", desc: "Value Stream Mapping precedes every redesign. One workflow was cut from 25 minutes to under 3 by removing 7 manual steps — before any automation was introduced." },
+    { icon: "🎯", tag: "SERVICE & QUALITY", title: "Quality is structured", desc: "Programs run tiered service-level structures with clear escalation paths. Quality is scored via formal rubrics with full ticket coverage — not random spot-checks." },
+    { icon: "🤝", tag: "STAKEHOLDERS", title: "Align across time zones", desc: "I manage operations leadership, platform engineering, external vendors, and compliance teams across the United States and India with structured governance and communication." },
+    { icon: "🧠", tag: "AUTOMATION AS PROCESS", title: "Agents are processes too", desc: "Every agent ships with service levels, failure modes, rollback procedures, deduplication guards, and monitoring. Automation is treated with the same rigour as any Lean workflow." },
   ];
 
   const projects = [
     {
-      badge: "Production · Agent 01", name: "Customer Feedback Auto-Triage", impact: "$55K annual savings  ·  90% AHT reduction",
-      desc: "An AI pipeline that classifies, enriches, and routes incoming property feedback tickets — replacing a manual process requiring data lookups across multiple systems before every routing decision.",
-      kpis: ["100+ tickets/day automated", "AHT: 25 min → 2.5 min", "Priority accuracy >95%"],
-      arch: [{ icon: "🎫", name: "Ticket Ingestion", sub: "Zendesk" }, { icon: "🔍", name: "Source Detection", sub: "Type routing" }, { icon: "📍", name: "Address Resolution", sub: "Waterfall" }, { icon: "❄️", name: "Property Enrichment", sub: "Data warehouse" }, { icon: "🧠", name: "AI Classification", sub: "Priority + type" }, { icon: "✅", name: "Auto-Update", sub: "Fields + routing" }],
-      tech: ["Gumloop", "Snowflake", "Zendesk API", "Claude AI", "REST APIs"],
-      metrics: [{ v: "13→6", l: "Team Size" }, { v: "90%", l: "AHT Reduction" }, { v: "12-Node", l: "Pipeline" }, { v: "100+", l: "Tickets/Day" }],
+      badge: "Production · Agent 01", name: "Intelligent Customer Feedback Triage System", impact: "$55K annual savings  ·  90% handle time reduction",
+      desc: "An artificial intelligence pipeline that classifies, enriches, and routes incoming property feedback tickets — replacing a manual process that required data lookups across multiple systems before every routing decision.",
+      kpis: ["100+ tickets/day automated", "Handle time: 25 min → 2.5 min", "Priority accuracy >95%"],
+      arch: [{ icon: "🎫", name: "Ticket Ingestion", sub: "Zendesk" }, { icon: "🔍", name: "Source Detection", sub: "Type routing" }, { icon: "📍", name: "Address Resolution", sub: "Waterfall" }, { icon: "❄️", name: "Property Enrichment", sub: "Data warehouse" }, { icon: "🧠", name: "Classification", sub: "Priority + type" }, { icon: "✅", name: "Auto-Update", sub: "Fields + routing" }],
+      tech: ["Gumloop", "Snowflake", "Zendesk API", "Claude", "REST APIs"],
+      metrics: [{ v: "13→6", l: "Team Size" }, { v: "90%", l: "Handle Time Cut" }, { v: "12-Node", l: "Pipeline" }, { v: "100+", l: "Tickets/Day" }],
     },
     {
-      badge: "Production · Agent 02", name: "HOA Document Retrieval Agent", impact: "$31K annual savings  ·  75% AHT reduction",
-      desc: "An autonomous agent retrieving HOA architectural review forms, extracting requirements, and producing a structured pre-fill output — replacing 40 minutes of manual document search with a sub-10-minute workflow.",
-      kpis: ["AHT: 40 min → 10 min", "Auto-polled every 15 minutes", "Tested across 5 property markets"],
-      arch: [{ icon: "📋", name: "Ticket Ingestion", sub: "Zendesk" }, { icon: "❄️", name: "Property Lookup", sub: "Data warehouse" }, { icon: "🔎", name: "Document Retrieval", sub: "Web + AI parse" }, { icon: "📝", name: "Pre-Fill Engine", sub: "Scope extraction" }, { icon: "💬", name: "Output Delivery", sub: "Slack" }],
+      badge: "Production · Agent 02", name: "Autonomous Document Retrieval & Pre-Fill System", impact: "$31K annual savings  ·  75% handle time reduction",
+      desc: "An autonomous agent that retrieves architectural review forms, extracts requirements, and produces a structured pre-fill output — replacing 40 minutes of manual document search with a sub-10-minute workflow.",
+      kpis: ["Handle time: 40 min → 10 min", "Auto-polled every 15 minutes", "Tested across 5 property markets"],
+      arch: [{ icon: "📋", name: "Ticket Ingestion", sub: "Zendesk" }, { icon: "❄️", name: "Property Lookup", sub: "Data warehouse" }, { icon: "🔎", name: "Document Retrieval", sub: "Web + parsing" }, { icon: "📝", name: "Pre-Fill Engine", sub: "Scope extraction" }, { icon: "💬", name: "Output Delivery", sub: "Slack" }],
       tech: ["Cowork", "Snowflake", "Gumloop", "Slack API", "Web Search"],
-      metrics: [{ v: "75%", l: "AHT Reduction" }, { v: "8→4", l: "Team Size" }, { v: "15 min", l: "Poll Interval" }, { v: "$31K", l: "Annual Saving" }],
+      metrics: [{ v: "75%", l: "Handle Time Cut" }, { v: "8→4", l: "Team Size" }, { v: "15 min", l: "Poll Interval" }, { v: "$31K", l: "Annual Saving" }],
     },
     {
-      badge: "Production · Agent 03", name: "QA Audit Agent", impact: "100% ticket coverage  ·  Real-time SOP compliance",
-      desc: "An AI quality assurance agent scoring every ticket against a structured 15-point SOP checklist — replacing random-sample manual reviews with full-population automated scoring across tiered SLA thresholds.",
-      kpis: ["15-point scoring rubric", "100% population coverage", "SLA tiers: 60 / 120 / 180 min"],
-      arch: [{ icon: "🎫", name: "Ticket Pool", sub: "" }, { icon: "🧠", name: "SOP Audit Engine", sub: "15-point" }, { icon: "📊", name: "Gap Scoring", sub: "Business-day" }, { icon: "💬", name: "Report Delivery", sub: "Slack" }],
-      tech: ["Cowork", "Zendesk API", "Claude AI", "Snowflake", "Slack API"],
-      metrics: [{ v: "15-Pt", l: "Audit Scope" }, { v: "100%", l: "Coverage" }, { v: "Real-time", l: "Monitoring" }, { v: "0 hrs", l: "Manual QA" }],
+      badge: "Production · Agent 03", name: "Automated Quality Assurance Auditor", impact: "100% ticket coverage  ·  Real-time process compliance",
+      desc: "A quality assurance agent that scores every ticket against a structured 15-point compliance checklist — replacing random-sample manual reviews with full-population automated scoring across tiered service-level thresholds.",
+      kpis: ["15-point scoring rubric", "100% population coverage", "Service-level tiers: 60 / 120 / 180 min"],
+      arch: [{ icon: "🎫", name: "Ticket Pool", sub: "" }, { icon: "🧠", name: "Audit Engine", sub: "15-point" }, { icon: "📊", name: "Gap Scoring", sub: "Business-day" }, { icon: "💬", name: "Report Delivery", sub: "Slack" }],
+      tech: ["Cowork", "Zendesk API", "Claude", "Snowflake", "Slack API"],
+      metrics: [{ v: "15-Pt", l: "Audit Scope" }, { v: "100%", l: "Coverage" }, { v: "Real-time", l: "Monitoring" }, { v: "0 hrs", l: "Manual Review" }],
     },
     {
-      badge: "Production · Agent 04", name: "Maintenance Triage Agent", impact: "741 tickets/month  ·  Zero manual intervention",
+      badge: "Production · Agent 04", name: "Automated Facilities Maintenance Triage System", impact: "741 tickets/month  ·  Zero manual intervention",
       desc: "An 11-node pipeline handling property maintenance tickets end-to-end — enriching with property state data, applying a 7-state priority matrix, and updating the ticket system automatically with deduplication.",
-      kpis: ["741 tickets/month automated", "7-state priority logic", "Dedup gate on every run"],
-      tech: ["Gumloop", "Snowflake", "Zendesk API", "Claude AI"],
-      metrics: [{ v: "741", l: "Tickets/Month" }, { v: "11-Node", l: "Pipeline" }, { v: "7-State", l: "Priority Logic" }, { v: "Auto", l: "Dedup" }],
+      kpis: ["741 tickets/month automated", "7-state priority logic", "Deduplication gate on every run"],
+      tech: ["Gumloop", "Snowflake", "Zendesk API", "Claude"],
+      metrics: [{ v: "741", l: "Tickets/Month" }, { v: "11-Node", l: "Pipeline" }, { v: "7-State", l: "Priority Logic" }, { v: "Auto", l: "Deduplication" }],
     },
     {
-      badge: "Production · Agent 05", name: "Signage Ordering Automation", impact: "End-to-end ordering  ·  State-based vendor routing",
-      desc: "A fully automated signage ordering pipeline — querying properties from the data warehouse, deduplicating against order history, routing to vendors by state, and generating purchase draft emails for human review.",
-      kpis: ["76 orders on first live run", "2-vendor routing by state", "Google Sheets dedup archive"],
-      tech: ["Snowflake", "Google Sheets", "Gmail MCP", "Cowork"],
+      badge: "Production · Agent 05", name: "Automated Procurement & Vendor Routing System", impact: "End-to-end ordering  ·  State-based vendor routing",
+      desc: "A fully automated procurement pipeline — querying properties from the data warehouse, deduplicating against order history, routing to vendors by state, and generating purchase draft emails for human review.",
+      kpis: ["76 orders on first live run", "2-vendor routing by state", "Google Sheets deduplication archive"],
+      tech: ["Snowflake", "Google Sheets", "Gmail", "Cowork"],
       metrics: [{ v: "76", l: "First Run Orders" }, { v: "2", l: "Vendors Routed" }, { v: "100%", l: "Automated" }, { v: "0", l: "Manual Steps" }],
     },
     {
-      badge: "Production · Agent 06", name: "Property Measurement Bot", impact: "Claude Vision  ·  Pricing validation  ·  Cost cross-reference",
-      desc: "A seven-step workflow using AI vision to estimate outdoor zone square footage from aerial images, priced against a vendor pricing database and cross-referenced against historical work order costs.",
+      badge: "Production · Agent 06", name: "Computer Vision Measurement & Cost Estimation System", impact: "Computer vision  ·  Pricing validation  ·  Cost cross-reference",
+      desc: "A seven-step workflow using computer vision to estimate outdoor zone square footage from aerial images, priced against a vendor pricing database and cross-referenced against historical work order costs.",
       kpis: ["5 outdoor zones measured", "Pricing cross-referenced", "Historical cost validation"],
-      tech: ["Claude Vision", "Watson Pricing API", "Snowflake", "Slack MCP"],
-      metrics: [{ v: "7-Step", l: "One-Shot" }, { v: "5 Zones", l: "Measured" }, { v: "AI Vision", l: "Powered" }, { v: "WO Validated", l: "Pricing" }],
+      tech: ["Claude Vision", "Watson Pricing API", "Snowflake", "Slack"],
+      metrics: [{ v: "7-Step", l: "One-Shot" }, { v: "5 Zones", l: "Measured" }, { v: "Vision", l: "Powered" }, { v: "Validated", l: "Pricing" }],
     },
   ];
 
+  // NOTE: Replace the placeholder text below with real recommendations
+  // (name, title/company, and quote) before publishing this section.
+  const testimonials = [
+    { quote: "[Paste a real recommendation here — e.g. a note from a manager or senior stakeholder on delivery, impact, or leadership.]", name: "[Name]", title: "[Role · Company]" },
+    { quote: "[Paste a second recommendation here — a peer or cross-functional partner works well for balance.]", name: "[Name]", title: "[Role · Company]" },
+    { quote: "[Paste a third recommendation here — optional, but three cards fill the row nicely.]", name: "[Name]", title: "[Role · Company]" },
+  ];
+
   const impactData = [
-    { num: "$88K+", label: "Annual savings", desc: "AI-driven workforce optimisation across programs", color: "#4f46e5" },
-    { num: "90%", label: "AHT reduction", desc: "Handle time cut from 25 min to under 3 min", color: "#059669" },
+    { num: "$88K+", label: "Annual savings", desc: "Automation-driven workforce optimisation across programs", color: "#4f46e5" },
+    { num: "90%", label: "Handle time reduction", desc: "Handle time cut from 25 min to under 3 min", color: "#059669" },
     { num: "100+", label: "Tickets/day", desc: "Automatically triaged — zero manual intervention", color: "#d97706" },
     { num: "100", label: "Markets covered", desc: "Automated triage coverage expanded Q2 2026", color: "#7c3aed" },
     { num: "45+", label: "Team members", desc: "Led across multiple operational programs", color: "#0891b2" },
     { num: "6", label: "Agents live", desc: "Production systems — not prototypes", color: "#dc2626" },
     { num: "741", label: "Tickets/month", desc: "Automated end-to-end by maintenance pipeline", color: "#7c3aed" },
-    { num: "25%", label: "Quality uplift", desc: "Operational quality improvement as SME", color: "#059669" },
+    { num: "25%", label: "Quality uplift", desc: "Operational quality improvement as subject matter expert", color: "#059669" },
   ];
 
   return (
@@ -307,7 +354,7 @@ export default function App() {
             <div className="nav-content">
               <div className="nav-logo">Sreenath<span className="accent"></span></div>
               <ul className="nav-links">
-                {["home","about","experience","projects","operations","impact","contact"].map(id => (
+                {navItems.map(id => (
                   <li key={id}><a href={`#${id}`}>{id.charAt(0).toUpperCase()+id.slice(1)}</a></li>
                 ))}
               </ul>
@@ -318,19 +365,19 @@ export default function App() {
           <section id="home" className="section hero-bg">
             <div className="container split-layout">
               <FadeIn direction="right" className="text-content">
-                <div className="hero-eyebrow">// AI Transformation  ·  Operations Excellence  ·  Team Manager</div>
+                <div className="hero-eyebrow">// Artificial Intelligence Transformation  ·  Operations Excellence  ·  Team Manager</div>
                 <img src={`${import.meta.env.BASE_URL}profile.jpg`} alt="Sreenath A B" className="profile-image" />
                 <h2 className="greeting">Hi, I'm</h2>
                 <h1 className="main-title">Sreenath A B</h1>
                 <h2 className="headline">I am <Typewriter words={typewords} /></h2>
-                <p className="subtext">10 years in operations. Purpose-built AI systems that run them. I bridge Lean methodology, structured KPI governance, and production AI engineering to deliver outcomes that scale.</p>
+                <p className="subtext">8+ years in operations. Purpose-built artificial intelligence systems that run them. I bridge Lean methodology, structured performance governance, and production engineering to deliver outcomes that scale.</p>
                 <div className="hero-cta">
                   <a href={`${import.meta.env.BASE_URL}Sreenath AB Resume.pdf`} target="_blank" rel="noopener noreferrer" className="btn-primary"><span className="btn-icon">↓</span> Download Resume</a>
                   <a href="#contact" className="btn-secondary">Let's Talk</a>
                 </div>
                 <div className="proof-strip">
                   <div><h3>$88K+</h3><p>Annual Savings</p></div>
-                  <div><h3>90%</h3><p>AHT Reduction</p></div>
+                  <div><h3>90%</h3><p>Handle Time Cut</p></div>
                   <div><h3>45+</h3><p>Team Members</p></div>
                   <div><h3>6</h3><p>Agents Live</p></div>
                 </div>
@@ -345,7 +392,7 @@ export default function App() {
 
           {/* STATS */}
           <div className="stats-strip">
-            {[{target:100,suffix:"+",label:"Tickets triaged / day"},{target:45,suffix:"+",label:"Team members led"},{target:6,suffix:"",label:"Agents in production"},{target:741,suffix:"",label:"Maint. tickets / month"}].map((s,i)=>(
+            {[{target:100,suffix:"+",label:"Tickets triaged / day"},{target:45,suffix:"+",label:"Team members led"},{target:6,suffix:"",label:"Agents in production"},{target:741,suffix:"",label:"Maintenance tickets / month"}].map((s,i)=>(
               <div className="stat-item" key={i}>
                 <span className="stat-num"><Counter target={s.target} suffix={s.suffix} /></span>
                 <span className="stat-label">{s.label}</span>
@@ -358,11 +405,12 @@ export default function App() {
             <div className="container split-reversed">
               <FadeIn direction="left" className="text-content">
                 <h2><span className="accent">About</span> Me</h2>
-                <p className="subtext">I lead operations and AI transformation at scale — managing large teams across multiple programs while building and shipping production AI systems that replace manual workflows.</p>
+                <p className="subtext">I am an Artificial Intelligence Transformation and Operations leader with 8+ years spanning large-scale service operations and hands-on production engineering. I currently lead a 45+ member cross-functional operations organisation across multiple programs, while founding and directing a dedicated automation unit that has shipped six production agents into daily use.</p>
+                <p className="subtext">My work sits at the intersection of Lean operating discipline and applied artificial intelligence. I map, measure, and streamline a process first — then build governed automation on top of it, with each agent carrying the same monitoring, guardrails, and accountability as any operational workflow. The outcome is measurable and durable: $88K+ in annual savings, up to 90% reduction in handle time, and automated triage coverage across 100 markets.</p>
                 <p className="highlight-dark" style={{minHeight:"54px",display:"flex",alignItems:"center"}}>
-                  Operator → <Typewriter words={["Optimizer → AI Architect","Process Excellence → AI Outcomes","Data-Driven → Outcome-Focused"]} />
+                  Operator → <Typewriter words={["Optimizer → Systems Architect","Process Excellence → Real Outcomes","Data-Driven → Outcome-Focused"]} />
                 </p>
-                <p className="subtext">I apply Lean methodology, SIPOC frameworks, and Value Stream Mapping before automating anything. The same structured thinking that drives operational improvements drives how I design, govern, and measure AI agents.</p>
+                <p className="subtext">The same structured thinking that drives operational improvement drives how I design, govern, and measure automation — mapping before building, and eliminating waste before adding technology.</p>
                 {Object.entries(skills).map(([cat,list])=>(
                   <div key={cat}>
                     <h4 className="section-subtitle">{cat}</h4>
@@ -371,7 +419,7 @@ export default function App() {
                 ))}
                 <h4 className="section-subtitle">Certifications</h4>
                 <div className="skills-container">
-                  {["Google — Project Management","IBM — Generative AI","IBM — RAG & Agentic AI","Google — Prompt Engineering"].map(s=>(
+                  {["Google — Project Management","IBM — Generative Artificial Intelligence","IBM — Retrieval-Augmented & Agentic Artificial Intelligence","Google — Prompt Engineering"].map(s=>(
                     <span className="skill-tag cert-tag" key={s}>🏆 {s}</span>
                   ))}
                 </div>
@@ -408,12 +456,80 @@ export default function App() {
             </div>
           </section>
 
+          {/* ══ EDUCATION ══ */}
+          <section id="education" className="section alt-bg">
+            <div className="container" style={{flexDirection:"column",gap:"40px"}}>
+              <FadeIn direction="up" style={{textAlign:"center"}}>
+                <h2><span className="accent">Education</span></h2>
+                <p className="subtext" style={{maxWidth:"560px",margin:"0 auto"}}>Formal grounding in computer science and software engineering.</p>
+              </FadeIn>
+              <div className="timeline">
+                {education.map((item,i)=>(
+                  <FadeIn direction="left" delay={i*0.12} key={i}>
+                    <div className="timeline-item dark-card">
+                      <h3>{item.degree}</h3><h4>{item.school}</h4>
+                      <p className="subtext" style={{marginTop:"8px"}}>{item.note}</p>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ══ LEADERSHIP PHILOSOPHY ══ */}
+          <section id="leadership" className="section hero-bg">
+            <div className="container" style={{flexDirection:"column",gap:"40px"}}>
+              <FadeIn direction="up" style={{textAlign:"center"}}>
+                <h2>Leadership <span className="accent">Philosophy</span></h2>
+                <p className="subtext" style={{maxWidth:"580px",margin:"0 auto"}}>The principles behind how I build teams, run programs, and ship automation.</p>
+              </FadeIn>
+              <div className="ops-grid">
+                {leadership.map((p,i)=>(
+                  <FadeIn direction="up" delay={i*0.09} key={i}>
+                    <div className="ops-card">
+                      <div className="ops-icon">{p.icon}</div>
+                      <h3 className="ops-title">{p.title}</h3>
+                      <p className="ops-desc">{p.desc}</p>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ══ OPERATIONS ══ */}
+          <section id="operations" className="section alt-bg">
+            <div className="container" style={{flexDirection:"column",gap:"40px"}}>
+              <FadeIn direction="up" style={{textAlign:"center"}}>
+                <h2>How I Run <span className="accent">Operations</span></h2>
+                <p className="subtext" style={{maxWidth:"560px",margin:"0 auto"}}>A structured operating system — Lean foundations, performance governance, process discipline, and automation as the execution layer.</p>
+              </FadeIn>
+              <div className="ops-grid">
+                {opsPillars.map((p,i)=>(
+                  <FadeIn direction="up" delay={i*0.09} key={i}>
+                    <div className="ops-card">
+                      <div className="ops-icon">{p.icon}</div>
+                      <div className="ops-tag">{p.tag}</div>
+                      <h3 className="ops-title">{p.title}</h3>
+                      <p className="ops-desc">{p.desc}</p>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+              <div className="methodology-strip">
+                {["Lean / Six Sigma","SIPOC","Value Stream Mapping","Performance & Risk Metric Design","Service-Level Governance","Root Cause Analysis","Kaizen","Process Reengineering","Standard Operating Procedure Development","Change Management","Capacity Planning","Workforce Optimisation"].map(m=>(
+                  <span className="method-pill" key={m}>{m}</span>
+                ))}
+              </div>
+            </div>
+          </section>
+
           {/* ══ PROJECTS ══ */}
-          <section id="projects" className="section alt-bg">
+          <section id="projects" className="section hero-bg">
             <div className="container projects-full-width">
               <FadeIn direction="up">
-                <h2>Signature <span className="accent">AI Agents</span></h2>
-                <p className="subtext" style={{maxWidth:"560px",marginBottom:"40px"}}>Production systems built on Lean foundations, governed by KPIs, and running daily — not prototypes.</p>
+                <h2>Signature <span className="accent">Artificial Intelligence Agents</span></h2>
+                <p className="subtext" style={{maxWidth:"560px",marginBottom:"40px"}}>Production systems built on Lean foundations, governed by performance metrics, and running daily — not prototypes.</p>
               </FadeIn>
               <div className="project-cards-grid">
                 {projects.map((proj,i)=>(
@@ -451,39 +567,32 @@ export default function App() {
             </div>
           </section>
 
-          {/* ══ OPERATIONS ══ */}
-          <section id="operations" className="section hero-bg">
-            <div className="container" style={{flexDirection:"column",gap:"40px"}}>
+          {/* ══ TOOLKIT ══ */}
+          <section id="toolkit" className="section alt-bg">
+            <div className="container" style={{flexDirection:"column",gap:"32px"}}>
               <FadeIn direction="up" style={{textAlign:"center"}}>
-                <h2>How I Run <span className="accent">Operations</span></h2>
-                <p className="subtext" style={{maxWidth:"560px",margin:"0 auto"}}>A structured operating system — Lean foundations, KPI governance, SIPOC discipline, and AI as the execution layer.</p>
+                <h2>Technology <span className="accent">Toolkit</span></h2>
+                <p className="subtext" style={{maxWidth:"560px",margin:"0 auto"}}>The platforms, languages, and methods I use to design, build, and govern systems.</p>
               </FadeIn>
-              <div className="ops-grid">
-                {opsPillars.map((p,i)=>(
-                  <FadeIn direction="up" delay={i*0.09} key={i}>
-                    <div className="ops-card">
-                      <div className="ops-icon">{p.icon}</div>
-                      <div className="ops-tag">{p.tag}</div>
-                      <h3 className="ops-title">{p.title}</h3>
-                      <p className="ops-desc">{p.desc}</p>
+              <div style={{maxWidth:"960px",margin:"0 auto",width:"100%"}}>
+                {Object.entries(techStack).map(([cat,list])=>(
+                  <FadeIn direction="up" delay={0.05} key={cat}>
+                    <div style={{marginBottom:"24px"}}>
+                      <h4 className="section-subtitle">{cat}</h4>
+                      <div className="skills-container">{list.map(s=><span className="skill-tag" key={s}>{s}</span>)}</div>
                     </div>
                   </FadeIn>
-                ))}
-              </div>
-              <div className="methodology-strip">
-                {["Lean / Six Sigma","SIPOC","Value Stream Mapping","KPI & KRI Design","SLA Governance","Root Cause Analysis","Kaizen","Process Reengineering","SOP Development","Change Management","Capacity Planning","Workforce Optimisation"].map(m=>(
-                  <span className="method-pill" key={m}>{m}</span>
                 ))}
               </div>
             </div>
           </section>
 
           {/* ══ IMPACT ══ */}
-          <section id="impact" className="section alt-bg">
+          <section id="impact" className="section hero-bg">
             <div className="container" style={{flexDirection:"column",gap:"40px"}}>
               <FadeIn direction="up" style={{textAlign:"center"}}>
                 <h2>Measured <span className="accent">Impact</span></h2>
-                <p className="subtext" style={{maxWidth:"500px",margin:"0 auto"}}>Tracked against KPIs. Not estimated in decks.</p>
+                <p className="subtext" style={{maxWidth:"500px",margin:"0 auto"}}>Tracked against performance metrics. Not estimated in decks.</p>
               </FadeIn>
               <div className="impact-grid">
                 {impactData.map((item,i)=>(
@@ -499,12 +608,36 @@ export default function App() {
             </div>
           </section>
 
+          {/* ══ TESTIMONIALS ══ */}
+          <section id="testimonials" className="section alt-bg">
+            <div className="container" style={{flexDirection:"column",gap:"40px"}}>
+              <FadeIn direction="up" style={{textAlign:"center"}}>
+                <h2>What Others <span className="accent">Say</span></h2>
+                <p className="subtext" style={{maxWidth:"520px",margin:"0 auto"}}>Recommendations from colleagues, stakeholders, and partners.</p>
+              </FadeIn>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"20px",maxWidth:"1000px",margin:"0 auto",width:"100%"}}>
+                {testimonials.map((t,i)=>(
+                  <FadeIn direction="up" delay={i*0.08} key={i}>
+                    <div className="dark-card" style={{display:"flex",flexDirection:"column",gap:"16px",height:"100%"}}>
+                      <div style={{fontSize:"2.4rem",lineHeight:"1",opacity:0.35}}>“</div>
+                      <p className="subtext" style={{fontStyle:"italic",margin:0,flex:1}}>{t.quote}</p>
+                      <div>
+                        <div style={{fontWeight:700}}>{t.name}</div>
+                        <div className="subtext" style={{margin:0,fontSize:"0.9rem"}}>{t.title}</div>
+                      </div>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+
           {/* ══ CONTACT ══ */}
           <section id="contact" className="section hero-bg contact">
             <div className="container contact-container">
               <FadeIn direction="up" className="contact-header" style={{textAlign:"center"}}>
                 <h2>Let's <span className="accent">Connect</span></h2>
-                <p className="subtext">Open to conversations about AI transformation, operations leadership, and building systems that ship at scale.</p>
+                <p className="subtext">Open to conversations about artificial intelligence transformation, operations leadership, and building systems that ship at scale.</p>
               </FadeIn>
               <div className="contact-grid">
                 <FadeIn direction="left" className="contact-left" style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
@@ -526,8 +659,8 @@ export default function App() {
           {/* FOOTER */}
           <footer className="site-footer">
             <div className="footer-content">
-              <div className="footer-brand"><span className="footer-logo">Sreenath<span className="accent">.AB</span></span><p className="footer-tagline">AI Transformation & Operations Excellence Leader</p></div>
-              <div className="footer-links">{["home","about","experience","projects","operations","impact","contact"].map(id=><a href={`#${id}`} key={id}>{id.charAt(0).toUpperCase()+id.slice(1)}</a>)}</div>
+              <div className="footer-brand"><span className="footer-logo">Sreenath<span className="accent">.AB</span></span><p className="footer-tagline">Artificial Intelligence Transformation & Operations Excellence Leader</p></div>
+              <div className="footer-links">{navItems.map(id=><a href={`#${id}`} key={id}>{id.charAt(0).toUpperCase()+id.slice(1)}</a>)}</div>
               <div className="footer-social">
                 <a href="mailto:absreenath212436@gmail.com" aria-label="Email">✉</a>
                 <a href="https://linkedin.com/in/sreenath-ab" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">in</a>
