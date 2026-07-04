@@ -154,6 +154,8 @@ export default function App() {
   const [loaded, setLoaded] = useState(false);
   const [avatarAction, setAvatarAction] = useState("Wave");
   const [scrolled, setScrolled] = useState(false);
+  const heroVideoRef = useRef(null);
+  const [heroMuted, setHeroMuted] = useState(true);
   const { scrollYProgress } = useScroll();
   const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
@@ -440,11 +442,22 @@ export default function App() {
                   <div><h3>45+</h3><p>Team Led</p></div>
                   <div><h3>6</h3><p>Agents Live</p></div>
                 </div>
-              </FadeIn>
               <FadeIn direction="up" delay={0.2} className="media-content media-portrait neon-border">
-                <video autoPlay muted loop playsInline className="feature-video">
+                <video ref={heroVideoRef} autoPlay muted loop playsInline className="feature-video">
                   <source src={`${import.meta.env.BASE_URL}home.mp4`} type="video/mp4" />
                 </video>
+                <button
+                  className="video-mute"
+                  onClick={() => {
+                    const v = heroVideoRef.current;
+                    v.muted = !v.muted;
+                    setHeroMuted(v.muted);
+                    if (!v.muted) v.play();
+                  }}
+                  aria-label={heroMuted ? "Unmute video" : "Mute video"}
+                >
+                  {heroMuted ? "🔇" : "🔊"}
+                </button>
               </FadeIn>
             </div>
           </section>
