@@ -1,435 +1,689 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500;1,9..144,600&display=swap');
-
-/* ═══════════════════════════════════════════════════════════
-   EDITORIAL GOLD — complete style.css
-   White + ivory · champagne gold accents · Fraunces serif
-   ═══════════════════════════════════════════════════════════ */
-
-:root{
-  --paper:#ffffff;
-  --ivory:#FAF6EB;
-  --ink:#1A1712;
-  --muted:#6B655A;
-  --line:#ECE4D2;
-  --gold:#B78A2E;
-  --gold-deep:#7A5E18;
-  --gold-mid:#A9801F;
-  --gold-lite:#C9A227;
-  --serif:'Fraunces',Georgia,serif;
-  --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
-  --grad:linear-gradient(90deg,#6E5417,#A9801F,#C9A227,#A9801F,#6E5417);
-}
-
-/* ── RESET ── */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body,html{
-  font-family:var(--sans);
-  background:var(--paper);
-  color:var(--ink);
-  overflow-x:hidden;
-  scroll-behavior:smooth;
-  scroll-padding-top:80px;
-  cursor:none;
-  line-height:1.5;
-  -webkit-font-smoothing:antialiased;
-}
-a{text-decoration:none;color:inherit}
-::selection{background:var(--gold);color:#fff}
-
-/* ── GOLD SHIMMER TEXT (the signature) ── */
-@keyframes shimmer{0%{background-position:0% 50%}100%{background-position:200% 50%}}
-.accent,.typewriter-text,.proof-strip h3{
-  background:var(--grad);
-  background-size:200% auto;
-  -webkit-background-clip:text;background-clip:text;
-  -webkit-text-fill-color:transparent;color:transparent;
-  -webkit-text-stroke:.6px var(--gold-deep);
-  text-shadow:0 1px 1px rgba(90,68,18,.14);
-  animation:shimmer 7s linear infinite;
-}
-
-/* ── CURSOR ── */
-.cursor-dot{
-  width:10px;height:10px;background:var(--gold);
-  border-radius:50%;position:fixed;top:0;left:0;
-  pointer-events:none;z-index:9999;
-  transition:width .2s,height .2s,background .2s;
-  mix-blend-mode:multiply;
-}
-.cursor-ring{
-  width:40px;height:40px;border:1.5px solid rgba(183,138,46,.5);
-  border-radius:50%;position:fixed;top:0;left:0;
-  pointer-events:none;z-index:9998;transition:width .3s,height .3s;
-}
-.cursor-dot.cursor-hover{width:18px;height:18px;background:var(--gold-deep)}
-.cursor-ring.cursor-hover{width:52px;height:52px;border-color:var(--gold-deep)}
-
-/* ── CINEMATIC OVERLAYS ── */
-.particle-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.32}
-.scanlines{position:fixed;inset:0;z-index:200;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.012) 2px,rgba(0,0,0,.012) 4px);pointer-events:none;opacity:.4}
-.film-grain{position:fixed;inset:0;z-index:199;pointer-events:none;opacity:.022;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.scroll-progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--gold-deep),var(--gold),var(--gold-lite));z-index:1000;pointer-events:none}
-
-/* ── LOADER ── */
-.loader{position:fixed;inset:0;background:var(--paper);z-index:2000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px}
-.loader-logo{font-family:var(--serif);font-size:48px;font-weight:500;letter-spacing:-1px;color:var(--ink)}
-.loader-bar{width:220px;height:2px;background:var(--line);border-radius:2px}
-.loader-fill{height:100%;background:linear-gradient(90deg,var(--gold-deep),var(--gold-lite));border-radius:2px;transition:width .08s ease}
-.loader-pct{font-size:12px;color:var(--muted);letter-spacing:.1em;font-family:monospace}
-
-/* ── NAVIGATION ── */
-.navbar{position:fixed;top:0;left:0;width:100%;z-index:900;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:box-shadow .3s,background .3s}
-.navbar-scrolled{box-shadow:0 8px 30px rgba(26,23,18,.07)!important;background:rgba(255,255,255,.96)!important}
-.nav-content{max-width:1200px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-family:var(--serif);font-weight:600;font-size:21px;letter-spacing:-.01em;color:var(--ink)}
-.nav-logo .accent::after{content:".";color:var(--gold);-webkit-text-fill-color:var(--gold);-webkit-text-stroke:0;animation:none;text-shadow:none}
-.nav-links{display:flex;gap:24px;list-style:none}
-.nav-links a{position:relative;color:var(--muted);font-size:13.5px;font-weight:500;padding:2px 0;transition:color .2s}
-.nav-links a::after{content:"";position:absolute;left:0;bottom:-3px;height:1.5px;width:100%;background:linear-gradient(90deg,var(--gold),var(--gold-lite));transform:scaleX(0);transform-origin:left;transition:transform .25s}
-.nav-links a:hover{color:var(--gold-deep)}
-.nav-links a:hover::after{transform:scaleX(1)}
-
-/* ── SECTIONS + BACKGROUNDS ── */
-.section{padding:100px 20px;display:flex;justify-content:center;position:relative;z-index:1;background:transparent}
-.section.alt-bg,.section.hero-bg{background:transparent}
-/* ivory sections (by id — precise, overrides class bg) */
-#experience,#certifications,#operations,#toolkit{background:var(--ivory)}
-/* white sections stay on the paper body: home, about, education, leadership, projects, impact, contact */
-
-/* ── CONTAINER + LAYOUT ── */
-.container{width:100%;max-width:1200px;display:flex;align-items:center;gap:60px}
-.split-layout{flex-direction:row;align-items:stretch}
-.split-reversed{flex-direction:row-reverse;align-items:stretch}
-.center-layout{justify-content:center;flex-direction:column;align-items:center}
-.text-content{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;padding:20px 0}
-.projects-full-width{flex-direction:column;gap:40px}
-
-/* ── MEDIA / VIDEO ── */
-.media-content{flex-shrink:0;position:relative;overflow:hidden;border-radius:16px;background:var(--ivory);border:1px solid var(--line)}
-.feature-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
-.media-portrait,.media-square,.media-tall{width:380px;max-width:45%;height:auto;aspect-ratio:auto;align-self:stretch;border-radius:16px}
-.media-contact{max-width:100%;aspect-ratio:4/3;border-radius:16px}
-.container.split-layout,.container.split-reversed{align-items:stretch!important}
-/* gold-tinted frame glow (replaces cyan neon) */
-.neon-border{box-shadow:0 0 0 1px rgba(183,138,46,.28),0 10px 34px rgba(26,23,18,.10)!important;transition:box-shadow .4s!important}
-.neon-border:hover{box-shadow:0 0 0 1px rgba(183,138,46,.5),0 0 26px rgba(183,138,46,.14),0 18px 48px rgba(26,23,18,.13)!important}
-
-/* ── PROFILE IMAGE (gold ring, was cyan) ── */
-.profile-image{width:170px;height:170px;border-radius:50%;object-fit:cover;object-position:top;margin-bottom:28px;border:3px solid var(--gold);box-shadow:0 0 0 6px rgba(183,138,46,.10),0 14px 34px rgba(26,23,18,.12);transition:all .4s cubic-bezier(.175,.885,.32,1.275);cursor:pointer}
-.profile-image:hover{transform:scale(1.05) rotate(1deg);box-shadow:0 0 0 8px rgba(183,138,46,.16),0 0 30px rgba(183,138,46,.22),0 18px 44px rgba(26,23,18,.16);border-color:var(--gold-lite)}
-
-/* ── TYPOGRAPHY ── */
-h2{font-family:var(--serif);font-size:38px;font-weight:500;margin-bottom:18px;letter-spacing:-.01em;color:var(--ink)}
-/* short gold rule under section headings only (not hero greeting/headline) */
-.section h2:not(.greeting):not(.headline)::after{content:"";display:block;width:46px;height:2px;margin-top:16px;background:linear-gradient(90deg,var(--gold),var(--gold-lite))}
-#education h2::after,
-#certifications h2::after,
-#leadership h2::after,
-#operations h2::after,
-#impact h2::after,
-#toolkit h2::after,
-#contact h2::after{
-  margin-left:auto;
-  margin-right:auto;
-}
-.greeting{font-family:var(--sans);font-size:18px;font-weight:500;color:var(--muted);margin-bottom:6px;letter-spacing:0}
-.greeting::after{display:none}
-.main-title{font-family:var(--serif);font-size:clamp(48px,6.5vw,80px);font-weight:500;margin-bottom:12px;letter-spacing:-.02em;line-height:.98;color:var(--ink);background:none;-webkit-text-fill-color:currentColor}
-.headline{font-family:var(--serif);font-size:24px;font-style:italic;font-weight:400;margin-bottom:22px;color:var(--ink);line-height:1.35}
-.headline::after{display:none}
-.subtext{font-size:16px;line-height:1.8;color:var(--muted);margin-bottom:20px}
-.cursor{color:var(--gold)}
-.hero-eyebrow{font-size:11px;color:var(--gold-deep);letter-spacing:.2em;font-weight:600;text-transform:uppercase;margin-bottom:20px}
-
-/* ── HIGHLIGHT (Operator → …) ── */
-.highlight-dark{font-weight:600;font-size:17px;padding:11px 20px;display:inline-flex;align-items:center;gap:6px;background:var(--ivory);color:var(--ink);border-radius:10px;margin:10px 0 20px;border:1px solid var(--line)}
-
-/* ── BUTTONS ── */
-.hero-cta{display:flex;gap:16px;margin-top:24px;margin-bottom:8px;flex-wrap:wrap}
-.btn-primary{position:relative;overflow:hidden;display:inline-flex;align-items:center;gap:8px;padding:14px 26px;background:var(--ink);color:#FDFBF4;font-size:15px;font-weight:600;border-radius:8px;border:none;cursor:pointer;transition:all .25s}
-.btn-primary::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(228,199,102,.55),transparent);transform:skewX(-18deg);transition:left .5s}
-.btn-primary:hover{background:#000;transform:translateY(-2px)}
-.btn-primary:hover::after{left:130%}
-.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:13px 24px;background:transparent;color:var(--ink);font-size:15px;font-weight:600;border-radius:8px;border:1px solid var(--gold);cursor:pointer;transition:all .25s}
-.btn-secondary:hover{background:var(--gold);color:#fff}
-.btn-icon{font-size:15px}
-
-/* ── PROOF STRIP ── */
-.proof-strip{display:flex;gap:30px;margin-top:28px;padding-top:24px;border-top:1px solid var(--line);flex-wrap:wrap}
-.proof-strip h3{font-family:var(--serif);font-size:31px;margin:0;font-weight:600;line-height:1}
-.proof-strip p{font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-top:6px}
-
-/* ── SKILLS / TAGS ── */
-.skills-container{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-.skill-tag{background:var(--paper);color:var(--ink);padding:7px 14px;border-radius:30px;font-size:13px;font-weight:500;border:1px solid var(--line);transition:all .2s}
-.skill-tag:hover{border-color:var(--gold);color:var(--gold-deep)}
-.cert-tag{background:rgba(183,138,46,.1)!important;color:var(--gold-deep)!important;border:1px solid rgba(183,138,46,.28)!important}
-.section-subtitle{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--gold-deep);margin:22px 0 8px}
-
-/* ── TIMELINE + CARDS (Experience, Education, Certifications) ── */
-.timeline{margin-top:30px;border-left:2px solid var(--line);padding-left:30px;display:flex;flex-direction:column;gap:26px;position:relative}
-.timeline-item{position:relative}
-.timeline-item::before{content:"";position:absolute;left:-39px;top:8px;width:11px;height:11px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px var(--ivory)}
-/* .dark-card is now the white editorial card used everywhere */
-.dark-card{background:var(--paper);color:var(--ink);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:8px;padding:24px 28px;transition:border-color .25s,box-shadow .25s}
-.dark-card:hover{border-color:var(--gold);box-shadow:0 12px 34px rgba(183,138,46,.12)}
-.dark-card h3{font-family:var(--serif);color:var(--ink);font-size:19px;font-weight:500;margin-bottom:3px}
-.dark-card h4{color:var(--gold-deep);font-size:13px;font-weight:600;margin-bottom:10px}
-.exp-bullets{padding-left:16px;margin-top:10px;list-style:none}
-.exp-bullets li{color:#413B31;font-size:13.5px;line-height:1.7;margin-bottom:7px;padding-left:14px;position:relative}
-.exp-bullets li::before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;background:var(--gold)}
-
-/* ── PROJECTS ── */
-.project-cards-grid{display:grid;grid-template-columns:1fr;gap:22px;width:100%}
-.project-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:28px 30px;transition:border-color .25s,box-shadow .25s}
-.project-card:hover{border-color:var(--gold);box-shadow:0 16px 40px rgba(26,23,18,.08)}
-.project-card-header h3{font-family:var(--serif);font-size:22px;font-weight:500;margin:10px 0 4px;color:var(--ink)}
-.project-badge{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:6px;background:rgba(183,138,46,.12);color:var(--gold-deep)}
-.impact-text{font-size:14px;font-weight:600;color:var(--gold-deep);margin-bottom:14px}
-.project-desc{font-size:14px;line-height:1.7;color:var(--muted);margin-bottom:20px}
-.arch-diagram{background:var(--ivory);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:18px}
-.arch-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-deep);margin-bottom:14px}
-.arch-flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px}
-.arch-node{flex:1;min-width:110px;background:var(--paper);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:8px;padding:12px 10px;display:flex;flex-direction:column;gap:3px;font-size:12px;font-weight:600;color:var(--ink);text-align:center;align-items:center}
-.arch-node.source{border-top-color:#1F4E79}
-.arch-node.process{border-top-color:#6B2D5C}
-.arch-node.data{border-top-color:#12626B}
-.arch-node.ai{border-top-color:#B78A2E}
-.arch-node.output{border-top-color:#0F6E56}
-.arch-icon{font-size:20px}
-.arch-sub{font-size:10px;font-weight:500;color:var(--muted)}
-.arch-arrow{display:flex;align-items:center;color:var(--gold);font-size:16px}
-.kpi-strip{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
-.kpi-badge{font-size:11px;padding:4px 10px;background:rgba(15,110,86,.08);border:1px solid rgba(15,110,86,.22);color:#0F6E56;border-radius:20px;font-weight:600}
-.project-tech{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
-.tech-tag{font-size:12px;font-weight:500;padding:5px 12px;background:var(--ivory);border:1px solid var(--line);color:var(--ink);border-radius:20px}
-.project-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;border-top:1px solid var(--line);padding-top:18px}
-.metric{text-align:center}
-.metric-value{display:block;font-family:var(--serif);font-size:24px;font-weight:600;color:var(--ink);letter-spacing:-.02em}
-.metric-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:3px}
-
-/* ── OPERATIONS ── */
-.ops-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;width:100%}
-.ops-card{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:26px 22px;transition:transform .25s,box-shadow .25s,border-color .25s;position:relative;overflow:hidden}
-.ops-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-lite));transform:scaleX(0);transform-origin:left;transition:transform .3s}
-.ops-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:0 14px 38px rgba(26,23,18,.08)}
-.ops-card:hover::before{transform:scaleX(1)}
-.ops-icon{font-size:26px;margin-bottom:8px}
-.ops-tag{font-size:9px;font-weight:600;letter-spacing:.15em;color:var(--gold-deep);text-transform:uppercase;margin-bottom:10px;background:rgba(183,138,46,.09);padding:3px 8px;border-radius:4px;display:inline-block}
-.ops-title{font-family:var(--serif);font-size:16px;font-weight:500;color:var(--ink);margin-bottom:8px}
-.ops-desc{font-size:13px;color:var(--muted);line-height:1.7;margin:0}
-.methodology-strip{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;width:100%;padding:20px 0 4px;border-top:1px solid var(--line)}
-.method-pill{font-size:12px;font-weight:500;padding:5px 14px;background:var(--paper);border:1px solid var(--line);color:var(--ink);border-radius:20px;transition:all .2s}
-.method-pill:hover{background:rgba(183,138,46,.08);border-color:var(--gold);color:var(--gold-deep)}
-
-/* ── IMPACT (colourful — jewel-tone) ── */
-.impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;width:100%}
-.impact-block{background:var(--paper)!important;border:1px solid var(--line);border-radius:12px;padding:26px 20px;transition:transform .25s,box-shadow .25s}
-.impact-block:hover{transform:translateY(-3px);box-shadow:0 12px 32px rgba(26,23,18,.08)}
-.impact-num{font-family:var(--serif);font-size:42px;font-weight:600;letter-spacing:-.03em;margin-bottom:4px}
-.impact-label{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:5px}
-.impact-desc{font-size:12px;color:var(--muted);line-height:1.6}
-/* jewel-tone overrides (beat App.jsx inline colours) — wrapper divs are unclassed */
-.impact-grid>*:nth-child(1) .impact-block{border-top:3px solid #1F4E79!important}
-.impact-grid>*:nth-child(1) .impact-num{color:#1F4E79!important}
-.impact-grid>*:nth-child(2) .impact-block{border-top:3px solid #0F6E56!important}
-.impact-grid>*:nth-child(2) .impact-num{color:#0F6E56!important}
-.impact-grid>*:nth-child(3) .impact-block{border-top:3px solid #B78A2E!important}
-.impact-grid>*:nth-child(3) .impact-num{color:#B78A2E!important}
-.impact-grid>*:nth-child(4) .impact-block{border-top:3px solid #6B2D5C!important}
-.impact-grid>*:nth-child(4) .impact-num{color:#6B2D5C!important}
-.impact-grid>*:nth-child(5) .impact-block{border-top:3px solid #12626B!important}
-.impact-grid>*:nth-child(5) .impact-num{color:#12626B!important}
-.impact-grid>*:nth-child(6) .impact-block{border-top:3px solid #8C2F39!important}
-.impact-grid>*:nth-child(6) .impact-num{color:#8C2F39!important}
-.impact-grid>*:nth-child(7) .impact-block{border-top:3px solid #3B3A6B!important}
-.impact-grid>*:nth-child(7) .impact-num{color:#3B3A6B!important}
-.impact-grid>*:nth-child(8) .impact-block{border-top:3px solid #0F6E56!important}
-.impact-grid>*:nth-child(8) .impact-num{color:#0F6E56!important}
-
-/* ── CONTACT ── */
-.contact-container{width:100%;max-width:1000px;display:flex;flex-direction:column;gap:40px}
-.contact-header{width:100%}
-.contact-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start}
-.contact-form{display:flex;flex-direction:column;gap:16px;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:26px}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.form-group{display:flex;flex-direction:column;gap:6px}
-.form-group label{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-.contact-form input,.contact-form textarea{font-family:var(--sans);font-size:14px;padding:11px 13px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);transition:border-color .2s,box-shadow .2s}
-.contact-form input:focus,.contact-form textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(183,138,46,.12)}
-.form-submit-btn{position:relative;overflow:hidden;margin-top:4px;padding:13px 22px;background:var(--ink);color:#FDFBF4;font-size:15px;font-weight:600;border:none;border-radius:8px;cursor:pointer;transition:all .25s}
-.form-submit-btn:hover{background:#000}
-.form-submit-btn.sent{background:#0F6E56}
-.contact-info-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.contact-info-card{display:flex;align-items:center;gap:12px;padding:14px;background:var(--paper);border:1px solid var(--line);border-radius:10px;transition:border-color .25s,box-shadow .25s}
-.contact-info-card:hover{border-color:var(--gold);box-shadow:0 8px 22px rgba(183,138,46,.1)}
-.contact-icon{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:9px;background:rgba(183,138,46,.1);color:var(--gold-deep);font-weight:600;flex-shrink:0}
-.contact-info-card h4{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px}
-.contact-info-card p{font-size:12px;color:var(--muted);word-break:break-all}
-
-/* ── FOOTER (rich dark-gold bookend) ── */
-.site-footer{background:var(--ink);color:#D9D2C4;padding:56px 24px 34px}
-.footer-content{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center}
-.footer-logo{font-family:var(--serif);font-size:24px;font-weight:600;color:#fff}
-.footer-logo .accent{-webkit-text-fill-color:transparent}
-.footer-tagline{font-size:13px;color:#A79F8E;margin-top:4px}
-.footer-links{display:flex;flex-wrap:wrap;gap:22px;justify-content:center}
-.footer-links a{font-size:13px;color:#B9B1A0;transition:color .2s}
-.footer-links a:hover{color:var(--gold-lite)}
-.footer-social{display:flex;gap:12px}
-.footer-social a{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;border:1px solid rgba(217,210,196,.2);color:#D9D2C4;font-size:14px;transition:all .25s}
-.footer-social a:hover{border-color:var(--gold);color:var(--gold-lite);transform:translateY(-2px)}
-.footer-copy p{font-size:12px;color:#8C846F;margin-top:8px}
-
-/* ── RESPONSIVE ── */
-@media(max-width:1100px){
-  .impact-grid{grid-template-columns:repeat(2,1fr)}
-  .ops-grid{grid-template-columns:repeat(2,1fr)}
-  .project-metrics{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:900px){
-  .section{padding:70px 20px}
-  .container,.split-layout,.split-reversed{flex-direction:column;gap:36px}
-  .media-portrait,.media-square,.media-tall{width:100%;max-width:300px!important;aspect-ratio:9/14}
-  .nav-links{display:none}
-  .contact-grid{grid-template-columns:1fr}
-}
-@media(max-width:700px){
-  .impact-grid{grid-template-columns:1fr 1fr}
-  .ops-grid{grid-template-columns:1fr}
-  .form-row{grid-template-columns:1fr}
-  .impact-num{font-size:34px}
-  .main-title{font-size:44px}
-}
-@media(max-width:480px){
-  .impact-grid{grid-template-columns:1fr}
-  .proof-strip{gap:20px}
-}
-@media(prefers-reduced-motion:reduce){
-  .accent,.typewriter-text,.proof-strip h3{animation:none}
-  .btn-primary::after,.form-submit-btn::after{display:none}
-  *{scroll-behavior:auto}
-}
-/* ── HERO VIDEO — taller crop, face-focused, feathered (hero only) ── */
-#home .media-content{
-  width:44% !important;
-  max-width:470px !important;
-  aspect-ratio:4 / 5 !important;      /* "a bit vertical" — taller than wide */
-  height:auto !important;
-  align-self:center !important;
-  background:transparent !important;
-  border:none !important;
-  border-radius:0 !important;
-  box-shadow:none !important;
-  position:relative;
-}
-#home .media-content:hover{ box-shadow:none !important; }
-#home .feature-video{
-  object-fit:cover;
-  object-position:70% center;         /* keeps YOU (right side); crops the room on the left */
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
-  -webkit-mask-composite:source-in;
-  mask-image:
-    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
-  mask-composite:intersect;
-}
-/* mute / unmute button */
-.video-mute{
-  position:absolute; bottom:12px; right:12px; z-index:5;
-  width:38px; height:38px; border-radius:50%;
-  border:1px solid rgba(183,138,46,.55);
-  background:rgba(26,23,18,.55); color:#fff; font-size:15px;
-  display:flex; align-items:center; justify-content:center;
-  cursor:pointer; backdrop-filter:blur(4px); transition:all .2s;
-}
-.video-mute:hover{ background:rgba(26,23,18,.82); border-color:#C9A227; transform:scale(1.06); }
-@media(max-width:900px){ #home .media-content{ width:100% !important; max-width:420px !important; } }
-
-/* ── ABOUT — two-column layout + hero-style video ── */
-.about-split{ display:flex; gap:48px; align-items:center; width:100%; }
-@media(max-width:900px){ .about-split{ flex-direction:column; } }
-
-#about .media-content{
-  width:44% !important;
-  max-width:470px !important;
-  aspect-ratio:4 / 5 !important;
-  height:auto !important;
-  align-self:center !important;
-  background:transparent !important;
-  border:none !important;
-  border-radius:0 !important;
-  box-shadow:none !important;
-  position:relative;
-}
-#about .media-content:hover{ box-shadow:none !important; }
-#about .feature-video{
-  object-fit:cover;
-  object-position:70% center;   /* you're on the right of this clip */
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
-  -webkit-mask-composite:source-in;
-  mask-image:
-    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
-  mask-composite:intersect;
-}
-@media(max-width:900px){ #about .media-content{ width:100% !important; max-width:420px !important; } }
-
-/* ── EXPERIENCE — montage video aligned (timeline untouched) ── */
-#experience .media-content{
-  width:44% !important;
-  max-width:470px !important;
-  aspect-ratio:4 / 5 !important;
-  height:auto !important;
-  align-self:center !important;
-  background:transparent !important;
-  border:none !important;
-  border-radius:0 !important;
-  box-shadow:none !important;
-  position:relative;
-}
-#experience .media-content:hover{ box-shadow:none !important; }
-#experience .feature-video{
-  object-fit:cover;
-  object-position:60% center;   /* keeps you framed across the three beats */
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 10%, #000 90%, transparent 100%);
-  -webkit-mask-composite:source-in;
-  mask-image:
-    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 10%, #000 90%, transparent 100%);
-  mask-composite:intersect;
-}
-@media(max-width:900px){ #experience .media-content{ width:100% !important; max-width:420px !important; } }
-
-/* ── CONTACT — video aligned to the section ── */
-#contact .media-content{
-  width:100% !important;
-  max-width:420px !important;
-  aspect-ratio:4 / 5 !important;
-  height:auto !important;
-  align-self:center !important;
-  background:transparent !important;
-  border:none !important;
-  border-radius:0 !important;
-  box-shadow:none !important;
-  position:relative;
-}
-#contact .media-content:hover{ box-shadow:none !important; }
-#contact .feature-video{
-  object-fit:cover;
-  object-position:center;   /* you're centered in this clip */
-  -webkit-mask-image:
-    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
-  -webkit-mask-composite:source-in;
-  mask-image:
-    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
-    linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
-  mask-composite:intersect;
+import React, { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform, useInView } from "framer-motion";
+import Scene from "./src/Scene.jsx";
+import "./style.css";
+// ── SCROLL-SAFE FADE-IN ───────────────────────────────────────────────────
+// whileInView breaks when a Three.js canvas is present in the DOM.
+// useInView + manual animate fixes this correctly.
+const FadeIn = ({ children, direction = "up", delay = 0, className = "", style = {} }) => {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+  const dirs = {
+    up:    { hidden: { opacity: 0, y: 50 },         visible: { opacity: 1, y: 0 } },
+    down:  { hidden: { opacity: 0, y: -50 },        visible: { opacity: 1, y: 0 } },
+    left:  { hidden: { opacity: 0, x: -60 },        visible: { opacity: 1, x: 0 } },
+    right: { hidden: { opacity: 0, x: 60 },         visible: { opacity: 1, x: 0 } },
+    scale: { hidden: { opacity: 0, scale: 0.93 },   visible: { opacity: 1, scale: 1 } },
+  };
+  return (
+    <motion.div ref={ref} className={className} style={style}
+      initial="hidden" animate={inView ? "visible" : "hidden"}
+      variants={dirs[direction]}
+      transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay }}>
+      {children}
+    </motion.div>
+  );
+};
+// ── CURSOR ───────────────────────────────────────────────────────────────
+const Cursor = () => {
+  const dot = useRef(null), ring = useRef(null);
+  const pos = useRef({ x: 0, y: 0 }), rpos = useRef({ x: 0, y: 0 });
+  useEffect(() => {
+    const move = (e) => { pos.current = { x: e.clientX, y: e.clientY }; };
+    window.addEventListener("mousemove", move);
+    let raf;
+    const loop = () => {
+      rpos.current.x += (pos.current.x - rpos.current.x) * 0.12;
+      rpos.current.y += (pos.current.y - rpos.current.y) * 0.12;
+      if (dot.current) dot.current.style.transform = `translate(${pos.current.x - 5}px,${pos.current.y - 5}px)`;
+      if (ring.current) ring.current.style.transform = `translate(${rpos.current.x - 20}px,${rpos.current.y - 20}px)`;
+      raf = requestAnimationFrame(loop);
+    };
+    loop();
+    return () => { window.removeEventListener("mousemove", move); cancelAnimationFrame(raf); };
+  }, []);
+  return (<><div ref={dot} className="cursor-dot" /><div ref={ring} className="cursor-ring" /></>);
+};
+// ── PARTICLES ────────────────────────────────────────────────────────────
+const ParticleCanvas = () => {
+  const canvasRef = useRef(null);
+  useEffect(() => {
+    const canvas = canvasRef.current, ctx = canvas.getContext("2d");
+    let W, H, pts = [], mouse = { x: -999, y: -999 };
+    const resize = () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; };
+    resize(); window.addEventListener("resize", resize);
+    window.addEventListener("mousemove", (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    for (let i = 0; i < 60; i++) pts.push({ x: Math.random() * 1920, y: Math.random() * 1080, vx: (Math.random() - .5) * .22, vy: (Math.random() - .5) * .22, r: Math.random() * 1.4 + .3, a: Math.random() * .3 + .07 });
+    let raf;
+    const draw = () => {
+      ctx.clearRect(0, 0, W, H);
+      pts.forEach((p) => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0; if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+        const dx = p.x - mouse.x, dy = p.y - mouse.y, d = Math.sqrt(dx * dx + dy * dy);
+        if (d < 100) { p.x += dx * .012; p.y += dy * .012; }
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fillStyle = `rgba(99,102,241,${p.a})`; ctx.fill();
+      });
+      pts.forEach((a, i) => pts.slice(i + 1).forEach((b) => {
+        const d = Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+        if (d < 85) { ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.strokeStyle = `rgba(99,102,241,${.06 * (1 - d / 85)})`; ctx.lineWidth = .5; ctx.stroke(); }
+      }));
+      raf = requestAnimationFrame(draw);
+    };
+    draw();
+    return () => { window.removeEventListener("resize", resize); cancelAnimationFrame(raf); };
+  }, []);
+  return <canvas ref={canvasRef} className="particle-canvas" />;
+};
+// ── LOADER ───────────────────────────────────────────────────────────────
+const Loader = ({ onDone }) => {
+  const [pct, setPct] = useState(0);
+  useEffect(() => {
+    let p = 0;
+    const iv = setInterval(() => { p += Math.random() * 16; if (p >= 100) { p = 100; clearInterval(iv); setTimeout(onDone, 350); } setPct(Math.round(p)); }, 80);
+    return () => clearInterval(iv);
+  }, [onDone]);
+  return (
+    <motion.div className="loader" exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>
+      <div className="loader-logo">SREENATH.AB<span className="accent"></span></div>
+      <div className="loader-bar"><div className="loader-fill" style={{ width: pct + "%" }} /></div>
+      <div className="loader-pct">{pct}%</div>
+    </motion.div>
+  );
+};
+// ── TYPEWRITER ───────────────────────────────────────────────────────────
+const Typewriter = ({ words }) => {
+  const [idx, setIdx] = useState(0), [sub, setSub] = useState(0), [rev, setRev] = useState(false), [blink, setBlink] = useState(true);
+  useEffect(() => { const t = setTimeout(() => setBlink(b => !b), 500); return () => clearTimeout(t); }, [blink]);
+  useEffect(() => {
+    if (sub === words[idx].length + 1 && !rev) { const t = setTimeout(() => setRev(true), 1800); return () => clearTimeout(t); }
+    if (sub === 0 && rev) { setRev(false); setIdx(i => (i + 1) % words.length); return; }
+    const t = setTimeout(() => setSub(s => s + (rev ? -1 : 1)), rev ? 45 : 90);
+    return () => clearTimeout(t);
+  }, [sub, idx, rev, words]);
+  return <span className="typewriter-text">{words[idx].substring(0, sub)}<span className="cursor" style={{ opacity: blink ? 1 : 0 }}>|</span></span>;
+};
+// ── COUNTER ──────────────────────────────────────────────────────────────
+const Counter = ({ target, suffix = "" }) => {
+  const [val, setVal] = useState(0), ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
+  useEffect(() => {
+    if (!inView) return;
+    let start = null;
+    const step = (ts) => { if (!start) start = ts; const p = Math.min((ts - start) / 1500, 1); setVal(Math.round((1 - Math.pow(1 - p, 3)) * target)); if (p < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }, [inView, target]);
+  return <span ref={ref}>{val}{suffix}</span>;
+};
+// ── CONTACT FORM ─────────────────────────────────────────────────────────
+const ContactForm = () => {
+  const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
+  const [status, setStatus] = useState("");
+  const onChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
+  const onSubmit = (e) => {
+    e.preventDefault(); setStatus("sending");
+    window.open(`mailto:absreenath212436@gmail.com?subject=${encodeURIComponent(form.subject || "Portfolio Contact")}&body=${encodeURIComponent(`Name: ${form.name}\nEmail: ${form.email}\n\n${form.message}`)}`, "_blank");
+    setStatus("sent"); setTimeout(() => { setStatus(""); setForm({ name: "", email: "", subject: "", message: "" }); }, 3000);
+  };
+  return (
+    <form className="contact-form" onSubmit={onSubmit}>
+      <div className="form-row">
+        <div className="form-group"><label>Name</label><input type="text" name="name" value={form.name} onChange={onChange} placeholder="Your name" required /></div>
+        <div className="form-group"><label>Email</label><input type="email" name="email" value={form.email} onChange={onChange} placeholder="you@example.com" required /></div>
+      </div>
+      <div className="form-group"><label>Subject</label><input type="text" name="subject" value={form.subject} onChange={onChange} placeholder="What's this about?" /></div>
+      <div className="form-group"><label>Message</label><textarea name="message" value={form.message} onChange={onChange} placeholder="Tell me about your project or opportunity..." rows="5" required /></div>
+      <button type="submit" className={`form-submit-btn ${status}`} disabled={status === "sending"}>
+        {status === "sent" ? "✓ Message ready" : status === "sending" ? "Opening mail..." : "Send Message →"}
+      </button>
+    </form>
+  );
+};
+// ── REUSABLE SECTION VIDEO (feathered frame + gold mute button) ───────────
+// Ratio / crop / feather are controlled per-section in style.css via the
+// section id (#home, #about, #experience, #contact). Each instance owns its
+// own mute state, and every video starts muted so scrolling never triggers
+// multiple audio tracks at once.
+const SectionVideo = ({ src, direction = "up", delay = 0.2, className = "media-content media-portrait neon-border", style = {} }) => {
+  const videoRef = useRef(null);
+  const [muted, setMuted] = useState(true);
+  return (
+    <FadeIn direction={direction} delay={delay} className={className} style={style}>
+      <video ref={videoRef} autoPlay muted loop playsInline className="feature-video">
+        <source src={`${import.meta.env.BASE_URL}${src}`} type="video/mp4" />
+      </video>
+      <button
+        className="video-mute"
+        onClick={() => {
+          const v = videoRef.current;
+          v.muted = !v.muted;
+          setMuted(v.muted);
+          if (!v.muted) v.play();
+        }}
+        aria-label={muted ? "Unmute video" : "Mute video"}
+      >
+        {muted ? "🔇" : "🔊"}
+      </button>
+    </FadeIn>
+  );
+};
+// ════════════════════════════════════════════════════════════════
+// MAIN APP
+// ════════════════════════════════════════════════════════════════
+export default function App() {
+  const [loaded, setLoaded] = useState(false);
+  const [avatarAction, setAvatarAction] = useState("Wave");
+  const [scrolled, setScrolled] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  useEffect(() => {
+    const s = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", s);
+    return () => window.removeEventListener("scroll", s);
+  }, []);
+  useEffect(() => {
+    if (!loaded) return;
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const id = e.target.id;
+        if (id === "home") setAvatarAction("Wave");
+        if (id === "about") setAvatarAction("Walk");
+        if (id === "experience") setAvatarAction("Point");
+        if (id === "education") setAvatarAction("Point");
+        if (id === "certifications") setAvatarAction("Point");
+        if (id === "leadership") setAvatarAction("Wave");
+        if (id === "projects") setAvatarAction("Jump");
+        if (id === "toolkit") setAvatarAction("Point");
+        if (id === "impact") setAvatarAction("Walk");
+        if (id === "contact") setAvatarAction("Wave");
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll(".section").forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, [loaded]);
+  // Sections shown in the top navigation and footer.
+  const navItems = ["home", "about", "experience", "education", "certifications", "projects", "operations", "toolkit", "impact", "contact"];
+  // DATA
+  const typewords = ["an Artificial Intelligence Transformation Leader", "a Process Optimisation Expert", "a Lean Operations Practitioner", "a Multi-Stakeholder Program Leader", "a Production Artificial Intelligence Systems Builder"];
+  const experience = [
+    {
+      role: "Team Manager — Artificial Intelligence & Operations",
+      company: "Opendoor Technologies  ·  Nov 2023 – Present",
+      bullets: [
+        "Lead a 45+ member cross-functional operations organisation — directing through 4+ team leads and 2+ subject-matter experts, coordinating daily with United States counterparts, and partnering with executive-level stakeholders — with full accountability for service-level compliance, quality, and cost efficiency.",
+        "Founded and direct a separate 5-member Artificial Intelligence Automation Unit — shipping 6 production agents that replaced manual triage, scheduling, quality assurance, and vendor coordination workflows.",
+        "Delivered $88K+ annual cost savings through automation-driven workforce optimisation while improving throughput and quality.",
+        "Cut average handle time by 90% on high-volume workflows by replacing manual lookups with automatically enriched outputs.",
+        "Own performance and risk governance across all programs — tracking resolution service levels, handle time, first-contact resolution, and utilisation weekly.",
+        "Apply SIPOC mapping and Value Stream Analysis before every process redesign — eliminating waste before automating.",
+        "Partner with global operations leadership and platform teams to align priorities and drive cross-functional transitions.",
+      ],
+    },
+    {
+      role: "Subject Matter Expert",
+      company: "Opendoor Technologies  ·  Mar 2022 – Nov 2023",
+      bullets: [
+        "Redesigned multi-step workflows delivering a 25% improvement in quality scores by standardising decision criteria and removing redundant handoffs.",
+        "Built standard-operating-procedure frameworks and compliance governance structures adopted across multiple programs.",
+        "Led cross-regional process transitions — coordinating global teams to maintain performance continuity from day one.",
+        "Ran structured Root Cause Analysis sessions for quality failures, implementing corrective actions tracked against measurable performance targets.",
+      ],
+    },
+    {
+      role: "Senior Customer Associate",
+      company: "Allsec Technologies  ·  Mar 2017 – Feb 2021",
+      bullets: [
+        "Managed high-volume international operations in financial services queues with consistent 100% service-level compliance.",
+        "Acted as quality reviewer and escalation point, contributing to process improvement and training design.",
+      ],
+    },
+  ];
+  const education = [
+    {
+      degree: "Master of Computer Applications",
+      school: "Vels University (VISTAS), Chennai  ·  2014 – 2016",
+      note: "Postgraduate degree covering software engineering, systems design, and applied computing.",
+    },
+    {
+      degree: "Bachelor of Computer Applications",
+      school: "Alpha Arts & Science College, University of Madras, Chennai  ·  2010 – 2013",
+      note: "Undergraduate foundation in programming, databases, and computer science fundamentals.",
+    },
+  ];
+  // Professional certifications. Verify links point to the learner's Coursera credentials.
+  const certifications = [
+    {
+      title: "Agentic AI and AI Agents for Leaders",
+      issuer: "Vanderbilt University",
+      date: "Jun 2026", courses: "3 courses",
+      learned: "Strategic grounding in agentic artificial intelligence for organisational decision-making — designing custom assistant agents, critically evaluating AI solutions, and applying prompt engineering to drive real-world impact as a leader.",
+      verify: "https://coursera.org/verify/specialization/BCFK2W5W3SMU",
+    },
+    {
+      title: "IBM RAG and Agentic AI",
+      issuer: "IBM",
+      date: "Oct 2025", courses: "8 courses",
+      learned: "Building production generative AI — retrieval-augmented generation, vector databases, and multimodal applications, plus multi-agent architectures using LangChain, LangGraph, CrewAI, and AutoGen with function calling and multi-step reasoning.",
+      verify: "https://coursera.org/verify/professional-cert/E3CK03U6JNVU",
+    },
+    {
+      title: "Google AI",
+      issuer: "Google",
+      date: "Mar 2026", courses: "7 courses",
+      learned: "Applying artificial intelligence across the full knowledge-work lifecycle — brainstorming, research, communication, content creation, data analysis, and app building — including effective prompting and responsible use.",
+      verify: "https://coursera.org/verify/professional-cert/9038H1OH0I0B",
+    },
+    {
+      title: "Generative AI for Project Managers",
+      issuer: "IBM · SkillUp",
+      date: "Aug 2025", courses: "3 courses",
+      learned: "Using generative AI to plan and execute projects — differentiating model types, applying tools such as ChatGPT, Copilot, Gemini, and image generation to project workflows, and weighing ethical considerations.",
+      verify: "https://coursera.org/verify/specialization/H7465QH07NJF",
+    },
+    {
+      title: "Google Prompting Essentials",
+      issuer: "Google",
+      date: "Nov 2025", courses: "4 courses",
+      learned: "Advanced prompting techniques for complex tasks — designing effective prompts for everyday work, accelerating data analysis and presentation building, and using AI as an expert partner.",
+      verify: "https://coursera.org/verify/specialization/QSHF2AUISZRA",
+    },
+    {
+      title: "Google Cloud AI Infrastructure",
+      issuer: "Google Cloud",
+      date: "Mar 2026", courses: "3 courses",
+      learned: "Artificial intelligence infrastructure fundamentals — hyperscale compute architecture, graphics- and tensor-processing acceleration, selecting machine types and provisioning platforms, and optimising for AI workloads.",
+      verify: "https://coursera.org/verify/specialization/4WJDGO7HGVAC",
+    },
+    {
+      title: "Google Data Analytics",
+      issuer: "Google",
+      date: "Jun 2026", courses: "9 courses",
+      learned: "End-to-end data analytics — asking the right questions, preparing and cleaning data, analysis and visualisation, working with spreadsheets, Structured Query Language, Tableau, and Python.",
+      verify: "https://coursera.org/verify/professional-cert/5BZ5UEN1MMWL",
+    },
+    {
+      title: "Google Project Management",
+      issuer: "Google",
+      date: "Jul 2025", courses: "6 courses",
+      learned: "Full project management lifecycle — initiation, planning, execution, and closure across both traditional and Agile methodologies.",
+      verify: "https://coursera.org/verify/professional-cert/2D3O66MMTQO7",
+    },
+    {
+      title: "Six Sigma Yellow Belt",
+      issuer: "Kennesaw State University",
+      date: "Jun 2026", courses: "4 courses",
+      learned: "Lean and Six Sigma foundations — the Define-Measure-Analyze-Improve-Control framework and the core tools for process improvement and quality assurance.",
+      verify: "https://coursera.org/verify/specialization/SKQUB1WXUYTT",
+    },
+  ];
+  const leadership = [
+    { icon: "🧭", title: "Understand before you automate", desc: "Every workflow is mapped, measured, and stripped of waste before a single line of automation is written. Automating a broken process only makes the mistakes faster." },
+    { icon: "📏", title: "Govern with numbers, not opinions", desc: "Teams and agents alike run on defined thresholds and weekly reviews. Performance is visible, tracked, and acted on — never assumed." },
+    { icon: "🤝", title: "People first, then the system", desc: "I grow team leads and subject-matter experts to own outcomes. Automation removes the drudgery so people can do higher-value work — not the other way round." },
+    { icon: "🛡️", title: "Ship with guardrails", desc: "Every agent carries failure modes, rollback paths, deduplication guards, and human review where it matters. Rigour is what separates production systems from demos." },
+    { icon: "🌐", title: "Lead across borders", desc: "I keep operations leadership, engineering, vendors, and compliance aligned across United States and India time zones through structured communication." },
+    { icon: "🎯", title: "Honesty over hype", desc: "I report what actually happened against what was promised. Credibility compounds — inflated numbers do not." },
+  ];
+  const techStack = {
+    "Artificial Intelligence & Language Models": ["Claude", "Large Language Models", "Retrieval-Augmented Generation", "Agentic Artificial Intelligence", "LangChain", "Prompt Engineering", "Claude Vision", "Human-in-the-Loop Design"],
+    "Automation Platforms": ["Gumloop", "Cowork", "Workflow Orchestration", "Model Context Protocol"],
+    "Data & Analytics": ["Snowflake", "Structured Query Language", "Data Warehousing", "Google Sheets"],
+    "Engineering & Languages": ["Python", "JavaScript", "React", "Three.js", "Framer Motion", "Tailwind CSS", "Vite"],
+    "Integrations & Systems": ["Zendesk", "Slack", "Gmail", "Jira", "System Integrations", "Google Workspace"],
+    "Operations Methodology": ["Lean / Six Sigma", "Value Stream Mapping", "SIPOC Mapping", "Kaizen", "Standard Operating Procedure Design", "Root Cause Analysis"],
+  };
+  const opsPillars = [
+    { icon: "📐", tag: "PROCESS MAPPING", title: "Map before you build", desc: "Every process starts as a SIPOC map before any code is written. This surfaces gaps and handoff failures that automation would otherwise lock in permanently." },
+    { icon: "📊", tag: "PERFORMANCE & RISK", title: "Govern with data", desc: "Performance indicators track what happened. Risk indicators flag what is at risk. Every program runs on weekly reviews against defined thresholds — not monthly retrospectives." },
+    { icon: "🔁", tag: "LEAN / VALUE STREAM", title: "Eliminate waste first", desc: "Value Stream Mapping precedes every redesign. One workflow was cut from 25 minutes to under 3 by removing 7 manual steps — before any automation was introduced." },
+    { icon: "🎯", tag: "SERVICE & QUALITY", title: "Quality is structured", desc: "Programs run tiered service-level structures with clear escalation paths. Quality is scored via formal rubrics with full ticket coverage — not random spot-checks." },
+    { icon: "🤝", tag: "STAKEHOLDERS", title: "Align across time zones", desc: "I manage operations leadership, platform engineering, external vendors, and compliance teams across the United States and India with structured governance and communication." },
+    { icon: "🧠", tag: "AUTOMATION AS PROCESS", title: "Agents are processes too", desc: "Every agent ships with service levels, failure modes, rollback procedures, deduplication guards, and monitoring. Automation is treated with the same rigour as any Lean workflow." },
+  ];
+  const projects = [
+    {
+      badge: "Production · Agent 01", name: "Intelligent Customer Feedback Triage System", impact: "$55K annual savings  ·  90% handle time reduction",
+      desc: "An artificial intelligence pipeline that classifies, enriches, and routes incoming property feedback tickets — replacing a manual process that required data lookups across multiple systems before every routing decision.",
+      kpis: ["100+ tickets/day automated", "Handle time: 25 min → 2.5 min", "Priority accuracy >95%"],
+      arch: [{ icon: "🎫", name: "Ticket Ingestion", sub: "Zendesk" }, { icon: "🔍", name: "Source Detection", sub: "Type routing" }, { icon: "📍", name: "Address Resolution", sub: "Waterfall" }, { icon: "❄️", name: "Property Enrichment", sub: "Data warehouse" }, { icon: "🧠", name: "Classification", sub: "Priority + type" }, { icon: "✅", name: "Auto-Update", sub: "Fields + routing" }],
+      tech: ["Gumloop", "Snowflake", "Zendesk API", "Claude", "REST APIs"],
+      metrics: [{ v: "13→6", l: "Team Size" }, { v: "90%", l: "Handle Time Cut" }, { v: "12-Node", l: "Pipeline" }, { v: "100+", l: "Tickets/Day" }],
+    },
+    {
+      badge: "Production · Agent 02", name: "Autonomous Document Retrieval & Pre-Fill System", impact: "$31K annual savings  ·  75% handle time reduction",
+      desc: "An autonomous agent that retrieves architectural review forms, extracts requirements, and produces a structured pre-fill output — replacing 40 minutes of manual document search with a sub-10-minute workflow.",
+      kpis: ["Handle time: 40 min → 10 min", "Auto-polled every 15 minutes", "Tested across 5 property markets"],
+      arch: [{ icon: "📋", name: "Ticket Ingestion", sub: "Zendesk" }, { icon: "❄️", name: "Property Lookup", sub: "Data warehouse" }, { icon: "🔎", name: "Document Retrieval", sub: "Web + parsing" }, { icon: "📝", name: "Pre-Fill Engine", sub: "Scope extraction" }, { icon: "💬", name: "Output Delivery", sub: "Slack" }],
+      tech: ["Cowork", "Snowflake", "Gumloop", "Slack API", "Web Search"],
+      metrics: [{ v: "75%", l: "Handle Time Cut" }, { v: "8→4", l: "Team Size" }, { v: "15 min", l: "Poll Interval" }, { v: "$31K", l: "Annual Saving" }],
+    },
+    {
+      badge: "Production · Agent 03", name: "Automated Quality Assurance Auditor", impact: "100% ticket coverage  ·  Real-time process compliance",
+      desc: "A quality assurance agent that scores every ticket against a structured 15-point compliance checklist — replacing random-sample manual reviews with full-population automated scoring across tiered service-level thresholds.",
+      kpis: ["15-point scoring rubric", "100% population coverage", "Service-level tiers: 60 / 120 / 180 min"],
+      arch: [{ icon: "🎫", name: "Ticket Pool", sub: "" }, { icon: "🧠", name: "Audit Engine", sub: "15-point" }, { icon: "📊", name: "Gap Scoring", sub: "Business-day" }, { icon: "💬", name: "Report Delivery", sub: "Slack" }],
+      tech: ["Cowork", "Zendesk API", "Claude", "Snowflake", "Slack API"],
+      metrics: [{ v: "15-Pt", l: "Audit Scope" }, { v: "100%", l: "Coverage" }, { v: "Real-time", l: "Monitoring" }, { v: "0 hrs", l: "Manual Review" }],
+    },
+    {
+      badge: "Production · Agent 04", name: "Automated Facilities Maintenance Triage System", impact: "741 tickets/month  ·  Zero manual intervention",
+      desc: "An 11-node pipeline handling property maintenance tickets end-to-end — enriching with property state data, applying a 7-state priority matrix, and updating the ticket system automatically with deduplication.",
+      kpis: ["741 tickets/month automated", "7-state priority logic", "Deduplication gate on every run"],
+      tech: ["Gumloop", "Snowflake", "Zendesk API", "Claude"],
+      metrics: [{ v: "741", l: "Tickets/Month" }, { v: "11-Node", l: "Pipeline" }, { v: "7-State", l: "Priority Logic" }, { v: "Auto", l: "Deduplication" }],
+    },
+    {
+      badge: "Production · Agent 05", name: "Automated Procurement & Vendor Routing System", impact: "End-to-end ordering  ·  State-based vendor routing",
+      desc: "A fully automated procurement pipeline — querying properties from the data warehouse, deduplicating against order history, routing to vendors by state, and generating purchase draft emails for human review.",
+      kpis: ["76 orders on first live run", "2-vendor routing by state", "Google Sheets deduplication archive"],
+      tech: ["Snowflake", "Google Sheets", "Gmail", "Cowork"],
+      metrics: [{ v: "76", l: "First Run Orders" }, { v: "2", l: "Vendors Routed" }, { v: "100%", l: "Automated" }, { v: "0", l: "Manual Steps" }],
+    },
+    {
+      badge: "Production · Agent 06", name: "Computer Vision Measurement & Cost Estimation System", impact: "Computer vision  ·  Pricing validation  ·  Cost cross-reference",
+      desc: "A seven-step workflow using computer vision to estimate outdoor zone square footage from aerial images, priced against a vendor pricing database and cross-referenced against historical work order costs.",
+      kpis: ["5 outdoor zones measured", "Pricing cross-referenced", "Historical cost validation"],
+      tech: ["Claude Vision", "Watson Pricing API", "Snowflake", "Slack"],
+      metrics: [{ v: "7-Step", l: "One-Shot" }, { v: "5 Zones", l: "Measured" }, { v: "Vision", l: "Powered" }, { v: "Validated", l: "Pricing" }],
+    },
+  ];
+  const impactData = [
+    { num: "$88K+", label: "Annual savings", desc: "Automation-driven workforce optimisation across programs", color: "#4f46e5" },
+    { num: "90%", label: "Handle time reduction", desc: "Handle time cut from 25 min to under 3 min", color: "#059669" },
+    { num: "100+", label: "Tickets/day", desc: "Automatically triaged — zero manual intervention", color: "#d97706" },
+    { num: "100", label: "Markets covered", desc: "Automated triage coverage expanded Q2 2026", color: "#7c3aed" },
+    { num: "45+", label: "Team members", desc: "Led through team leads and subject-matter experts across programs", color: "#0891b2" },
+    { num: "6", label: "Agents live", desc: "Production systems — not prototypes", color: "#dc2626" },
+    { num: "741", label: "Tickets/month", desc: "Automated end-to-end by maintenance pipeline", color: "#7c3aed" },
+    { num: "25%", label: "Quality uplift", desc: "Operational quality improvement as subject matter expert", color: "#059669" },
+  ];
+  return (
+    <>
+      <AnimatePresence>{!loaded && <Loader onDone={() => setLoaded(true)} />}</AnimatePresence>
+      {loaded && (
+        <div className="app">
+          <Cursor /><ParticleCanvas />
+          <div className="scanlines" /><div className="film-grain" />
+          <motion.div className="scroll-progress" style={{ width: progressWidth }} />
+          <Scene currentAction={avatarAction} />
+          {/* NAV */}
+          <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}>
+            <div className="nav-content">
+              <div className="nav-logo">Sreenath<span className="accent"></span></div>
+              <ul className="nav-links">
+                {navItems.map(id => (
+                  <li key={id}><a href={`#${id}`}>{id.charAt(0).toUpperCase()+id.slice(1)}</a></li>
+                ))}
+              </ul>
+            </div>
+          </nav>
+          {/* ══ HOME ══ */}
+          <section id="home" className="section hero-bg">
+            <div className="container split-layout">
+              <FadeIn direction="right" className="text-content">
+                <div className="hero-eyebrow">// Artificial Intelligence Transformation  ·  Operations Excellence  ·  Team Manager</div>
+                <img src={`${import.meta.env.BASE_URL}profile.jpg`} alt="Sreenath A B" className="profile-image" />
+                <h2 className="greeting">Hi, I'm</h2>
+                <h1 className="main-title">Sreenath A B</h1>
+                <h2 className="headline">I am <Typewriter words={typewords} /></h2>
+                <p className="subtext">8+ years in operations. Purpose-built artificial intelligence systems that run them. I bridge Lean methodology, structured performance governance, and production engineering to deliver outcomes that scale.</p>
+                <div className="hero-cta">
+                  <a href={`${import.meta.env.BASE_URL}Sreenath AB Resume.pdf`} target="_blank" rel="noopener noreferrer" className="btn-primary"><span className="btn-icon">↓</span> Download Resume</a>
+                  <a href="#contact" className="btn-secondary">Let's Talk</a>
+                </div>
+                <div className="proof-strip">
+                  <div><h3>$88K+</h3><p>Annual Savings</p></div>
+                  <div><h3>90%</h3><p>Handle Time Cut</p></div>
+                  <div><h3>45+</h3><p>Team Led</p></div>
+                  <div><h3>6</h3><p>Agents Live</p></div>
+                </div>
+              </FadeIn>
+              <SectionVideo src="home.mp4" direction="up" delay={0.2} className="media-content media-portrait neon-border" />
+            </div>
+          </section>
+          {/* ══ ABOUT ══ */}
+          <section id="about" className="section alt-bg">
+            <div className="container" style={{flexDirection:"column",gap:"40px"}}>
+              <FadeIn direction="up" style={{textAlign:"center"}}>
+                <h2><span className="accent">About</span> Me</h2>
+              </FadeIn>
+              <div className="about-split">
+                <SectionVideo src="about.mp4" direction="left" delay={0.2} className="media-content media-portrait neon-border" />
+                <FadeIn direction="right" className="text-content" style={{flex:1}}>
+                  <p className="subtext">I am an Artificial Intelligence Transformation and Operations leader with 8+ years spanning large-scale service operations and hands-on production engineering. I currently lead a 45+ member cross-functional operations organisation — directing through team leads and subject-matter experts, coordinating with United States counterparts, and partnering with executive-level stakeholders — while founding and directing a separate 5-member automation unit that has shipped six production agents into daily use.</p>
+                  <p className="subtext">My work sits at the intersection of Lean operating discipline and applied artificial intelligence. I map, measure, and streamline a process first — then build governed automation on top of it, with each agent carrying the same monitoring, guardrails, and accountability as any operational workflow. The outcome is measurable and durable: $88K+ in annual savings, up to 90% reduction in handle time, and automated triage coverage across 100 markets.</p>
+                  <p className="highlight-dark" style={{minHeight:"54px",display:"flex",alignItems:"center"}}>
+                    Operator → <Typewriter words={["Optimizer → Systems Architect","Process Excellence → Real Outcomes","Data-Driven → Outcome-Focused"]} />
+                  </p>
+                  <p className="subtext">The same structured thinking that drives operational improvement drives how I design, govern, and measure automation — mapping before building, and eliminating waste before adding technology.</p>
+                </FadeIn>
+              </div>
+            </div>
+          </section>
+          {/* ══ EXPERIENCE ══ */}
+          <section id="experience" className="section hero-bg">
+            <div className="container split-layout">
+              <FadeIn direction="right" className="text-content">
+                <h2>Professional <span className="accent">Journey</span></h2>
+                <div className="timeline">
+                  {experience.map((item,i)=>(
+                    <FadeIn direction="left" delay={i*0.12} key={i}>
+                      <div className="timeline-item dark-card">
+                        <h3>{item.role}</h3><h4>{item.company}</h4>
+                        <ul className="exp-bullets">{item.bullets.map((b,j)=><li key={j}>{b}</li>)}</ul>
+                      </div>
+                    </FadeIn>
+                  ))}
+                </div>
+              </FadeIn>
+              <SectionVideo src="experience.mp4" direction="up" delay={0.2} className="media-content media-tall neon-border" />
+            </div>
+          </section>
+          {/* ══ EDUCATION ══ */}
+          <section id="education" className="section alt-bg">
+            <div className="container" style={{flexDirection:"column",gap:"40px"}}>
+              <FadeIn direction="up" style={{textAlign:"center"}}>
+                <h2><span className="accent">Education</span></h2>
+                <p className="subtext" style={{maxWidth:"560px",margin:"0 auto"}}>Formal grounding in computer science and software engineering.</p>
+              </FadeIn>
+              <div className="timeline">
+                {education.map((item,i)=>(
+                  <FadeIn direction="left" delay={i*0.12} key={i}>
+                    <div className="timeline-item dark-card">
+                      <h3>{item.degree}</h3><h4>{item.school}</h4>
+                      <p className="subtext" style={{marginTop:"8px"}}>{item.note}</p>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+          {/* ══ CERTIFICATIONS ══ */}
+          <section id="certifications" className="section hero-bg">
+            <div className="container" style={{flexDirection:"column",gap:"40px"}}>
+              <FadeIn direction="up" style={{textAlign:"center"}}>
+                <h2>Professional <span className="accent">Certifications</span></h2>
+                <p className="subtext" style={{maxWidth:"600px",margin:"0 auto"}}>Verified credentials in artificial intelligence, data, project management, and process excellence — with what each program covered.</p>
+              </FadeIn>
+              <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))",gap:"20px",maxWidth:"1100px",margin:"0 auto",width:"100%"}}>
+                {certifications.map((c,i)=>(
+                  <FadeIn direction="up" delay={i*0.05} key={i}>
+                    <div className="dark-card" style={{display:"flex",flexDirection:"column",gap:"10px",height:"100%"}}>
+                      <div className="skills-container" style={{marginBottom:"2px"}}>
+                        <span className="skill-tag cert-tag">🏆 {c.issuer}</span>
+                      </div>
+                      <h3 style={{margin:0}}>{c.title}</h3>
+                      <div className="subtext" style={{margin:0,fontSize:"0.85rem",opacity:0.75}}>{c.date}  ·  {c.courses}</div>
+                      <p className="subtext" style={{margin:0,flex:1}}>{c.learned}</p>
+                      <a href={c.verify} target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{alignSelf:"flex-start",fontSize:"0.85rem",padding:"6px 14px"}}>Verify credential →</a>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+          {/* ══ LEADERSHIP PHILOSOPHY ══ */}
+          <section id="leadership" className="section alt-bg">
+            <div className="container" style={{flexDirection:"column",gap:"40px"}}>
+              <FadeIn direction="up" style={{textAlign:"center"}}>
+                <h2>Leadership <span className="accent">Philosophy</span></h2>
+                <p className="subtext" style={{maxWidth:"580px",margin:"0 auto"}}>The principles behind how I build teams, run programs, and ship automation.</p>
+              </FadeIn>
+              <div className="ops-grid">
+                {leadership.map((p,i)=>(
+                  <FadeIn direction="up" delay={i*0.09} key={i}>
+                    <div className="ops-card">
+                      <div className="ops-icon">{p.icon}</div>
+                      <h3 className="ops-title">{p.title}</h3>
+                      <p className="ops-desc">{p.desc}</p>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+          {/* ══ OPERATIONS ══ */}
+          <section id="operations" className="section hero-bg">
+            <div className="container" style={{flexDirection:"column",gap:"40px"}}>
+              <FadeIn direction="up" style={{textAlign:"center"}}>
+                <h2>How I Run <span className="accent">Operations</span></h2>
+                <p className="subtext" style={{maxWidth:"560px",margin:"0 auto"}}>A structured operating system — Lean foundations, performance governance, process discipline, and automation as the execution layer.</p>
+              </FadeIn>
+              <div className="ops-grid">
+                {opsPillars.map((p,i)=>(
+                  <FadeIn direction="up" delay={i*0.09} key={i}>
+                    <div className="ops-card">
+                      <div className="ops-icon">{p.icon}</div>
+                      <div className="ops-tag">{p.tag}</div>
+                      <h3 className="ops-title">{p.title}</h3>
+                      <p className="ops-desc">{p.desc}</p>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+              <div className="methodology-strip">
+                {["Lean / Six Sigma","SIPOC","Value Stream Mapping","Performance & Risk Metric Design","Service-Level Governance","Quality Assurance Frameworks","Audit & Compliance","Root Cause Analysis","Kaizen","Process Reengineering","Standard Operating Procedure Development","Change Management","Capacity Planning","Workforce Optimisation","Multi-Stakeholder Management","Cross-functional Delivery","Team Development","Program Governance"].map(m=>(
+                  <span className="method-pill" key={m}>{m}</span>
+                ))}
+              </div>
+            </div>
+          </section>
+          {/* ══ PROJECTS ══ */}
+          <section id="projects" className="section alt-bg">
+            <div className="container projects-full-width">
+              <FadeIn direction="up">
+                <h2>Signature <span className="accent">Artificial Intelligence Agents</span></h2>
+                <p className="subtext" style={{maxWidth:"560px",marginBottom:"40px"}}>Production systems built on Lean foundations, governed by performance metrics, and running daily — not prototypes.</p>
+              </FadeIn>
+              <div className="project-cards-grid">
+                {projects.map((proj,i)=>(
+                  <FadeIn direction={i%2===0?"left":"right"} delay={i*0.07} key={i}>
+                    <div className="project-card">
+                      <div className="project-card-header">
+                        <span className="project-badge">{proj.badge}</span>
+                        <h3>{proj.name}</h3>
+                        <p className="impact-text">{proj.impact}</p>
+                      </div>
+                      <p className="project-desc">{proj.desc}</p>
+                      {proj.arch&&(
+                        <div className="arch-diagram">
+                          <h4 className="arch-title">Pipeline Architecture</h4>
+                          <div className="arch-flow">
+                            {proj.arch.map((node,j)=>(
+                              <React.Fragment key={j}>
+                                <div className={`arch-node ${["source","process","data","ai","output","data"][j%6]}`}>
+                                  <span className="arch-icon">{node.icon}</span><span>{node.name}</span>
+                                  {node.sub&&<span className="arch-sub">{node.sub}</span>}
+                                </div>
+                                {j<proj.arch.length-1&&<div className="arch-arrow">→</div>}
+                              </React.Fragment>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      <div className="kpi-strip">{proj.kpis.map((k,j)=><span className="kpi-badge" key={j}>✓ {k}</span>)}</div>
+                      <div className="project-tech">{proj.tech.map(t=><span className="tech-tag" key={t}>{t}</span>)}</div>
+                      <div className="project-metrics">{proj.metrics.map((m,j)=><div className="metric" key={j}><span className="metric-value">{m.v}</span><span className="metric-label">{m.l}</span></div>)}</div>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+          {/* ══ TOOLKIT ══ */}
+          <section id="toolkit" className="section hero-bg">
+            <div className="container" style={{flexDirection:"column",gap:"32px"}}>
+              <FadeIn direction="up" style={{textAlign:"center"}}>
+                <h2>Technology <span className="accent">Toolkit</span></h2>
+                <p className="subtext" style={{maxWidth:"560px",margin:"0 auto"}}>The platforms, languages, and methods I use to design, build, and govern systems.</p>
+              </FadeIn>
+              <div style={{maxWidth:"960px",margin:"0 auto",width:"100%"}}>
+                {Object.entries(techStack).map(([cat,list])=>(
+                  <FadeIn direction="up" delay={0.05} key={cat}>
+                    <div style={{marginBottom:"24px"}}>
+                      <h4 className="section-subtitle">{cat}</h4>
+                      <div className="skills-container">{list.map(s=><span className="skill-tag" key={s}>{s}</span>)}</div>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+          {/* ══ IMPACT ══ */}
+          <section id="impact" className="section alt-bg">
+            <div className="container" style={{flexDirection:"column",gap:"40px"}}>
+              <FadeIn direction="up" style={{textAlign:"center"}}>
+                <h2>Measured <span className="accent">Impact</span></h2>
+                <p className="subtext" style={{maxWidth:"500px",margin:"0 auto"}}>Tracked against performance metrics. Not estimated in decks.</p>
+              </FadeIn>
+              <div className="impact-grid">
+                {impactData.map((item,i)=>(
+                  <FadeIn direction="up" delay={i*0.07} key={i}>
+                    <div className="impact-block" style={{borderTop:`3px solid ${item.color}`}}>
+                      <div className="impact-num" style={{color:item.color}}>{item.num}</div>
+                      <div className="impact-label">{item.label}</div>
+                      <div className="impact-desc">{item.desc}</div>
+                    </div>
+                  </FadeIn>
+                ))}
+              </div>
+            </div>
+          </section>
+          {/* ══ CONTACT ══ */}
+          <section id="contact" className="section hero-bg contact">
+            <div className="container contact-container">
+              <FadeIn direction="up" className="contact-header" style={{textAlign:"center"}}>
+                <h2>Let's <span className="accent">Connect</span></h2>
+                <p className="subtext">Open to conversations about artificial intelligence transformation, operations leadership, and building systems that ship at scale.</p>
+              </FadeIn>
+              <div className="contact-grid">
+                <FadeIn direction="left" className="contact-left" style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                  <ContactForm />
+                  <div className="contact-info-cards" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+                    <a href="mailto:absreenath212436@gmail.com" className="contact-info-card"><span className="contact-icon">✉</span><div><h4>Email</h4><p>absreenath212436@gmail.com</p></div></a>
+                    <a href="https://linkedin.com/in/sreenathab" target="_blank" rel="noopener noreferrer" className="contact-info-card"><span className="contact-icon">in</span><div><h4>LinkedIn</h4><p>linkedin.com/in/sreenathab</p></div></a>
+                  </div>
+                </FadeIn>
+                <SectionVideo src="contact.mp4" direction="right" className="media-content media-portrait neon-border" style={{ margin: "0 auto" }} />
+              </div>
+            </div>
+          </section>
+          {/* FOOTER */}
+          <footer className="site-footer">
+            <div className="footer-content">
+              <div className="footer-brand"><span className="footer-logo">Sreenath<span className="accent">.AB</span></span><p className="footer-tagline">Artificial Intelligence Transformation & Operations Excellence Leader</p></div>
+              <div className="footer-links">{navItems.map(id=><a href={`#${id}`} key={id}>{id.charAt(0).toUpperCase()+id.slice(1)}</a>)}</div>
+              <div className="footer-social">
+                <a href="mailto:absreenath212436@gmail.com" aria-label="Email">✉</a>
+                <a href="https://linkedin.com/in/sreenath-ab" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">in</a>
+                <a href="https://github.com/absreenath212436" target="_blank" rel="noopener noreferrer" aria-label="GitHub">gh</a>
+              </div>
+              <div className="footer-copy"><p>© {new Date().getFullYear()} Sreenath A B · Chennai, India · React + Three.js + Framer Motion</p></div>
+            </div>
+          </footer>
+        </div>
+      )}
+    </>
+  );
 }
