@@ -347,3 +347,89 @@ h2{font-family:var(--serif);font-size:38px;font-weight:500;margin-bottom:18px;le
 }
 .video-mute:hover{ background:rgba(26,23,18,.82); border-color:#C9A227; transform:scale(1.06); }
 @media(max-width:900px){ #home .media-content{ width:100% !important; max-width:420px !important; } }
+
+/* ── ABOUT — two-column layout + hero-style video ── */
+.about-split{ display:flex; gap:48px; align-items:center; width:100%; }
+@media(max-width:900px){ .about-split{ flex-direction:column; } }
+
+#about .media-content{
+  width:44% !important;
+  max-width:470px !important;
+  aspect-ratio:4 / 5 !important;
+  height:auto !important;
+  align-self:center !important;
+  background:transparent !important;
+  border:none !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  position:relative;
+}
+#about .media-content:hover{ box-shadow:none !important; }
+#about .feature-video{
+  object-fit:cover;
+  object-position:70% center;   /* you're on the right of this clip */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-composite:intersect;
+}
+@media(max-width:900px){ #about .media-content{ width:100% !important; max-width:420px !important; } }
+
+/* ── EXPERIENCE — montage video aligned (timeline untouched) ── */
+#experience .media-content{
+  width:44% !important;
+  max-width:470px !important;
+  aspect-ratio:4 / 5 !important;
+  height:auto !important;
+  align-self:center !important;
+  background:transparent !important;
+  border:none !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  position:relative;
+}
+#experience .media-content:hover{ box-shadow:none !important; }
+#experience .feature-video{
+  object-fit:cover;
+  object-position:60% center;   /* keeps you framed across the three beats */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 10%, #000 90%, transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 10%, #000 90%, transparent 100%);
+  mask-composite:intersect;
+}
+@media(max-width:900px){ #experience .media-content{ width:100% !important; max-width:420px !important; } }
+
+/* ── CONTACT — video aligned to the section ── */
+#contact .media-content{
+  width:100% !important;
+  max-width:420px !important;
+  aspect-ratio:4 / 5 !important;
+  height:auto !important;
+  align-self:center !important;
+  background:transparent !important;
+  border:none !important;
+  border-radius:0 !important;
+  box-shadow:none !important;
+  position:relative;
+}
+#contact .media-content:hover{ box-shadow:none !important; }
+#contact .feature-video{
+  object-fit:cover;
+  object-position:center;   /* you're centered in this clip */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-composite:source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 12%, #000 90%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-composite:intersect;
+}
