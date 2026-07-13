@@ -231,7 +231,7 @@ export default function App() {
       ],
     },
     {
-      role: "Senior Customer Associate",
+      role: "Senior Customer Suuport Officer",
       company: "Allsec Technologies  ·  Mar 2017 – Feb 2021",
       bullets: [
         "Managed high-volume international operations in financial services queues with consistent 100% service-level compliance.",
